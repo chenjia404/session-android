@@ -1,11 +1,11 @@
 package org.thoughtcrime.securesms.home
 
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.text.SpannableString
 import android.widget.Toast
@@ -17,6 +17,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.azhon.appupdate.manager.DownloadManager
+import com.azhon.appupdate.util.ApkUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -27,9 +29,16 @@ import kotlinx.coroutines.withContext
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityHomeBinding
 import network.qki.messenger.databinding.ViewMessageRequestBannerBinding
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONException
+import org.json.JSONObject
 import org.session.libsession.messaging.jobs.JobQueue
 import org.session.libsession.messaging.sending_receiving.MessageSender
 import org.session.libsession.utilities.Address
@@ -72,6 +81,7 @@ import org.thoughtcrime.securesms.util.show
 import org.thoughtcrime.securesms.util.themeState
 import java.io.IOException
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -264,6 +274,61 @@ class HomeActivity : PassphraseRequiredActionBarActivity(),
             }
         }
         EventBus.getDefault().register(this@HomeActivity)
+        checkUpdate()
+    }
+
+
+    private fun checkUpdate() {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(30000, TimeUnit.MILLISECONDS)
+            .readTimeout(35000, TimeUnit.MILLISECONDS) // 设置连接时间和读取时间
+            .build() // 设置缓存
+        val doRequestUrl = "https://qki.network/update.json"
+        val request = Request.Builder().url(doRequestUrl).get().build()
+        val call = client.newCall(request)
+        call.enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                //失败回调 回调是在子线程中，可使用Handler、post、activity.runOnUiThread()等方式在主线程中更新ui
+            }
+
+            @Throws(IOException::class)
+            override fun onResponse(call: Call, response: Response) {
+                //成功回调  可使用Handler、post、activity.runOnUiThread()等方式在主线程中更新ui
+                //获取返回byte数组
+                if (!response.isSuccessful) {
+                    throw IOException("Bad response: " + response.message)
+                }
+                val resultData = response.body!!.string()
+                try {
+                    val jsonObject = JSONObject(resultData)
+                    android.util.Log.d(
+                        "checkUpdate",
+                        "onResponse: " + jsonObject.getString("versionCode")
+                    )
+                    update(jsonObject)
+                } catch (e: JSONException) {
+                    throw RuntimeException(e)
+                }
+            }
+        })
+    }
+
+    private fun update(jsonObject:JSONObject){
+
+        val manager = DownloadManager.Builder(this).run {
+            apkUrl(jsonObject.getString("url"))
+            apkName(jsonObject.getString("versionName") + ".apk")
+            smallIcon(R.mipmap.ic_launcher)
+            //设置了此参数，那么内部会自动判断是否需要显示更新对话框，否则需要自己判断是否需要更新
+            apkVersionCode(jsonObject.getInt("versionCode"))
+            //同时下面三个参数也必须要设置
+            apkVersionName(jsonObject.getString("versionName"))
+            apkSize("7.7MB")
+            apkDescription(jsonObject.getString("Description"))
+            //省略一些非必须参数...
+            build()
+        }
+        manager?.download()
     }
 
     override fun onInputFocusChanged(hasFocus: Boolean) {
