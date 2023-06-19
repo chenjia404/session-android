@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import network.loki.messenger.databinding.FragmentScanQrCodePlaceholderBinding
+import network.qki.messenger.databinding.FragmentScanQrCodePlaceholderBinding
 
 class ScanQRCodePlaceholderFragment: Fragment() {
     private lateinit var binding: FragmentScanQrCodePlaceholderBinding

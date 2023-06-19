@@ -6,7 +6,7 @@ import androidx.preference.Preference;
 
 import java.util.Arrays;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class ListSummaryPreferenceFragment extends CorrectedPreferenceFragment {
 

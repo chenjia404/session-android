@@ -31,7 +31,7 @@ import org.thoughtcrime.securesms.util.AvatarPlaceholderGenerator;
 
 import java.util.Objects;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class AvatarImageView extends AppCompatImageView {
 

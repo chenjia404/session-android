@@ -11,8 +11,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.JustifyContent
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewEmojiReactionsBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewEmojiReactionsBinding
 import org.session.libsession.utilities.TextSecurePreferences.Companion.getLocalNumber
 import org.session.libsession.utilities.ThemeUtil
 import org.thoughtcrime.securesms.components.emoji.EmojiImageView

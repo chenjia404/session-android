@@ -17,7 +17,7 @@ import org.session.libsession.utilities.Util;
 import org.session.libsession.utilities.recipients.Recipient;
 import org.session.libsession.utilities.recipients.Recipient.VibrateState;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class AbstractNotificationBuilder extends NotificationCompat.Builder {
 

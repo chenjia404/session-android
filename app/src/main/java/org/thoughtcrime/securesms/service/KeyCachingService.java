@@ -45,7 +45,7 @@ import org.thoughtcrime.securesms.notifications.NotificationChannels;
 
 import java.util.concurrent.TimeUnit;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Small service that stays running to keep a key cached in memory.

@@ -14,8 +14,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.functional.map
 import okhttp3.Headers
+import okhttp3.Headers.Companion.toHeaders
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.sending_receiving.pollers.OpenGroupPoller.Companion.maxInactivityPeriod
@@ -56,14 +59,14 @@ object OpenGroupApi {
         now - lastOpenDate
     }
 
-    const val defaultServerPublicKey = "a03c383cf63c3c4efe67acc52112a6dd734b3a946b9545f488aaa93da7991238"
+    const val defaultServerPublicKey = "70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e"
     const val legacyServerIP = "116.203.70.33"
     const val legacyDefaultServer = "http://116.203.70.33" // TODO: migrate all references to use new value
 
     /** For migration purposes only, don't use this value in joining groups */
-    const val httpDefaultServer = "http://open.getsession.org"
+    const val httpDefaultServer = "https://communities.qki.network"
 
-    const val defaultServer = "https://open.getsession.org"
+    const val defaultServer = "https://communities.qki.network"
 
     val pendingReactions = mutableListOf<PendingReaction>()
 
@@ -283,10 +286,10 @@ object OpenGroupApi {
     )
 
     private fun createBody(body: ByteArray?, parameters: Any?): RequestBody? {
-        if (body != null) return RequestBody.create(MediaType.get("application/octet-stream"), body)
+        if (body != null) return RequestBody.create("application/octet-stream".toMediaType(), body)
         if (parameters == null) return null
         val parametersAsJSON = JsonUtil.toJson(parameters)
-        return RequestBody.create(MediaType.get("application/json"), parametersAsJSON)
+        return RequestBody.create("application/json".toMediaType(), parametersAsJSON)
     }
 
     private fun getResponseBody(request: Request): Promise<ByteArray, Exception> {
@@ -302,7 +305,7 @@ object OpenGroupApi {
     }
 
     private fun send(request: Request): Promise<OnionResponse, Exception> {
-        HttpUrl.parse(request.server) ?: return Promise.ofFail(Error.InvalidURL)
+        request.server.toHttpUrlOrNull() ?: return Promise.ofFail(Error.InvalidURL)
         val urlBuilder = StringBuilder("${request.server}/${request.endpoint.value}")
         if (request.verb == GET && request.queryParameters.isNotEmpty()) {
             urlBuilder.append("?")
@@ -389,7 +392,7 @@ object OpenGroupApi {
 
             val requestBuilder = okhttp3.Request.Builder()
                 .url(urlRequest)
-                .headers(Headers.of(headers))
+                .headers(headers.toHeaders())
             when (request.verb) {
                 GET -> requestBuilder.get()
                 PUT -> requestBuilder.put(createBody(request.body, request.parameters)!!)

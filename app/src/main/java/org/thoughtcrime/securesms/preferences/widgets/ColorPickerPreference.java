@@ -17,7 +17,7 @@ import com.takisoft.colorpicker.ColorPickerDialog;
 import com.takisoft.colorpicker.ColorPickerDialog.Size;
 import com.takisoft.colorpicker.ColorStateDrawable;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class ColorPickerPreference extends DialogPreference {
 

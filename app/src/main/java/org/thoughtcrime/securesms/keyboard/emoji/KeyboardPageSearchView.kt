@@ -15,7 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.ImageViewCompat
 import androidx.core.widget.doAfterTextChanged
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.thoughtcrime.securesms.animation.AnimationCompleteListener
 import org.thoughtcrime.securesms.animation.ResizeAnimation
 import org.thoughtcrime.securesms.conversation.v2.ViewUtil

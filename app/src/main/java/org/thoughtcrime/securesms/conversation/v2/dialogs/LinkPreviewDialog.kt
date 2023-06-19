@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.conversation.v2.dialogs
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
-import network.loki.messenger.databinding.DialogLinkPreviewBinding
+import network.qki.messenger.databinding.DialogLinkPreviewBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.conversation.v2.utilities.BaseDialog
 

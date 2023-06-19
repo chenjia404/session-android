@@ -11,7 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.session.libsession.utilities.ViewUtil;
 
 public class AnimatingToggle extends FrameLayout {

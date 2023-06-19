@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 import java.util.ArrayList;
 import java.util.Collection;

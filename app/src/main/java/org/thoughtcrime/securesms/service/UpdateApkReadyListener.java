@@ -26,7 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class UpdateApkReadyListener extends BroadcastReceiver {
 

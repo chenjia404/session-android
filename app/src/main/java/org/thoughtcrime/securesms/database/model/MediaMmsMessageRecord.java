@@ -33,7 +33,7 @@ import org.thoughtcrime.securesms.mms.SlideDeck;
 
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Represents the message record model for MMS messages that contain

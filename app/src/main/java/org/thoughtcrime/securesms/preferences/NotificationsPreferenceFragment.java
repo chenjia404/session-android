@@ -24,7 +24,7 @@ import org.thoughtcrime.securesms.ApplicationContext;
 import org.thoughtcrime.securesms.components.SwitchPreferenceCompat;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class NotificationsPreferenceFragment extends ListSummaryPreferenceFragment {
 

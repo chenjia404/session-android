@@ -25,7 +25,7 @@ import org.session.libsession.utilities.recipients.Recipient;
 import org.thoughtcrime.securesms.database.SmsDatabase;
 import java.util.LinkedList;
 import java.util.List;
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * The message record model which represents standard SMS messages.

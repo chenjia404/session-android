@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
-import network.loki.messenger.databinding.DialogListPreferenceBinding
+import network.qki.messenger.databinding.DialogListPreferenceBinding
 
 fun listPreferenceDialog(
     context: Context,

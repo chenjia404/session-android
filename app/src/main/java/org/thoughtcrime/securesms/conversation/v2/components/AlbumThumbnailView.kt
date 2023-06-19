@@ -12,8 +12,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import network.loki.messenger.R
-import network.loki.messenger.databinding.AlbumThumbnailViewBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.AlbumThumbnailViewBinding
 import org.session.libsession.messaging.sending_receiving.attachments.AttachmentTransferProgress
 import org.session.libsession.messaging.sending_receiving.attachments.DatabaseAttachment
 import org.session.libsession.utilities.recipients.Recipient

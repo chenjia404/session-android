@@ -13,7 +13,7 @@ import android.text.TextUtils
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsession.utilities.task.ProgressDialogAsyncTask
 import org.session.libsignal.utilities.ExternalStorageUtil
 import org.session.libsignal.utilities.Log

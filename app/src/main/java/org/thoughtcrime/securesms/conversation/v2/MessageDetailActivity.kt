@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityMessageDetailBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityMessageDetailBinding
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.open_groups.OpenGroupApi
 import org.session.libsession.messaging.utilities.SessionId

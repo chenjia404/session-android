@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Utility methods to help display dates in a nice, easily readable way.

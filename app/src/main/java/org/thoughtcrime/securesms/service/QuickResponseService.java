@@ -6,7 +6,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 import org.session.libsession.messaging.messages.visible.VisibleMessage;
 import org.session.libsession.snode.SnodeAPI;

@@ -1,0 +1,65 @@
+<resources>
+    <!-- MessageRecord -->
+    <string name="MessageRecord_left_group">您已退出群组。</string>
+    <string name="MessageRecord_you_created_a_new_group">您创建了一个新组。</string>
+    <string name="MessageRecord_s_added_you_to_the_group">%1$s 将您添加到组中。</string>
+    <string name="MessageRecord_you_renamed_the_group_to_s">您将群组重命名为 %1$s</string>
+    <string name="MessageRecord_s_renamed_the_group_to_s">%1$s 将群组重命名为：%2$s</string>
+    <string name="MessageRecord_you_added_s_to_the_group">您将 %1$s 添加到组中。</string>
+    <string name="MessageRecord_s_added_s_to_the_group">%1$s 将 %2$s 添加到组中。</string>
+    <string name="MessageRecord_you_removed_s_from_the_group">您从群组中删除了 %1$s。</string>
+    <string name="MessageRecord_s_removed_s_from_the_group">%1$s 从群组中删除了 %2$s。</string>
+    <string name="MessageRecord_you_were_removed_from_the_group">您已从群组中移除。</string>
+    <string name="MessageRecord_you">你</string>
+    <string name="MessageRecord_s_called_you">%s 给你打电话</string>
+    <string name="MessageRecord_called_s">叫 %s</string>
+    <string name="MessageRecord_missed_call_from">来自 %s 的未接来电</string>
+    <string name="MessageRecord_you_disabled_disappearing_messages">您禁用了自动删除消息。</string>
+    <string name="MessageRecord_s_disabled_disappearing_messages">%1$s 禁用自动删除消息。</string>
+    <string name="MessageRecord_you_set_disappearing_message_time_to_s">您将自动删除消息计时器设置为 %1$s</string>
+    <string name="MessageRecord_s_set_disappearing_message_time_to_s">%1$s 将自动删除消息计时器设置为 %2$s</string>
+    <string name="MessageRecord_s_took_a_screenshot">%1$s 截图了。</string>
+    <string name="MessageRecord_media_saved_by_s">媒体由 %1$s 保存。</string>
+
+    <!-- expiration -->
+    <string name="expiration_off">离开</string>
+
+    <plurals name="expiration_seconds">
+        <item quantity="one">%d 秒</item>
+        <item quantity="other">%d 秒</item>
+    </plurals>
+
+    <string name="expiration_seconds_abbreviated">%ds</string>
+
+    <plurals name="expiration_minutes">
+        <item quantity="one">%d 分钟</item>
+        <item quantity="other">%d 分钟</item>
+    </plurals>
+
+    <string name="expiration_minutes_abbreviated">%dm</string>
+
+    <plurals name="expiration_hours">
+        <item quantity="one">%d 小时</item>
+        <item quantity="other">%d 小时</item>
+    </plurals>
+
+    <string name="expiration_hours_abbreviated">%dh</string>
+
+    <plurals name="expiration_days">
+        <item quantity="one">%d 天</item>
+        <item quantity="other">%d 天</item>
+    </plurals>
+
+    <string name="expiration_days_abbreviated">%dd</string>
+
+    <plurals name="expiration_weeks">
+        <item quantity="one">%d 周</item>
+        <item quantity="other">%d 周</item>
+    </plurals>
+
+    <string name="expiration_weeks_abbreviated">%dw</string>
+
+    <string name="ConversationItem_group_action_left">%1$s 已离开群组。</string>
+    <!-- RecipientProvider -->
+    <string name="RecipientProvider_unnamed_group">未命名组</string>
+</resources>

@@ -16,13 +16,16 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
 import com.goterl.lazysodium.utils.KeyPair
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityRegisterBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityRegisterBinding
 import org.session.libsession.snode.SnodeModule
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsignal.crypto.ecc.ECKeyPair
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.utilities.KeyHelper
+import org.session.libsignal.utilities.Log
+import org.session.libsignal.utilities.Log.Logger
+import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.crypto.KeyPairUtilities
@@ -57,14 +60,14 @@ class RegisterActivity : BaseActionBarActivity() {
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://getsession.org/terms-of-service/")
+                openURL("https://qki.network/terms-of-service/")
             }
         }, 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://getsession.org/privacy-policy/")
+                openURL("https://qki.network/privacy-policy/")
             }
         }, 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.termsTextView.movementMethod = LinkMovementMethod.getInstance()
@@ -83,6 +86,8 @@ class RegisterActivity : BaseActionBarActivity() {
 
     private fun updatePublicKeyTextView() {
         val hexEncodedPublicKey = x25519KeyPair!!.hexEncodedPublicKey
+        Log.d("key",x25519KeyPair!!.hexEncodedPrivateKey)
+        Log.d("key",ed25519KeyPair!!.publicKey.asHexString)
         val characterCount = hexEncodedPublicKey.count()
         var count = 0
         val limit = 32

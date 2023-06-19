@@ -16,8 +16,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import network.loki.messenger.R
-import network.loki.messenger.databinding.FragmentUserDetailsBottomSheetBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.FragmentUserDetailsBottomSheetBinding
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.contacts.Contact
 import org.session.libsession.utilities.Address

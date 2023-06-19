@@ -36,8 +36,8 @@ class PushNotificationService : FirebaseMessagingService() {
         } else {
             Log.d("Loki", "Failed to decode data for message.")
             val builder = NotificationCompat.Builder(this, NotificationChannels.OTHER)
-                .setSmallIcon(network.loki.messenger.R.drawable.ic_notification)
-                .setColor(this.getResources().getColor(network.loki.messenger.R.color.textsecure_primary))
+                .setSmallIcon(network.qki.messenger.R.drawable.ic_notification)
+                .setColor(this.getResources().getColor(network.qki.messenger.R.color.textsecure_primary))
                 .setContentTitle("Session")
                 .setContentText("You've got a new message.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

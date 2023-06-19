@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class ConversationItemAlertView extends LinearLayout {
 

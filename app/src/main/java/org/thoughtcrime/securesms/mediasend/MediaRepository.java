@@ -31,7 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Handles the retrieval of media present on the user's device.

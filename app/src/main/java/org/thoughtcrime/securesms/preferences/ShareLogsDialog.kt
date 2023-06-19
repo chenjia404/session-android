@@ -18,9 +18,9 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import network.loki.messenger.BuildConfig
-import network.loki.messenger.R
-import network.loki.messenger.databinding.DialogShareLogsBinding
+import network.qki.messenger.BuildConfig
+import network.qki.messenger.R
+import network.qki.messenger.databinding.DialogShareLogsBinding
 import org.session.libsignal.utilities.ExternalStorageUtil
 import org.session.libsignal.utilities.Log
 import org.thoughtcrime.securesms.ApplicationContext

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class RemovableEditableMediaView extends FrameLayout {
 

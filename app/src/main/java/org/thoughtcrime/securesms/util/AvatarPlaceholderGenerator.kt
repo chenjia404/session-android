@@ -11,7 +11,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.text.TextPaint
 import android.text.TextUtils
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsignal.utilities.IdPrefix
 import java.math.BigInteger
 import java.security.MessageDigest

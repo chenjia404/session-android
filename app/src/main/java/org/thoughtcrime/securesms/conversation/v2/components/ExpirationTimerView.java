@@ -11,7 +11,7 @@ import org.session.libsession.utilities.Util;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class ExpirationTimerView extends androidx.appcompat.widget.AppCompatImageView {
 

@@ -34,9 +34,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityConversationV2Binding
-import network.loki.messenger.databinding.ViewVisibleMessageBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityConversationV2Binding
+import network.qki.messenger.databinding.ViewVisibleMessageBinding
 import nl.komponents.kovenant.ui.successUi
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.contacts.Contact

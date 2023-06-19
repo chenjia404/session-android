@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 
 import kotlin.Unit;
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public final class ConversationReactionOverlay extends FrameLayout {
 

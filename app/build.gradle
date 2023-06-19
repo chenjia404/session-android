@@ -160,8 +160,8 @@ dependencies {
     testImplementation 'org.robolectric:shadows-multidex:4.4'
 }
 
-def canonicalVersionCode = 338
-def canonicalVersionName = "1.16.9"
+def canonicalVersionCode = 344
+def canonicalVersionName = "1.17.5"
 
 def postFixSize = 10
 def abiPostFix = ['armeabi-v7a' : 1,
@@ -172,7 +172,7 @@ def abiPostFix = ['armeabi-v7a' : 1,
 
 android {
     compileSdkVersion androidCompileSdkVersion
-    namespace 'network.loki.messenger'
+    namespace 'network.qki.messenger'
     useLibrary 'org.apache.http.legacy'
 
     compileOptions {
@@ -214,6 +214,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         project.ext.set("archivesBaseName", "session")
+        applicationId 'network.qki.messenger'
 
         buildConfigField "long", "BUILD_TIMESTAMP", getLastCommitTimestamp() + "L"
         buildConfigField "String", "CONTENT_PROXY_HOST", "\"contentproxy.signal.org\""
@@ -269,7 +270,7 @@ android {
             def postFix = abiPostFix.get(abiName, 0)
 
             if (postFix >= postFixSize) throw new AssertionError("postFix is too large")
-            output.outputFileName = output.outputFileName = "session-${variant.versionName}-${abiName}.apk"
+            output.outputFileName = output.outputFileName = "${variant.applicationId}-${variant.versionName}-${abiName}.apk"
             output.versionCodeOverride = canonicalVersionCode * postFixSize + postFix
         }
     }

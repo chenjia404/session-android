@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ListView
 import dagger.hilt.android.AndroidEntryPoint
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsession.messaging.mentions.Mention
 import org.thoughtcrime.securesms.database.LokiThreadDatabase
 import org.thoughtcrime.securesms.mms.GlideRequests

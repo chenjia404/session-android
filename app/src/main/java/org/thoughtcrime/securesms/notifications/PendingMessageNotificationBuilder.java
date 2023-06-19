@@ -12,7 +12,7 @@ import org.session.libsession.utilities.TextSecurePreferences;
 import org.session.libsession.utilities.recipients.Recipient;
 import org.thoughtcrime.securesms.home.HomeActivity;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class PendingMessageNotificationBuilder extends AbstractNotificationBuilder {
 

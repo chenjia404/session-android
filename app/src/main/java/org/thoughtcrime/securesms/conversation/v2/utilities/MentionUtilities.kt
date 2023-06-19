@@ -8,7 +8,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.util.Range
 import androidx.core.content.res.ResourcesCompat
-import network.loki.messenger.R
+import network.qki.messenger.R
 import nl.komponents.kovenant.combine.Tuple2
 import org.session.libsession.messaging.contacts.Contact
 import org.session.libsession.messaging.utilities.SodiumUtilities

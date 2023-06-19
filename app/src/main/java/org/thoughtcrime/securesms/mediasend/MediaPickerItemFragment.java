@@ -27,7 +27,7 @@ import org.session.libsession.utilities.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Allows the user to select a set of media items from a specified folder.

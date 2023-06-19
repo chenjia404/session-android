@@ -26,7 +26,7 @@ import org.session.libsession.utilities.ViewUtil;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class GiphyFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<GiphyImage>>, GiphyAdapter.OnItemClickListener {
 

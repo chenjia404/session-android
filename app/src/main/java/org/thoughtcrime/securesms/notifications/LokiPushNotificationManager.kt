@@ -4,6 +4,7 @@ import android.content.Context
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.functional.map
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody
 import org.session.libsession.messaging.sending_receiving.notifications.PushNotificationAPI
@@ -42,7 +43,7 @@ object LokiPushNotificationManager {
     fun unregister(token: String, context: Context) {
         val parameters = mapOf( "token" to token )
         val url = "$server/unregister"
-        val body = RequestBody.create(MediaType.get("application/json"), JsonUtil.toJson(parameters))
+        val body = RequestBody.create("application/json".toMediaType(), JsonUtil.toJson(parameters))
         val request = Request.Builder().url(url).post(body)
         retryIfNeeded(maxRetryCount) {
             getResponseBody(request.build()).map { json ->
@@ -71,7 +72,7 @@ object LokiPushNotificationManager {
         if (!force && token == oldToken && System.currentTimeMillis() - lastUploadDate < tokenExpirationInterval) { return }
         val parameters = mapOf( "token" to token, "pubKey" to publicKey )
         val url = "$server/register"
-        val body = RequestBody.create(MediaType.get("application/json"), JsonUtil.toJson(parameters))
+        val body = RequestBody.create("application/json".toMediaType(), JsonUtil.toJson(parameters))
         val request = Request.Builder().url(url).post(body)
         retryIfNeeded(maxRetryCount) {
             getResponseBody(request.build()).map { json ->
@@ -99,7 +100,7 @@ object LokiPushNotificationManager {
         if (!TextSecurePreferences.isUsingFCM(context)) { return }
         val parameters = mapOf( "closedGroupPublicKey" to closedGroupPublicKey, "pubKey" to publicKey )
         val url = "$server/${operation.rawValue}"
-        val body = RequestBody.create(MediaType.get("application/json"), JsonUtil.toJson(parameters))
+        val body = RequestBody.create("application/json".toMediaType(), JsonUtil.toJson(parameters))
         val request = Request.Builder().url(url).post(body)
         retryIfNeeded(maxRetryCount) {
             getResponseBody(request.build()).map { json ->

@@ -13,8 +13,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityPnModeBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityPnModeBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.ThemeUtil
 import org.thoughtcrime.securesms.ApplicationContext
@@ -77,7 +77,7 @@ class PNModeActivity : BaseActionBarActivity() {
 
     private fun learnMore() {
         try {
-            val url = "https://getsession.org/faq/#privacy"
+            val url = "https://qki.network/faq/#privacy"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {

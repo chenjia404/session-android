@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
-import network.loki.messenger.databinding.ViewLinkPreviewDraftBinding
+import network.qki.messenger.databinding.ViewLinkPreviewDraftBinding
 import org.session.libsession.messaging.sending_receiving.link_preview.LinkPreview
 import org.thoughtcrime.securesms.mms.GlideRequests
 import org.thoughtcrime.securesms.mms.ImageSlide

@@ -6,8 +6,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewMessageRequestBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewMessageRequestBinding
 import org.session.libsession.utilities.recipients.Recipient
 import org.thoughtcrime.securesms.conversation.v2.utilities.MentionUtilities.highlightMentions
 import org.thoughtcrime.securesms.database.model.ThreadRecord

@@ -7,8 +7,8 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewOpenGroupInvitationBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewOpenGroupInvitationBinding
 import org.session.libsession.messaging.utilities.UpdateMessageData
 import org.session.libsession.utilities.OpenGroupUrlParser
 import org.thoughtcrime.securesms.conversation.v2.dialogs.JoinOpenGroupDialog

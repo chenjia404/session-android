@@ -27,4 +27,15 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     testImplementation "org.assertj:assertj-core:1.7.1"
     testImplementation "org.conscrypt:conscrypt-openjdk-uber:2.0.0"
+
+
+    implementation 'org.web3j:core:4.10.0'
+    implementation('org.bitcoinj:bitcoinj-core:0.15.10'){
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on-1.70'
+        exclude group: 'org.bouncycastle', module: 'jetified-bcprov-jdk15to18-1.68'
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15to18'
+    }
+    implementation 'io.github.novacrypto:BIP39:0.1.9'
+    implementation 'com.lhalcyon:bip32:1.0.0'
+    implementation 'io.github.novacrypto:BIP44:0.0.3'
 }

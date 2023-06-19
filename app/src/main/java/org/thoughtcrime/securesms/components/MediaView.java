@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.thoughtcrime.securesms.mms.GlideRequests;
 import org.thoughtcrime.securesms.mms.VideoSlide;
 import org.thoughtcrime.securesms.video.VideoPlayer;

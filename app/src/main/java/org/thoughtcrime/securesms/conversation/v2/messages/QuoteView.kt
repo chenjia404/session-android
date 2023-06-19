@@ -10,8 +10,8 @@ import androidx.core.content.res.use
 import androidx.core.text.toSpannable
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewQuoteBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewQuoteBinding
 import org.session.libsession.messaging.contacts.Contact
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr

@@ -48,7 +48,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class SingleRecipientNotificationBuilder extends AbstractNotificationBuilder {
 

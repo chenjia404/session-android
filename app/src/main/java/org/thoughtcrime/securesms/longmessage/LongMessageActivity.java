@@ -18,7 +18,7 @@ import org.session.libsession.utilities.recipients.Recipient;
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity;
 import org.thoughtcrime.securesms.conversation.v2.messages.VisibleMessageContentView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class LongMessageActivity extends PassphraseRequiredActionBarActivity {
 

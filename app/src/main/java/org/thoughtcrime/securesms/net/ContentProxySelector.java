@@ -3,7 +3,7 @@ package org.thoughtcrime.securesms.net;
 
 import org.session.libsignal.utilities.Log;
 
-import network.loki.messenger.BuildConfig;
+import network.qki.messenger.BuildConfig;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import java.util.concurrent.TimeUnit;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class MuteDialog extends AlertDialog {
 

@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.preference.Preference
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.permissions.Permissions
 
@@ -32,8 +32,8 @@ class HelpSettingsFragment: CorrectedPreferenceFragment() {
         private const val SUPPORT = "support"
 
         private const val CROWDIN_URL = "https://crowdin.com/project/session-android"
-        private const val FEEDBACK_URL = "https://getsession.org/survey"
-        private const val FAQ_URL = "https://getsession.org/faq"
+        private const val FEEDBACK_URL = "https://qki.network/survey"
+        private const val FAQ_URL = "https://qki.network/faq"
         private const val SUPPORT_URL = "https://sessionapp.zendesk.com/hc/en-us"
     }
 

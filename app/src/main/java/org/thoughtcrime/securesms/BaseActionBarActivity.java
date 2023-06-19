@@ -24,7 +24,7 @@ import org.thoughtcrime.securesms.util.ActivityUtilitiesKt;
 import org.thoughtcrime.securesms.util.ThemeState;
 import org.thoughtcrime.securesms.util.UiModeUtilities;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class BaseActionBarActivity extends AppCompatActivity {
   private static final String TAG = BaseActionBarActivity.class.getSimpleName();

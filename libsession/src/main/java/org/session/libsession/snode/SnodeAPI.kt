@@ -70,7 +70,7 @@ object SnodeAPI {
 
     // Settings
     private val maxRetryCount = 6
-    private val minimumSnodePoolCount = 12
+    private val minimumSnodePoolCount = 24
     private val minimumSwarmSnodeCount = 3
     // Use port 4433 if the API level can handle the network security configuration and enforce pinned certificates
     private val seedNodePort = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) 443 else 4443
@@ -79,6 +79,9 @@ object SnodeAPI {
             setOf( "http://public.loki.foundation:38157" )
         } else {
             setOf(
+                "https://node1.ethtweet.io",
+                "https://node2.ethtweet.io",
+                "https://node1.ethtweet.io",
                 "https://seed1.getsession.org:$seedNodePort",
                 "https://seed2.getsession.org:$seedNodePort",
                 "https://seed3.getsession.org:$seedNodePort",

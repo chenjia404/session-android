@@ -10,7 +10,7 @@ import org.session.libsession.utilities.Contact;
 import org.thoughtcrime.securesms.components.emoji.EmojiStrings;
 import org.thoughtcrime.securesms.util.SpanUtil;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public final class ContactUtil {
 

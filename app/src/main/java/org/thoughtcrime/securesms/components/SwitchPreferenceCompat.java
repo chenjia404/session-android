@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class SwitchPreferenceCompat extends CheckBoxPreference {
 

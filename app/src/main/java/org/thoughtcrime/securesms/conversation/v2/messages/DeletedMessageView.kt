@@ -5,8 +5,8 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewDeletedMessageBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewDeletedMessageBinding
 import org.thoughtcrime.securesms.database.model.MessageRecord
 
 class DeletedMessageView : LinearLayout {

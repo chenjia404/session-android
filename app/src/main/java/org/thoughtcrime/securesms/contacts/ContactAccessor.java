@@ -29,7 +29,7 @@ import org.thoughtcrime.securesms.dependencies.DatabaseComponent;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * This class was originally a layer of indirection between

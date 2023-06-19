@@ -14,8 +14,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import network.loki.messenger.R
-import network.loki.messenger.databinding.FragmentEnterPublicKeyBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.FragmentEnterPublicKeyBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.util.QRCodeUtilities
 import org.thoughtcrime.securesms.util.hideKeyboard

@@ -88,7 +88,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Handles posting system notifications for new messages.

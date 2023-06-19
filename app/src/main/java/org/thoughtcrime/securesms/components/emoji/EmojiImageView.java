@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class EmojiImageView extends AppCompatImageView {
 

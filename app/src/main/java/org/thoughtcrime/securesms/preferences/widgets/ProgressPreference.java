@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class ProgressPreference extends Preference {
 

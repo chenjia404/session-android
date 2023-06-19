@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import network.loki.messenger.databinding.ViewSeedReminderBinding
+import network.qki.messenger.databinding.ViewSeedReminderBinding
 
 class SeedReminderView : FrameLayout {
     private lateinit var binding: ViewSeedReminderBinding

@@ -8,7 +8,7 @@ import android.widget.Toast;
 import org.thoughtcrime.securesms.database.ThreadDatabase;
 import org.thoughtcrime.securesms.dependencies.DatabaseComponent;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class Trimmer {
 

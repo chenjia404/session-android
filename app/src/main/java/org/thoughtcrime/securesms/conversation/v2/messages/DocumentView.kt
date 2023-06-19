@@ -5,7 +5,7 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
-import network.loki.messenger.databinding.ViewDocumentBinding
+import network.qki.messenger.databinding.ViewDocumentBinding
 import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 
 class DocumentView : LinearLayout {

@@ -14,8 +14,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewInputBarBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewInputBarBinding
 import org.session.libsession.messaging.sending_receiving.link_preview.LinkPreview
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient

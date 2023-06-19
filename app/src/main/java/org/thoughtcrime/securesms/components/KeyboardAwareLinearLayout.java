@@ -28,7 +28,7 @@ import org.session.libsignal.utilities.Log;
 import android.view.Surface;
 import android.view.View;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.session.libsession.utilities.ServiceUtil;
 import org.session.libsession.utilities.Util;
 

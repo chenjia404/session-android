@@ -53,7 +53,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * An activity to quickly share content with contacts

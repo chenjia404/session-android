@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityBlockedContactsBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityBlockedContactsBinding
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 
 @AndroidEntryPoint

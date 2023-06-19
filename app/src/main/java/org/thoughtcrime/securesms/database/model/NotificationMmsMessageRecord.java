@@ -28,7 +28,7 @@ import org.thoughtcrime.securesms.database.MmsDatabase;
 import org.thoughtcrime.securesms.database.SmsDatabase.Status;
 import org.thoughtcrime.securesms.mms.SlideDeck;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Represents the message record model for MMS messages that are

@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 import static android.provider.MediaStore.EXTRA_OUTPUT;
 

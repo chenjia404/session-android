@@ -33,7 +33,7 @@ import org.thoughtcrime.securesms.database.model.MessageRecord;
 import org.thoughtcrime.securesms.keyboard.emoji.KeyboardPageSearchView;
 import org.thoughtcrime.securesms.util.LifecycleDisposable;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public final class ReactWithAnyEmojiDialogFragment extends BottomSheetDialogFragment implements EmojiEventListener,
                                                                                                            EmojiPageViewGridAdapter.VariationSelectorListener

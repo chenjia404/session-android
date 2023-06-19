@@ -27,7 +27,7 @@ import org.thoughtcrime.securesms.conversation.v2.ViewUtil;
 import org.thoughtcrime.securesms.preferences.widgets.ColorPickerPreference;
 import org.thoughtcrime.securesms.preferences.widgets.ColorPickerPreferenceDialogFragmentCompat;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class CorrectedPreferenceFragment extends PreferenceFragmentCompat {
 

@@ -33,7 +33,7 @@ import org.session.libsession.utilities.Util;
 
 import java.security.SecureRandom;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class Slide {
 

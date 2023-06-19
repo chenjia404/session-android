@@ -35,7 +35,7 @@ import org.thoughtcrime.securesms.mms.GlideRequests;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 
 class GiphyAdapter extends RecyclerView.Adapter<GiphyAdapter.GiphyViewHolder> {

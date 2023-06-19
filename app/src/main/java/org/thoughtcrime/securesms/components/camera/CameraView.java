@@ -36,7 +36,7 @@ import org.session.libsignal.utilities.Log;
 import android.view.OrientationEventListener;
 import android.view.ViewGroup;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.thoughtcrime.securesms.util.BitmapUtil;
 import org.session.libsignal.utilities.guava.Optional;
 

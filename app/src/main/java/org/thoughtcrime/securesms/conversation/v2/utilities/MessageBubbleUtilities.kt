@@ -1,7 +1,7 @@
 package org.thoughtcrime.securesms.conversation.v2.utilities
 
 import android.content.Context
-import network.loki.messenger.R
+import network.qki.messenger.R
 import kotlin.math.roundToInt
 
 object MessageBubbleUtilities {

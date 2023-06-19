@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import network.loki.messenger.databinding.FragmentScanQrCodeBinding
+import network.qki.messenger.databinding.FragmentScanQrCodeBinding
 import org.thoughtcrime.securesms.qr.ScanListener
 import org.thoughtcrime.securesms.qr.ScanningThread
 

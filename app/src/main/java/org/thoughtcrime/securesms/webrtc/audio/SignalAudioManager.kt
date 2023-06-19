@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import android.media.AudioManager
 import android.media.SoundPool
 import android.os.HandlerThread
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.ThreadUtils
 import org.thoughtcrime.securesms.webrtc.AudioManagerCommand

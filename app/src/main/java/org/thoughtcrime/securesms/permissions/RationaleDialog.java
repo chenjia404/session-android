@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 
 import org.session.libsession.utilities.ViewUtil;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class RationaleDialog {
 

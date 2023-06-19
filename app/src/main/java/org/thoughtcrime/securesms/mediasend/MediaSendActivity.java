@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Encompasses the entire flow of sending media, starting from the selection process to the actual

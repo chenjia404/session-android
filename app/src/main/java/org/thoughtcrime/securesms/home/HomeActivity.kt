@@ -24,9 +24,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityHomeBinding
-import network.loki.messenger.databinding.ViewMessageRequestBannerBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityHomeBinding
+import network.qki.messenger.databinding.ViewMessageRequestBannerBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

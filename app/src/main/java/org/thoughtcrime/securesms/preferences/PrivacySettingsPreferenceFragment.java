@@ -27,8 +27,8 @@ import org.thoughtcrime.securesms.util.CallNotificationBuilder;
 import org.thoughtcrime.securesms.util.IntentUtils;
 
 import kotlin.jvm.functions.Function1;
-import network.loki.messenger.BuildConfig;
-import network.loki.messenger.R;
+import network.qki.messenger.BuildConfig;
+import network.qki.messenger.R;
 
 public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFragment {
 

@@ -35,8 +35,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import network.loki.messenger.BuildConfig;
-import network.loki.messenger.R;
+import network.qki.messenger.BuildConfig;
+import network.qki.messenger.R;
 
 public class NotificationChannels {
 

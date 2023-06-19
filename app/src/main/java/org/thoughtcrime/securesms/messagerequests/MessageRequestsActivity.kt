@@ -12,8 +12,8 @@ import androidx.loader.content.Loader
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityMessageRequestsBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityMessageRequestsBinding
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.conversation.v2.ConversationActivityV2
 import org.thoughtcrime.securesms.database.ThreadDatabase

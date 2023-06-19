@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import network.loki.messenger.databinding.ViewGlobalSearchInputBinding
+import network.qki.messenger.databinding.ViewGlobalSearchInputBinding
 
 class GlobalSearchInputLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null

@@ -29,7 +29,7 @@ import android.widget.PopupWindow;
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.session.libsession.utilities.ViewUtil;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class AttachmentTypeSelector extends PopupWindow {
 

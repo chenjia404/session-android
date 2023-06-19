@@ -26,7 +26,7 @@ import org.thoughtcrime.securesms.util.adapter.mapping.MappingModel;
 import java.util.List;
 import java.util.Optional;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class EmojiPageView extends RecyclerView implements VariationSelectorListener {
   private AdapterFactory                   adapterFactory;

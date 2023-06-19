@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 import static com.codewaves.stickyheadergrid.StickyHeaderGridLayoutManager.TAG;
 

@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 import net.zetetic.database.sqlcipher.SQLiteDatabase;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.thoughtcrime.securesms.database.helpers.SQLCipherOpenHelper;
 
 import java.util.LinkedList;

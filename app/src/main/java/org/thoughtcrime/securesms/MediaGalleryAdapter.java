@@ -38,7 +38,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 class MediaGalleryAdapter extends StickyHeaderGridAdapter {
 

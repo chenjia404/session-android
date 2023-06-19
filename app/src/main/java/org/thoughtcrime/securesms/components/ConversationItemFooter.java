@@ -23,7 +23,7 @@ import org.thoughtcrime.securesms.util.DateUtils;
 
 import java.util.Locale;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class ConversationItemFooter extends LinearLayout {
 

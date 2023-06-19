@@ -10,7 +10,7 @@ import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.Toast;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class LongClickCopySpan extends URLSpan {
   private static final String PREFIX_MAILTO = "mailto:";

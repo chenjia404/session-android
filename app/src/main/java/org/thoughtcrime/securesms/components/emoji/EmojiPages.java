@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.components.emoji;
 
 import android.net.Uri;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.session.libsignal.utilities.Pair;
 import org.thoughtcrime.securesms.emoji.EmojiCategory;
 

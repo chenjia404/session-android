@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.conversation.v2.dialogs
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
-import network.loki.messenger.databinding.DialogSendSeedBinding
+import network.qki.messenger.databinding.DialogSendSeedBinding
 import org.thoughtcrime.securesms.conversation.v2.utilities.BaseDialog
 
 /** Shown if the user is about to send their recovery phrase to someone. */

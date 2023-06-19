@@ -11,8 +11,8 @@ import android.text.style.ClickableSpan
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityRecoveryPhraseRestoreBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityRecoveryPhraseRestoreBinding
 import org.session.libsession.snode.SnodeModule
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsignal.crypto.MnemonicCodec
@@ -49,14 +49,14 @@ class RecoveryPhraseRestoreActivity : BaseActionBarActivity() {
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://getsession.org/terms-of-service/")
+                openURL("https://qki.network/terms-of-service/")
             }
         }, 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://getsession.org/privacy-policy/")
+                openURL("https://qki.network/privacy-policy/")
             }
         }, 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.termsTextView.movementMethod = LinkMovementMethod.getInstance()

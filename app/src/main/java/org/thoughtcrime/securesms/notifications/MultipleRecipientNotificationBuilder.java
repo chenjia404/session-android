@@ -22,7 +22,7 @@ import org.thoughtcrime.securesms.home.HomeActivity;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class MultipleRecipientNotificationBuilder extends AbstractNotificationBuilder {
 

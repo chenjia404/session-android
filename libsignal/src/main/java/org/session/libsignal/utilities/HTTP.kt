@@ -1,6 +1,7 @@
 package org.session.libsignal.utilities
 
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
@@ -106,7 +107,7 @@ object HTTP {
             Verb.GET -> request.get()
             Verb.PUT, Verb.POST -> {
                 if (body == null) { throw Exception("Invalid request body.") }
-                val contentType = MediaType.get("application/json; charset=utf-8")
+                val contentType = "application/json; charset=utf-8".toMediaType()
                 @Suppress("NAME_SHADOWING") val body = RequestBody.create(contentType, body)
                 if (verb == Verb.PUT) request.put(body) else request.post(body)
             }
@@ -131,9 +132,9 @@ object HTTP {
             // Override the actual error so that we can correctly catch failed requests in OnionRequestAPI
             throw HTTPRequestFailedException(0, null, "HTTP request failed due to: ${exception.message}")
         }
-        return when (val statusCode = response.code()) {
+        return when (val statusCode = response.code) {
             200 -> {
-                response.body()?.bytes() ?: throw Exception("An error occurred.")
+                response.body?.bytes() ?: throw Exception("An error occurred.")
             }
             else -> {
                 Log.d("Loki", "${verb.rawValue} request to $url failed with status code: $statusCode.")

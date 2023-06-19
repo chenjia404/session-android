@@ -1,7 +1,7 @@
 package org.thoughtcrime.securesms.contacts
 
 import android.content.Context
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.thoughtcrime.securesms.util.ContactUtilities
 import org.session.libsession.utilities.recipients.Recipient
 import org.thoughtcrime.securesms.util.AsyncLoader

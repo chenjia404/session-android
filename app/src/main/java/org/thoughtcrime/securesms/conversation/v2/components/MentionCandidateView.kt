@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import network.loki.messenger.databinding.ViewMentionCandidateBinding
+import network.qki.messenger.databinding.ViewMentionCandidateBinding
 import org.session.libsession.messaging.mentions.Mention
 import org.thoughtcrime.securesms.groups.OpenGroupManager
 import org.thoughtcrime.securesms.mms.GlideRequests

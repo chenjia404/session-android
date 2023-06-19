@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class EmojiVariationSelectorPopup extends PopupWindow {
 

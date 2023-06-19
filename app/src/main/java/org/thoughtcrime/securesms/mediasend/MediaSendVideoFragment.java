@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 import org.session.libsignal.utilities.Log;
 import org.thoughtcrime.securesms.mms.VideoSlide;
 import org.thoughtcrime.securesms.video.VideoPlayer;

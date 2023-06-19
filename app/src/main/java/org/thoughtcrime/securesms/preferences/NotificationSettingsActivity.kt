@@ -1,7 +1,7 @@
 package org.thoughtcrime.securesms.preferences
 
 import android.os.Bundle
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.preferences.NotificationsPreferenceFragment
 

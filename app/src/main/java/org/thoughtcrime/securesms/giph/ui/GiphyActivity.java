@@ -27,7 +27,7 @@ import org.session.libsession.utilities.ViewUtil;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class GiphyActivity extends PassphraseRequiredActionBarActivity
     implements GiphyActivityToolbar.OnLayoutChangedListener,

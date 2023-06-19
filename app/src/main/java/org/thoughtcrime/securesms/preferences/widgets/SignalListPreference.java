@@ -10,7 +10,7 @@ import androidx.preference.PreferenceViewHolder;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class SignalListPreference extends ListPreference {
 

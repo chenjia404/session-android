@@ -6,8 +6,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import network.loki.messenger.R
-import network.loki.messenger.databinding.DialogSeedBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.DialogSeedBinding
 import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil

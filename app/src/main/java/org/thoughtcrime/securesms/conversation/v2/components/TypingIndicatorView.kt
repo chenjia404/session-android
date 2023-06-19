@@ -7,8 +7,8 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewTypingIndicatorBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewTypingIndicatorBinding
 
 class TypingIndicatorView : LinearLayout {
     companion object {

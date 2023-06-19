@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import network.loki.messenger.databinding.FragmentConversationBottomSheetBinding
+import network.qki.messenger.databinding.FragmentConversationBottomSheetBinding
 import org.thoughtcrime.securesms.database.model.ThreadRecord
 import org.thoughtcrime.securesms.util.UiModeUtilities
 

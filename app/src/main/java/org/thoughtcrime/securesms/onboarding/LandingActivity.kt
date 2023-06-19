@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import network.loki.messenger.databinding.ActivityLandingBinding
+import network.qki.messenger.databinding.ActivityLandingBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil

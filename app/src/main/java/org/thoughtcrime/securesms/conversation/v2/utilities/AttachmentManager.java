@@ -59,7 +59,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class AttachmentManager {
 

@@ -9,11 +9,13 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.widget.LinearLayout
 import android.widget.Toast
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivitySeedBinding
+import com.goterl.lazysodium.utils.Key
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivitySeedBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.session.libsignal.crypto.MnemonicCodec
+import org.session.libsignal.utilities.Base64
 import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
@@ -26,6 +28,8 @@ class SeedActivity : BaseActionBarActivity() {
 
     private val seed by lazy {
         var hexEncodedSeed = IdentityKeyUtil.retrieve(this, IdentityKeyUtil.LOKI_SEED)
+        val base64EncodedED25519SecretKey = IdentityKeyUtil.retrieve(this, IdentityKeyUtil.ED25519_SECRET_KEY)
+//        val ed25519SecretKey = Key.fromBytes(Base64.decode(base64EncodedED25519SecretKey))
         if (hexEncodedSeed == null) {
             hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(this).hexEncodedPrivateKey // Legacy account
         }

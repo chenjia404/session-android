@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewControlMessageBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewControlMessageBinding
 import org.thoughtcrime.securesms.database.model.MessageRecord
 
 class ControlMessageView : LinearLayout {

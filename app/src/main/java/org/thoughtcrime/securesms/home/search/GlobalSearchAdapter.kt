@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewGlobalSearchHeaderBinding
-import network.loki.messenger.databinding.ViewGlobalSearchResultBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewGlobalSearchHeaderBinding
+import network.qki.messenger.databinding.ViewGlobalSearchResultBinding
 import org.session.libsession.utilities.GroupRecord
 import org.session.libsession.utilities.recipients.Recipient
 import org.thoughtcrime.securesms.mms.GlideApp

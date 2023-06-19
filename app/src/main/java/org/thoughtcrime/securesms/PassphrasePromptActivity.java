@@ -49,7 +49,7 @@ import org.thoughtcrime.securesms.util.AnimationCompleteListener;
 import java.security.InvalidKeyException;
 import java.security.Signature;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 //TODO Rename to ScreenLockActivity and refactor to Kotlin.
 public class PassphrasePromptActivity extends BaseActionBarActivity {

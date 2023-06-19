@@ -7,8 +7,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityDisplayNameBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityDisplayNameBinding
 import org.session.libsession.utilities.SSKEnvironment.ProfileManagerProtocol
 import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.util.push

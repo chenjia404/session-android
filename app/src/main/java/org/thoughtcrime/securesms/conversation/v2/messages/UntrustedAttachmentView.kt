@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewUntrustedAttachmentBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewUntrustedAttachmentBinding
 import org.session.libsession.utilities.recipients.Recipient
 import org.thoughtcrime.securesms.conversation.v2.dialogs.DownloadDialog
 import org.thoughtcrime.securesms.util.ActivityDispatcher

@@ -11,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import network.loki.messenger.R
+import network.qki.messenger.R
 import kotlin.math.roundToInt
 
 interface GlowView {

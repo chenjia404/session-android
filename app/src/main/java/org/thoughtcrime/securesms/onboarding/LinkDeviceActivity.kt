@@ -19,9 +19,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityLinkDeviceBinding
-import network.loki.messenger.databinding.FragmentRecoveryPhraseBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityLinkDeviceBinding
+import network.qki.messenger.databinding.FragmentRecoveryPhraseBinding
 import org.session.libsession.snode.SnodeModule
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsignal.crypto.MnemonicCodec

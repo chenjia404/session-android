@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.emoji
 
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
-import network.loki.messenger.R
+import network.qki.messenger.R
 
 /**
  * All the different Emoji categories the app is aware of in the order we want to display them.

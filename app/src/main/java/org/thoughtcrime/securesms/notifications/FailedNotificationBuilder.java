@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory;
 import org.session.libsession.utilities.NotificationPrivacyPreference;
 import org.session.libsession.utilities.recipients.Recipient;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class FailedNotificationBuilder extends AbstractNotificationBuilder {
 

@@ -13,7 +13,7 @@ import org.thoughtcrime.securesms.components.emoji.RecentEmojiPageModel;
 
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Contains the Emojis that have been used in reactions for a given message.

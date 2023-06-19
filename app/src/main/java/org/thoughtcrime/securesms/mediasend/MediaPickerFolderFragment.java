@@ -23,7 +23,7 @@ import org.thoughtcrime.securesms.mms.GlideApp;
 import org.session.libsession.utilities.recipients.Recipient;
 import org.session.libsignal.utilities.guava.Optional;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Allows the user to select a media folder to explore.

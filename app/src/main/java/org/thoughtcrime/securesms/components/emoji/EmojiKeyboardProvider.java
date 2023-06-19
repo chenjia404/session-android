@@ -20,7 +20,7 @@ import org.session.libsession.utilities.ThemeUtil;
 import java.util.LinkedList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * A provider to select emoji in the {@link org.thoughtcrime.securesms.components.emoji.MediaKeyboard}.

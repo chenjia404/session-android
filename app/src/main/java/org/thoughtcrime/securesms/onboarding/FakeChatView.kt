@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ScrollView
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewFakeChatBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewFakeChatBinding
 import org.thoughtcrime.securesms.util.disableClipping
 
 class FakeChatView : ScrollView {

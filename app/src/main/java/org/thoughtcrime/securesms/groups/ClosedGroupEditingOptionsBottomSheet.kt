@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import network.loki.messenger.databinding.FragmentClosedGroupEditBottomSheetBinding
+import network.qki.messenger.databinding.FragmentClosedGroupEditBottomSheetBinding
 
 class ClosedGroupEditingOptionsBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentClosedGroupEditBottomSheetBinding

@@ -18,7 +18,7 @@ import org.thoughtcrime.securesms.mms.GlideApp;
 import java.util.Collections;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 final class ReactionRecipientsAdapter extends RecyclerView.Adapter<ReactionRecipientsAdapter.ViewHolder> {
 

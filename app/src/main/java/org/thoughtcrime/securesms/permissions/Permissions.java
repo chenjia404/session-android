@@ -33,7 +33,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class Permissions {
 

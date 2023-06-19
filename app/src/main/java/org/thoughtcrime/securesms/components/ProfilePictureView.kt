@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.annotation.DimenRes
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewProfilePictureBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewProfilePictureBinding
 import org.session.libsession.avatars.ContactColors
 import org.session.libsession.avatars.PlaceholderAvatarPhoto
 import org.session.libsession.avatars.ProfileContactPhoto

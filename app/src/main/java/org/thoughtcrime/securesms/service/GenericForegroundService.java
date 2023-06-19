@@ -18,7 +18,7 @@ import org.session.libsignal.utilities.guava.Preconditions;
 import org.thoughtcrime.securesms.home.HomeActivity;
 import org.thoughtcrime.securesms.notifications.NotificationChannels;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class GenericForegroundService extends Service {
 

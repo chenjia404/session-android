@@ -21,7 +21,7 @@ import org.thoughtcrime.securesms.mms.GlideApp;
 
 import java.util.Arrays;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class MediaKeyboard extends FrameLayout implements InputView,
                                                           MediaKeyboardProvider.Presenter,

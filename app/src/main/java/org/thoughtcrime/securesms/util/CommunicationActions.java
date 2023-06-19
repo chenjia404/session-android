@@ -15,7 +15,7 @@ import org.session.libsession.utilities.recipients.Recipient;
 import org.thoughtcrime.securesms.conversation.v2.ConversationActivityV2;
 import org.thoughtcrime.securesms.dependencies.DatabaseComponent;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class CommunicationActions {
 

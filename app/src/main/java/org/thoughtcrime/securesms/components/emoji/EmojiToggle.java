@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import org.session.libsession.utilities.TextSecurePreferences;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class EmojiToggle extends AppCompatImageButton implements MediaKeyboard.MediaKeyboardListener {
 

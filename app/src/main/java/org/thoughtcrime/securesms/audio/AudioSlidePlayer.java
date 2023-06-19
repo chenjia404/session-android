@@ -46,8 +46,8 @@ import org.session.libsignal.utilities.guava.Optional;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-import network.loki.messenger.BuildConfig;
-import network.loki.messenger.R;
+import network.qki.messenger.BuildConfig;
+import network.qki.messenger.R;
 
 public class AudioSlidePlayer implements SensorEventListener {
 

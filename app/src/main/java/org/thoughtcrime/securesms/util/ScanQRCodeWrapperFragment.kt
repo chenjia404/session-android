@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.tbruyelle.rxpermissions2.RxPermissions
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.thoughtcrime.securesms.qr.ScanListener
 
 class ScanQRCodeWrapperFragment : Fragment(), ScanQRCodePlaceholderFragmentDelegate, ScanListener {

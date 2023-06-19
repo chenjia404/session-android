@@ -65,7 +65,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Allows the user to edit and caption a set of media items before choosing to send them.

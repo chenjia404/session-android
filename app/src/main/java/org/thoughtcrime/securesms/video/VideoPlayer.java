@@ -57,7 +57,7 @@ import org.thoughtcrime.securesms.video.exo.AttachmentDataSourceFactory;
 
 import java.io.IOException;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class VideoPlayer extends FrameLayout {
 

@@ -12,7 +12,7 @@ import android.util.Size
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.DimenRes
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsession.utilities.getColorFromAttr
 import android.view.inputmethod.InputMethodManager
 import androidx.core.graphics.applyCanvas

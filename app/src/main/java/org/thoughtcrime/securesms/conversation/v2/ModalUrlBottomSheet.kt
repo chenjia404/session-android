@@ -15,8 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import network.loki.messenger.R
-import network.loki.messenger.databinding.FragmentModalUrlBottomSheetBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.FragmentModalUrlBottomSheetBinding
 import org.thoughtcrime.securesms.util.UiModeUtilities
 
 class ModalUrlBottomSheet(private val url: String): BottomSheetDialogFragment(), View.OnClickListener {

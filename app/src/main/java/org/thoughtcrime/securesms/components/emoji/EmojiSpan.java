@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class EmojiSpan extends AnimatingImageSpan {
 

@@ -85,7 +85,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.WeakHashMap;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * Activity for displaying media attachments in-app

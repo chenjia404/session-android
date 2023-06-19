@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.util.dynamiclanguage
 
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
-import network.loki.messenger.BuildConfig
+import network.qki.messenger.BuildConfig
 import org.session.libsession.utilities.dynamiclanguage.LocaleParserHelperProtocol
 import java.util.*
 

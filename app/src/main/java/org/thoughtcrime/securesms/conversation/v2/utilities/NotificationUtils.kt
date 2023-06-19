@@ -2,7 +2,7 @@ package org.thoughtcrime.securesms.conversation.v2.utilities
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
-import network.loki.messenger.R
+import network.qki.messenger.R
 import org.session.libsession.utilities.recipients.Recipient
 
 object NotificationUtils {

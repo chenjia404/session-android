@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ItemSelectableBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ItemSelectableBinding
 import org.thoughtcrime.securesms.mms.GlideApp
 
 class RadioOptionAdapter(

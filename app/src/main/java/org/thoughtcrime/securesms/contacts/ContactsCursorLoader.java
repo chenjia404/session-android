@@ -35,7 +35,7 @@ import org.thoughtcrime.securesms.dependencies.DatabaseComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * CursorLoader that initializes a ContactsDatabase instance

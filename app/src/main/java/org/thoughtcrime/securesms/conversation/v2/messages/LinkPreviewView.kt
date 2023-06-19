@@ -8,8 +8,8 @@ import android.view.MotionEvent
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewLinkPreviewBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewLinkPreviewBinding
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.components.CornerMask
 import org.thoughtcrime.securesms.conversation.v2.ModalUrlBottomSheet

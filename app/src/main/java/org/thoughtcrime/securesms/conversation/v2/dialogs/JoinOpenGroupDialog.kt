@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import network.loki.messenger.R
-import network.loki.messenger.databinding.DialogJoinOpenGroupBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.DialogJoinOpenGroupBinding
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.utilities.OpenGroupUrlParser
 import org.session.libsignal.utilities.ThreadUtils

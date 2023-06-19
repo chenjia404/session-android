@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ActivityQrCodeBinding
-import network.loki.messenger.databinding.FragmentViewMyQrCodeBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ActivityQrCodeBinding
+import network.qki.messenger.databinding.FragmentViewMyQrCodeBinding
 import org.session.libsession.utilities.Address
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient

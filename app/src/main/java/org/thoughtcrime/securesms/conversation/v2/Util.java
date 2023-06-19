@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public class Util {
   private static final String TAG = Log.tag(Util.class);

@@ -16,7 +16,7 @@ import org.thoughtcrime.securesms.util.adapter.AlwaysChangedDiffUtil;
 
 import java.util.List;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 /**
  * ReactionViewPagerAdapter provides pages to a ViewPager2 which contains the reactions on a given message.

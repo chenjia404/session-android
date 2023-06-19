@@ -15,7 +15,7 @@ import org.session.libsession.utilities.TextSecurePreferences;
 import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageActivityHelper;
 import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageContextWrapper;
 
-import network.loki.messenger.R;
+import network.qki.messenger.R;
 
 public abstract class BaseActivity extends FragmentActivity {
   @Override

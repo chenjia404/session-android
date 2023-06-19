@@ -14,8 +14,8 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
-import network.loki.messenger.R
-import network.loki.messenger.databinding.ViewInputBarRecordingBinding
+import network.qki.messenger.R
+import network.qki.messenger.databinding.ViewInputBarRecordingBinding
 import org.thoughtcrime.securesms.util.DateUtils
 import org.thoughtcrime.securesms.util.animateSizeChange
 import org.thoughtcrime.securesms.util.disableClipping
