@@ -323,7 +323,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity(),
             apkVersionCode(jsonObject.getInt("versionCode"))
             //同时下面三个参数也必须要设置
             apkVersionName(jsonObject.getString("versionName"))
-            apkSize("7.7MB")
+            apkSize(jsonObject.getString("apkSize"))
             apkDescription(jsonObject.getString("Description"))
             //省略一些非必须参数...
             build()
