@@ -214,7 +214,7 @@
     <string name="ConversationActivity_attachment_exceeds_size_limits">附件超出了您正在发送的消息类型的大小限制。</string>
     <string name="ConversationActivity_unable_to_record_audio">无法录音！</string>
     <string name="ConversationActivity_there_is_no_app_available_to_handle_this_link_on_your_device">您的设备上没有应用程序能打开这个链接。</string>
-    <string name="ConversationActivity_copy_open_group_url">Copy Community URL</string>
+    <string name="ConversationActivity_copy_open_group_url">复制社区链接</string>
     <string name="ConversationActivity_invite_to_open_group">添加成员</string>
     <string name="ConversationActivity_to_send_audio_messages_allow_signal_access_to_your_microphone">如果想要发送语音信息，请允许 Session 使用您设备的麦克风。</string>
     <string name="ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages">Session 需要麦克风权限才能发送语音信息，但是该权限已经被永久拒绝，请进入应用程序设置，点击权限，并启用“麦克风”。</string>
