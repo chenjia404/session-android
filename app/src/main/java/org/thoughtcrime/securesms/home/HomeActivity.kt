@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import network.qki.messenger.BuildConfig
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityHomeBinding
 import network.qki.messenger.databinding.ViewMessageRequestBannerBinding
@@ -283,7 +284,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity(),
             .connectTimeout(30000, TimeUnit.MILLISECONDS)
             .readTimeout(35000, TimeUnit.MILLISECONDS) // 设置连接时间和读取时间
             .build() // 设置缓存
-        val doRequestUrl = "https://qki.network/update.json"
+        val doRequestUrl = BuildConfig.updateServer + "update.json"
         val request = Request.Builder().url(doRequestUrl).get().build()
         val call = client.newCall(request)
         call.enqueue(object : Callback {

@@ -161,8 +161,8 @@ dependencies {
     testImplementation 'org.robolectric:shadows-multidex:4.4'
 }
 
-def canonicalVersionCode = 347
-def canonicalVersionName = "1.17.7"
+def canonicalVersionCode = 348
+def canonicalVersionName = "1.17.8"
 
 def postFixSize = 10
 def abiPostFix = ['armeabi-v7a' : 1,
@@ -199,8 +199,7 @@ android {
         abi {
             enable true
             reset()
-            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-            universalApk true
+            include 'arm64-v8a'
         }
     }
 
@@ -252,16 +251,25 @@ android {
 
     flavorDimensions "distribution"
     productFlavors {
-        play {
-            ext.websiteUpdateUrl = "null"
-            buildConfigField "boolean", "PLAY_STORE_DISABLED", "false"
-            buildConfigField "String", "NOPLAY_UPDATE_URL", "$ext.websiteUpdateUrl"
-        }
 
         website {
             ext.websiteUpdateUrl = "https://github.com/oxen-io/session-android/releases"
             buildConfigField "boolean", "PLAY_STORE_DISABLED", "true"
             buildConfigField "String", "NOPLAY_UPDATE_URL", "\"$ext.websiteUpdateUrl\""
+            buildConfigField "String", "defaultServer", "\"https://chat.ethtweet.io\""
+            buildConfigField "String", "defaultServerPublicKey", "\"c9758a0330094305779385ab3f04d5037532fd4b0f40b92dd83383ac890f4f00\""
+            buildConfigField "String", "updateServer", "\"https://dl.ethtweet.io/network.qki.messenger/\""
+
+        }
+
+        qki {
+            ext.websiteUpdateUrl = "https://github.com/oxen-io/session-android/releases"
+            buildConfigField "boolean", "PLAY_STORE_DISABLED", "true"
+            buildConfigField "String", "NOPLAY_UPDATE_URL", "\"$ext.websiteUpdateUrl\""
+            buildConfigField "String", "defaultServer", "\"https://communities.qki.network\""
+            buildConfigField "String", "defaultServerPublicKey", "\"70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e\""
+            buildConfigField "String", "updateServer", "\"https://qki.network/\""
+
         }
     }
 

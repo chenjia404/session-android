@@ -59,14 +59,14 @@ object OpenGroupApi {
         now - lastOpenDate
     }
 
-    const val defaultServerPublicKey = "70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e"
+    var defaultServerPublicKey = "70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e"
     const val legacyServerIP = "116.203.70.33"
     const val legacyDefaultServer = "http://116.203.70.33" // TODO: migrate all references to use new value
 
     /** For migration purposes only, don't use this value in joining groups */
-    const val httpDefaultServer = "https://chat.ethtweet.io"
+    const val httpDefaultServer = "https://communities.qki.network"
 
-    const val defaultServer = "https://chat.ethtweet.io"
+    var defaultServer = "https://communities.qki.network"
 
     val pendingReactions = mutableListOf<PendingReaction>()
 
