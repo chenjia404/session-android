@@ -1007,4 +1007,10 @@
     <string name="giphy_permission_title">搜索 GIFs?</string>
     <string name="giphy_permission_message">Session 将连接到 Giphy 以提供搜索结果。 发送 GIF 时，您将无法获得完整的元数据保护。</string>
     <string name="invitation">嘿，我一直在使用去中心化版微信进行完全隐私和安全的聊天。 快来加入我吧！无限手机号即可注册免费聊天，还可以在未来获得免费空投 在 https://qki.network/ 下载。 我的会话 ID 是 </string>
+    <string name="seed_site">引导网站</string>
+    <string name="dialog_seed_site_desc">请输入引导网站地址，这将帮助您获取最新的seed</string>
+    <string name="ok">确定</string>
+    <string name="content_not_empty">内容不能为空</string>
+    <string name="please_enter_content">请输入内容</string>
+    <string name="please_enter_the_correct_url">请输入正确的URL</string>
 </resources>

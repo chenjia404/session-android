@@ -18,6 +18,7 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.AUTOPLAY
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CALL_NOTIFICATIONS_ENABLED
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_DARK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
+import org.session.libsession.utilities.TextSecurePreferences.Companion.COSTOMIZED_NODE_SITE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
@@ -171,7 +172,9 @@ interface TextSecurePreferences {
     fun setLastVacuumNow()
     fun getFingerprintKeyGenerated(): Boolean
     fun setFingerprintKeyGenerated()
-    @StyleRes fun getAccentColorStyle(): Int?
+
+    @StyleRes
+    fun getAccentColorStyle(): Int?
     fun setAccentColorStyle(@StyleRes newColorStyle: Int?)
     fun getThemeStyle(): String
     fun getFollowSystemSettings(): Boolean
@@ -243,7 +246,8 @@ interface TextSecurePreferences {
         const val LOG_ENCRYPTED_SECRET = "pref_log_encrypted_secret"
         const val LOG_UNENCRYPTED_SECRET = "pref_log_unencrypted_secret"
         const val NOTIFICATION_CHANNEL_VERSION = "pref_notification_channel_version"
-        const val NOTIFICATION_MESSAGES_CHANNEL_VERSION = "pref_notification_messages_channel_version"
+        const val NOTIFICATION_MESSAGES_CHANNEL_VERSION =
+            "pref_notification_messages_channel_version"
         const val UNIVERSAL_UNIDENTIFIED_ACCESS = "pref_universal_unidentified_access"
         const val TYPING_INDICATORS = "pref_typing_indicators"
         const val LINK_PREVIEWS = "pref_link_previews"
@@ -258,8 +262,10 @@ interface TextSecurePreferences {
         const val LAST_OPEN_DATE = "pref_last_open_date"
         const val HAS_HIDDEN_MESSAGE_REQUESTS = "pref_message_requests_hidden"
         const val CALL_NOTIFICATIONS_ENABLED = "pref_call_notifications_enabled"
-        const val SHOWN_CALL_WARNING = "pref_shown_call_warning" // call warning is user-facing warning of enabling calls
-        const val SHOWN_CALL_NOTIFICATION = "pref_shown_call_notification" // call notification is a prompt to check privacy settings
+        const val SHOWN_CALL_WARNING =
+            "pref_shown_call_warning" // call warning is user-facing warning of enabling calls
+        const val SHOWN_CALL_NOTIFICATION =
+            "pref_shown_call_notification" // call notification is a prompt to check privacy settings
         const val LAST_VACUUM_TIME = "pref_last_vacuum_time"
         const val AUTOPLAY_AUDIO_MESSAGES = "pref_autoplay_audio"
         const val FINGERPRINT_KEY_GENERATED = "fingerprint_key_generated"
@@ -275,11 +281,23 @@ interface TextSecurePreferences {
         const val SELECTED_STYLE = "pref_selected_style" // classic_dark/light, ocean_dark/light
         const val FOLLOW_SYSTEM_SETTINGS = "pref_follow_system" // follow system day/night
 
-        const val LEGACY_PREF_KEY_SELECTED_UI_MODE = "SELECTED_UI_MODE" // this will be cleared upon launching app, for users migrating to theming build
+        const val LEGACY_PREF_KEY_SELECTED_UI_MODE =
+            "SELECTED_UI_MODE" // this will be cleared upon launching app, for users migrating to theming build
         const val CLASSIC_DARK = "classic.dark"
         const val CLASSIC_LIGHT = "classic.light"
         const val OCEAN_DARK = "ocean.dark"
         const val OCEAN_LIGHT = "ocean.light"
+        const val COSTOMIZED_NODE_SITE = "customized_node_site"
+
+        @JvmStatic
+        fun setCustomizedNodeSite(context: Context, site: String) {
+            setStringPreference(context, COSTOMIZED_NODE_SITE, site)
+        }
+
+        @JvmStatic
+        fun getCustomizedNodeSite(context: Context): String? {
+            return getStringPreference(context, COSTOMIZED_NODE_SITE, null)
+        }
 
         @JvmStatic
         fun getLastConfigurationSyncTime(context: Context): Long {
@@ -539,7 +557,11 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun getNotificationPriority(context: Context): Int {
-            return getStringPreference(context, NOTIFICATION_PRIORITY_PREF, NotificationCompat.PRIORITY_HIGH.toString())!!.toInt()
+            return getStringPreference(
+                context,
+                NOTIFICATION_PRIORITY_PREF,
+                NotificationCompat.PRIORITY_HIGH.toString()
+            )!!.toInt()
         }
 
         @JvmStatic
@@ -554,12 +576,22 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun getDirectCaptureCameraId(context: Context): Int {
-            return getIntegerPreference(context, DIRECT_CAPTURE_CAMERA_ID, Camera.CameraInfo.CAMERA_FACING_BACK)
+            return getIntegerPreference(
+                context,
+                DIRECT_CAPTURE_CAMERA_ID,
+                Camera.CameraInfo.CAMERA_FACING_BACK
+            )
         }
 
         @JvmStatic
         fun getNotificationPrivacy(context: Context): NotificationPrivacyPreference {
-            return NotificationPrivacyPreference(getStringPreference(context, NOTIFICATION_PRIVACY_PREF, "all"))
+            return NotificationPrivacyPreference(
+                getStringPreference(
+                    context,
+                    NOTIFICATION_PRIVACY_PREF,
+                    "all"
+                )
+            )
         }
 
         @JvmStatic
@@ -694,7 +726,11 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun getNotificationRingtone(context: Context): Uri {
-            var result = getStringPreference(context, RINGTONE_PREF, Settings.System.DEFAULT_NOTIFICATION_URI.toString())
+            var result = getStringPreference(
+                context,
+                RINGTONE_PREF,
+                Settings.System.DEFAULT_NOTIFICATION_URI.toString()
+            )
             if (result != null && result.startsWith("file:")) {
                 result = Settings.System.DEFAULT_NOTIFICATION_URI.toString()
             }
@@ -723,7 +759,11 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun getNotificationLedColor(context: Context): Int {
-            return getIntegerPreference(context, LED_COLOR_PREF_PRIMARY, ThemeUtil.getThemedColor(context, R.attr.colorAccent))
+            return getIntegerPreference(
+                context,
+                LED_COLOR_PREF_PRIMARY,
+                ThemeUtil.getThemedColor(context, R.attr.colorAccent)
+            )
         }
 
         @JvmStatic
@@ -738,21 +778,41 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun getMobileMediaDownloadAllowed(context: Context): Set<String>? {
-            return getMediaDownloadAllowed(context, MEDIA_DOWNLOAD_MOBILE_PREF, R.array.pref_media_download_mobile_data_default)
+            return getMediaDownloadAllowed(
+                context,
+                MEDIA_DOWNLOAD_MOBILE_PREF,
+                R.array.pref_media_download_mobile_data_default
+            )
         }
 
         @JvmStatic
         fun getWifiMediaDownloadAllowed(context: Context): Set<String>? {
-            return getMediaDownloadAllowed(context, MEDIA_DOWNLOAD_WIFI_PREF, R.array.pref_media_download_wifi_default)
+            return getMediaDownloadAllowed(
+                context,
+                MEDIA_DOWNLOAD_WIFI_PREF,
+                R.array.pref_media_download_wifi_default
+            )
         }
 
         @JvmStatic
         fun getRoamingMediaDownloadAllowed(context: Context): Set<String>? {
-            return getMediaDownloadAllowed(context, MEDIA_DOWNLOAD_ROAMING_PREF, R.array.pref_media_download_roaming_default)
+            return getMediaDownloadAllowed(
+                context,
+                MEDIA_DOWNLOAD_ROAMING_PREF,
+                R.array.pref_media_download_roaming_default
+            )
         }
 
-        private fun getMediaDownloadAllowed(context: Context, key: String, @ArrayRes defaultValuesRes: Int): Set<String>? {
-            return getStringSetPreference(context, key, HashSet(Arrays.asList(*context.resources.getStringArray(defaultValuesRes))))
+        private fun getMediaDownloadAllowed(
+            context: Context,
+            key: String,
+            @ArrayRes defaultValuesRes: Int
+        ): Set<String>? {
+            return getStringSetPreference(
+                context,
+                key,
+                HashSet(Arrays.asList(*context.resources.getStringArray(defaultValuesRes)))
+            )
         }
 
         @JvmStatic
@@ -823,7 +883,11 @@ interface TextSecurePreferences {
             getDefaultSharedPreferences(context).edit().putInt(key, value).apply()
         }
 
-        private fun setIntegerPreferenceBlocking(context: Context, key: String, value: Int): Boolean {
+        private fun setIntegerPreferenceBlocking(
+            context: Context,
+            key: String,
+            value: Int
+        ): Boolean {
             return getDefaultSharedPreferences(context).edit().putInt(key, value).commit()
         }
 
@@ -839,7 +903,11 @@ interface TextSecurePreferences {
             getDefaultSharedPreferences(context).edit().remove(key).apply()
         }
 
-        private fun getStringSetPreference(context: Context, key: String, defaultValues: Set<String>): Set<String>? {
+        private fun getStringSetPreference(
+            context: Context,
+            key: String,
+            defaultValues: Set<String>
+        ): Set<String>? {
             val prefs = getDefaultSharedPreferences(context)
             return if (prefs.contains(key)) {
                 prefs.getStringSet(key, emptySet())
@@ -954,7 +1022,8 @@ interface TextSecurePreferences {
             setBooleanPreference(context, FINGERPRINT_KEY_GENERATED, true)
         }
 
-        @JvmStatic @StyleRes
+        @JvmStatic
+        @StyleRes
         fun getAccentColorStyle(context: Context): Int? {
             return when (getStringPreference(context, SELECTED_ACCENT_COLOR, ORANGE_ACCENT)) {
                 GREEN_ACCENT -> R.style.PrimaryGreen
@@ -970,16 +1039,18 @@ interface TextSecurePreferences {
 
         @JvmStatic
         fun setAccentColorStyle(context: Context, @StyleRes newColor: Int?) {
-            setStringPreference(context, SELECTED_ACCENT_COLOR, when (newColor) {
-                R.style.PrimaryGreen -> GREEN_ACCENT
-                R.style.PrimaryBlue -> BLUE_ACCENT
-                R.style.PrimaryPurple -> PURPLE_ACCENT
-                R.style.PrimaryPink -> PINK_ACCENT
-                R.style.PrimaryRed -> RED_ACCENT
-                R.style.PrimaryOrange -> ORANGE_ACCENT
-                R.style.PrimaryYellow -> YELLOW_ACCENT
-                else -> null
-            })
+            setStringPreference(
+                context, SELECTED_ACCENT_COLOR, when (newColor) {
+                    R.style.PrimaryGreen -> GREEN_ACCENT
+                    R.style.PrimaryBlue -> BLUE_ACCENT
+                    R.style.PrimaryPurple -> PURPLE_ACCENT
+                    R.style.PrimaryPink -> PINK_ACCENT
+                    R.style.PrimaryRed -> RED_ACCENT
+                    R.style.PrimaryOrange -> ORANGE_ACCENT
+                    R.style.PrimaryYellow -> YELLOW_ACCENT
+                    else -> null
+                }
+            )
         }
 
         @JvmStatic
@@ -992,7 +1063,7 @@ interface TextSecurePreferences {
 
 class AppTextSecurePreferences @Inject constructor(
     @ApplicationContext private val context: Context
-): TextSecurePreferences {
+) : TextSecurePreferences {
 
     override fun getLastConfigurationSyncTime(): Long {
         return getLongPreference(TextSecurePreferences.LAST_CONFIGURATION_SYNC_TIME, 0)
@@ -1206,11 +1277,16 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun getNotificationPriority(): Int {
         return getStringPreference(
-            TextSecurePreferences.NOTIFICATION_PRIORITY_PREF, NotificationCompat.PRIORITY_HIGH.toString())!!.toInt()
+            TextSecurePreferences.NOTIFICATION_PRIORITY_PREF,
+            NotificationCompat.PRIORITY_HIGH.toString()
+        )!!.toInt()
     }
 
     override fun getMessageBodyTextSize(): Int {
-        return getStringPreference(TextSecurePreferences.MESSAGE_BODY_TEXT_SIZE_PREF, "16")!!.toInt()
+        return getStringPreference(
+            TextSecurePreferences.MESSAGE_BODY_TEXT_SIZE_PREF,
+            "16"
+        )!!.toInt()
     }
 
     override fun setDirectCaptureCameraId(value: Int) {
@@ -1218,12 +1294,18 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun getDirectCaptureCameraId(): Int {
-        return getIntegerPreference(TextSecurePreferences.DIRECT_CAPTURE_CAMERA_ID, Camera.CameraInfo.CAMERA_FACING_BACK)
+        return getIntegerPreference(
+            TextSecurePreferences.DIRECT_CAPTURE_CAMERA_ID,
+            Camera.CameraInfo.CAMERA_FACING_BACK
+        )
     }
 
     override fun getNotificationPrivacy(): NotificationPrivacyPreference {
-        return NotificationPrivacyPreference(getStringPreference(
-            TextSecurePreferences.NOTIFICATION_PRIVACY_PREF, "all"))
+        return NotificationPrivacyPreference(
+            getStringPreference(
+                TextSecurePreferences.NOTIFICATION_PRIVACY_PREF, "all"
+            )
+        )
     }
 
     override fun getRepeatAlertsCount(): Int {
@@ -1309,7 +1391,11 @@ class AppTextSecurePreferences @Inject constructor(
 
     @Throws(IOException::class)
     override fun setLastVersionCode(versionCode: Int) {
-        if (!setIntegerPreferenceBlocking(TextSecurePreferences.LAST_VERSION_CODE_PREF, versionCode)) {
+        if (!setIntegerPreferenceBlocking(
+                TextSecurePreferences.LAST_VERSION_CODE_PREF,
+                versionCode
+            )
+        ) {
             throw IOException("couldn't write version code to sharedpreferences")
         }
     }
@@ -1339,7 +1425,10 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun getNotificationRingtone(): Uri {
-        var result = getStringPreference(TextSecurePreferences.RINGTONE_PREF, Settings.System.DEFAULT_NOTIFICATION_URI.toString())
+        var result = getStringPreference(
+            TextSecurePreferences.RINGTONE_PREF,
+            Settings.System.DEFAULT_NOTIFICATION_URI.toString()
+        )
         if (result != null && result.startsWith("file:")) {
             result = Settings.System.DEFAULT_NOTIFICATION_URI.toString()
         }
@@ -1363,7 +1452,10 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun getNotificationLedColor(): Int {
-        return getIntegerPreference(TextSecurePreferences.LED_COLOR_PREF_PRIMARY, context.getColor(R.color.accent_green))
+        return getIntegerPreference(
+            TextSecurePreferences.LED_COLOR_PREF_PRIMARY,
+            context.getColor(R.color.accent_green)
+        )
     }
 
     override fun isThreadLengthTrimmingEnabled(): Boolean {
@@ -1375,19 +1467,34 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun getMobileMediaDownloadAllowed(): Set<String>? {
-        return getMediaDownloadAllowed(TextSecurePreferences.MEDIA_DOWNLOAD_MOBILE_PREF, R.array.pref_media_download_mobile_data_default)
+        return getMediaDownloadAllowed(
+            TextSecurePreferences.MEDIA_DOWNLOAD_MOBILE_PREF,
+            R.array.pref_media_download_mobile_data_default
+        )
     }
 
     override fun getWifiMediaDownloadAllowed(): Set<String>? {
-        return getMediaDownloadAllowed(TextSecurePreferences.MEDIA_DOWNLOAD_WIFI_PREF, R.array.pref_media_download_wifi_default)
+        return getMediaDownloadAllowed(
+            TextSecurePreferences.MEDIA_DOWNLOAD_WIFI_PREF,
+            R.array.pref_media_download_wifi_default
+        )
     }
 
     override fun getRoamingMediaDownloadAllowed(): Set<String>? {
-        return getMediaDownloadAllowed(TextSecurePreferences.MEDIA_DOWNLOAD_ROAMING_PREF, R.array.pref_media_download_roaming_default)
+        return getMediaDownloadAllowed(
+            TextSecurePreferences.MEDIA_DOWNLOAD_ROAMING_PREF,
+            R.array.pref_media_download_roaming_default
+        )
     }
 
-    override fun getMediaDownloadAllowed(key: String, @ArrayRes defaultValuesRes: Int): Set<String>? {
-        return getStringSetPreference(key, HashSet(listOf(*context.resources.getStringArray(defaultValuesRes))))
+    override fun getMediaDownloadAllowed(
+        key: String,
+        @ArrayRes defaultValuesRes: Int
+    ): Set<String>? {
+        return getStringSetPreference(
+            key,
+            HashSet(listOf(*context.resources.getStringArray(defaultValuesRes)))
+        )
     }
 
     override fun getLogEncryptedSecret(): String? {
@@ -1508,7 +1615,10 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun shouldUpdateProfile(profileUpdateTime: Long): Boolean {
-        return profileUpdateTime > getLongPreference(TextSecurePreferences.LAST_PROFILE_UPDATE_TIME, 0)
+        return profileUpdateTime > getLongPreference(
+            TextSecurePreferences.LAST_PROFILE_UPDATE_TIME,
+            0
+        )
     }
 
     override fun setLastProfileUpdateTime(profileUpdateTime: Long) {
@@ -1556,7 +1666,7 @@ class AppTextSecurePreferences @Inject constructor(
      * Set the SHOWN_CALL_WARNING preference to `true`
      * Return `true` if the value did update (it was previously unset)
      */
-    override fun setShownCallWarning() : Boolean {
+    override fun setShownCallWarning(): Boolean {
         val previousValue = getBooleanPreference(SHOWN_CALL_WARNING, false)
         if (previousValue) {
             return false
@@ -1625,7 +1735,13 @@ class AppTextSecurePreferences @Inject constructor(
     }
 
     override fun setThemeStyle(themeStyle: String) {
-        val safeTheme = if (themeStyle !in listOf(CLASSIC_DARK, CLASSIC_LIGHT, OCEAN_DARK, OCEAN_LIGHT)) CLASSIC_DARK else themeStyle
+        val safeTheme = if (themeStyle !in listOf(
+                CLASSIC_DARK,
+                CLASSIC_LIGHT,
+                OCEAN_DARK,
+                OCEAN_LIGHT
+            )
+        ) CLASSIC_DARK else themeStyle
         setStringPreference(SELECTED_STYLE, safeTheme)
     }
 
@@ -1644,12 +1760,15 @@ class AppTextSecurePreferences @Inject constructor(
             "DAY" -> {
                 CLASSIC_LIGHT to false
             }
+
             "NIGHT" -> {
                 CLASSIC_DARK to false
             }
+
             "SYSTEM_DEFAULT" -> {
                 CLASSIC_DARK to true
             }
+
             else -> {
                 CLASSIC_DARK to false
             }
@@ -1672,5 +1791,4 @@ class AppTextSecurePreferences @Inject constructor(
     override fun clearAll() {
         getDefaultSharedPreferences(context).edit().clear().commit()
     }
-
 }
