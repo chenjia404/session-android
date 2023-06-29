@@ -53,7 +53,9 @@ import java.util.Date
 class SettingsActivity : PassphraseRequiredActionBarActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private var displayNameEditActionMode: ActionMode? = null
-        set(value) { field = value; handleDisplayNameEditActionModeChanged() }
+        set(value) {
+            field = value; handleDisplayNameEditActionModeChanged()
+        }
     private lateinit var glide: GlideRequests
     private var tempFile: File? = null
 
@@ -77,7 +79,11 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         with(binding) {
             setupProfilePictureView(profilePictureView.root)
             profilePictureView.root.setOnClickListener { showEditProfilePictureUI() }
-            ctnGroupNameSection.setOnClickListener { startActionMode(DisplayNameEditActionModeCallback()) }
+            ctnGroupNameSection.setOnClickListener {
+                startActionMode(
+                    DisplayNameEditActionModeCallback()
+                )
+            }
             btnGroupNameDisplay.text = displayName
             publicKeyTextView.text = hexEncodedPublicKey
             copyButton.setOnClickListener { copyPublicKey() }
@@ -93,7 +99,11 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
             helpButton.setOnClickListener { showHelp() }
             seedButton.setOnClickListener { showSeed() }
             clearAllDataButton.setOnClickListener { clearAllData() }
-            versionTextView.text = String.format(getString(R.string.version_s), "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+            rlSeed.setOnClickListener { showSeedWebsite() }
+            versionTextView.text = String.format(
+                getString(R.string.version_s),
+                "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
+            )
         }
     }
 
@@ -135,6 +145,7 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                 showQRCode()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -151,15 +162,25 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                 if (inputFile == null && tempFile != null) {
                     inputFile = Uri.fromFile(tempFile)
                 }
-                AvatarSelection.circularCropImage(this, inputFile, outputFile, R.string.CropImageActivity_profile_avatar)
+                AvatarSelection.circularCropImage(
+                    this,
+                    inputFile,
+                    outputFile,
+                    R.string.CropImageActivity_profile_avatar
+                )
             }
+
             AvatarSelection.REQUEST_CODE_CROP_IMAGE -> {
                 if (resultCode != Activity.RESULT_OK) {
                     return
                 }
                 AsyncTask.execute {
                     try {
-                        val profilePictureToBeUploaded = BitmapUtil.createScaledBytes(this@SettingsActivity, AvatarSelection.getResultUri(data), ProfileMediaConstraints()).bitmap
+                        val profilePictureToBeUploaded = BitmapUtil.createScaledBytes(
+                            this@SettingsActivity,
+                            AvatarSelection.getResultUri(data),
+                            ProfileMediaConstraints()
+                        ).bitmap
                         Handler(Looper.getMainLooper()).post {
                             updateProfile(true, profilePictureToBeUploaded)
                         }
@@ -171,7 +192,11 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Permissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
     }
@@ -181,10 +206,13 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
     private fun handleDisplayNameEditActionModeChanged() {
         val isEditingDisplayName = this.displayNameEditActionMode !== null
 
-        binding.btnGroupNameDisplay.visibility = if (isEditingDisplayName) View.INVISIBLE else View.VISIBLE
-        binding.displayNameEditText.visibility = if (isEditingDisplayName) View.VISIBLE else View.INVISIBLE
+        binding.btnGroupNameDisplay.visibility =
+            if (isEditingDisplayName) View.INVISIBLE else View.VISIBLE
+        binding.displayNameEditText.visibility =
+            if (isEditingDisplayName) View.VISIBLE else View.INVISIBLE
 
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (isEditingDisplayName) {
             binding.displayNameEditText.setText(binding.btnGroupNameDisplay.text)
             binding.displayNameEditText.selectAll()
@@ -208,7 +236,13 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         val encodedProfileKey = ProfileKeyUtil.generateEncodedProfileKey(this)
         if (isUpdatingProfilePicture) {
             if (profilePicture != null) {
-                promises.add(ProfilePictureUtilities.upload(profilePicture, encodedProfileKey, this))
+                promises.add(
+                    ProfilePictureUtilities.upload(
+                        profilePicture,
+                        encodedProfileKey,
+                        this
+                    )
+                )
             } else {
                 TextSecurePreferences.setLastProfilePictureUpload(this, System.currentTimeMillis())
                 TextSecurePreferences.setProfilePictureURL(this, null)
@@ -217,8 +251,14 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         val compoundPromise = all(promises)
         compoundPromise.successUi { // Do this on the UI thread so that it happens before the alwaysUi clause below
             if (isUpdatingProfilePicture) {
-                AvatarHelper.setAvatar(this, Address.fromSerialized(TextSecurePreferences.getLocalNumber(this)!!), profilePicture)
-                TextSecurePreferences.setProfileAvatarId(this, profilePicture?.let { SecureRandom().nextInt() } ?: 0 )
+                AvatarHelper.setAvatar(
+                    this,
+                    Address.fromSerialized(TextSecurePreferences.getLocalNumber(this)!!),
+                    profilePicture
+                )
+                TextSecurePreferences.setProfileAvatarId(
+                    this,
+                    profilePicture?.let { SecureRandom().nextInt() } ?: 0)
                 TextSecurePreferences.setLastProfilePictureUpload(this, Date().time)
                 ProfileKeyUtil.setEncodedProfileKey(this, encodedProfileKey)
             }
@@ -247,11 +287,19 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
     private fun saveDisplayName(): Boolean {
         val displayName = binding.displayNameEditText.text.toString().trim()
         if (displayName.isEmpty()) {
-            Toast.makeText(this, R.string.activity_settings_display_name_missing_error, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                R.string.activity_settings_display_name_missing_error,
+                Toast.LENGTH_SHORT
+            ).show()
             return false
         }
         if (displayName.toByteArray().size > ProfileManagerProtocol.Companion.NAME_PADDED_LENGTH) {
-            Toast.makeText(this, R.string.activity_settings_display_name_too_long_error, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                R.string.activity_settings_display_name_too_long_error,
+                Toast.LENGTH_SHORT
+            ).show()
             return false
         }
         updateProfile(false, displayName = displayName)
@@ -282,9 +330,11 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
 
                 val pictureIcon = findViewById<View>(R.id.ic_pictures)
 
-                val recipient = Recipient.from(context, Address.fromSerialized(hexEncodedPublicKey), false)
+                val recipient =
+                    Recipient.from(context, Address.fromSerialized(hexEncodedPublicKey), false)
 
-                val photoSet = (recipient.contactPhoto as ProfileContactPhoto).avatarObject !in setOf("0", "")
+                val photoSet =
+                    (recipient.contactPhoto as ProfileContactPhoto).avatarObject !in setOf("0", "")
 
                 profilePic?.isVisible = photoSet
                 pictureIcon?.isVisible = !photoSet
@@ -352,7 +402,8 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         val invitation = getString(R.string.invitation) + "$hexEncodedPublicKey "
         intent.putExtra(Intent.EXTRA_TEXT, invitation)
         intent.type = "text/plain"
-        val chooser = Intent.createChooser(intent, getString(R.string.activity_settings_invite_button_title))
+        val chooser =
+            Intent.createChooser(intent, getString(R.string.activity_settings_invite_button_title))
         startActivity(chooser)
     }
 
@@ -374,9 +425,16 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         ClearAllDataDialog().show(supportFragmentManager, "Clear All Data Dialog")
     }
 
+    private fun showSeedWebsite() {
+        SeedSiteDialog {
+            TextSecurePreferences.setCustomizedNodeSite(this, it)
+            val site = TextSecurePreferences.getCustomizedNodeSite(this)
+        }.show(supportFragmentManager, "show seed site")
+    }
+
     // endregion
 
-    private inner class DisplayNameEditActionModeCallback: ActionMode.Callback {
+    private inner class DisplayNameEditActionModeCallback : ActionMode.Callback {
 
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
             mode.title = getString(R.string.activity_settings_display_name_edit_text_hint)

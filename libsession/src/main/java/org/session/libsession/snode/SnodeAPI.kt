@@ -3,6 +3,7 @@
 package org.session.libsession.snode
 
 import android.os.Build
+import android.text.TextUtils
 import com.goterl.lazysodium.LazySodiumAndroid
 import com.goterl.lazysodium.SodiumAndroid
 import com.goterl.lazysodium.exceptions.SodiumException
@@ -11,6 +12,7 @@ import com.goterl.lazysodium.interfaces.PwHash
 import com.goterl.lazysodium.interfaces.SecretBox
 import com.goterl.lazysodium.interfaces.Sign
 import com.goterl.lazysodium.utils.Key
+import dagger.hilt.android.qualifiers.ApplicationContext
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.all
 import nl.komponents.kovenant.deferred
@@ -19,6 +21,9 @@ import nl.komponents.kovenant.functional.map
 import nl.komponents.kovenant.task
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.utilities.MessageWrapper
+import org.session.libsession.utilities.Logger
+import org.session.libsession.utilities.TextSecurePreferences
+import org.session.libsession.utilities.context
 import org.session.libsignal.crypto.getRandomElement
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.protos.SignalServiceProtos
@@ -141,10 +146,75 @@ object SnodeAPI {
         return deferred.promise
     }
 
-    internal fun getRandomSnode(): Promise<Snode, Exception> {
+    fun getRandomSnode(): Promise<Snode, Exception> {
+        val site = TextSecurePreferences.getCustomizedNodeSite(context())
+        Logger.d("site = $site")
+        return site?.let {
+            getRandomSnodeCustomized(site)
+        }?: getRandomSnodeOld()
+    }
+
+    private fun getRandomSnodeCustomized(site: String): Promise<Snode, Exception> {
+        val url = "$site/json_rpc"
+            Log.d("Loki", "Populating snode pool using: $site.")
+            val parameters = mapOf(
+                "method" to "get_n_service_nodes",
+                "params" to mapOf(
+                    "active_only" to true,
+                    "limit" to 256,
+                    "fields" to mapOf("public_ip" to true, "storage_port" to true, "pubkey_x25519" to true, "pubkey_ed25519" to true)
+                )
+            )
+            val deferred = deferred<Snode, Exception>()
+            deferred<Snode, Exception>()
+            ThreadUtils.queue {
+                try {
+                    val response = HTTP.execute(HTTP.Verb.POST, url, parameters, useSeedNodeConnection = true)
+                    val json = try {
+                        JsonUtil.fromJson(response, Map::class.java)
+                    } catch (exception: Exception) {
+                        mapOf( "result" to response.toString())
+                    }
+                    //Logger.d( "result = $json")
+                    val intermediate = json["result"] as? Map<*, *>
+                    val rawSnodes = intermediate?.get("service_node_states") as? List<*>
+                    if (rawSnodes != null) {
+                        val snodePool = rawSnodes.mapNotNull { rawSnode ->
+                            val rawSnodeAsJSON = rawSnode as? Map<*, *>
+                            val address = rawSnodeAsJSON?.get("public_ip") as? String
+                            val port = rawSnodeAsJSON?.get("storage_port") as? Int
+                            val ed25519Key = rawSnodeAsJSON?.get("pubkey_ed25519") as? String
+                            val x25519Key = rawSnodeAsJSON?.get("pubkey_x25519") as? String
+                            if (address != null && port != null && ed25519Key != null && x25519Key != null && address != "0.0.0.0") {
+                                Snode("https://$address", port, Snode.KeySet(ed25519Key, x25519Key))
+                            } else {
+                                Log.d("Loki", "Failed to parse: ${rawSnode?.prettifiedDescription()}.")
+                                null
+                            }
+                        }.toMutableSet()
+                        Log.d("Loki", "Persisting snode pool to database.")
+                        this.snodePool = snodePool
+                        try {
+                            deferred.resolve(snodePool.getRandomElement())
+                        } catch (exception: Exception) {
+                            Log.d("Loki", "Got an empty snode pool from: $site.")
+                            deferred.reject(SnodeAPI.Error.Generic)
+                        }
+                    } else {
+                        Log.d("Loki", "Failed to update snode pool from: ${(rawSnodes as List<*>?)?.prettifiedDescription()}.")
+                        deferred.reject(SnodeAPI.Error.Generic)
+                    }
+                } catch (exception: Exception) {
+                    deferred.reject(exception)
+                }
+            }
+            return deferred.promise
+    }
+     private fun getRandomSnodeOld(): Promise<Snode, Exception> {
         val snodePool = this.snodePool
         if (snodePool.count() < minimumSnodePoolCount) {
             val target = seedNodePool.random()
+            //Logger.d("target = $target")
             val url = "$target/json_rpc"
             Log.d("Loki", "Populating snode pool using: $target.")
             val parameters = mapOf(
@@ -165,6 +235,7 @@ object SnodeAPI {
                     } catch (exception: Exception) {
                         mapOf( "result" to response.toString())
                     }
+                    //Logger.d("result = $json")
                     val intermediate = json["result"] as? Map<*, *>
                     val rawSnodes = intermediate?.get("service_node_states") as? List<*>
                     if (rawSnodes != null) {

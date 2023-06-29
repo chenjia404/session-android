@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="org.session.libsession" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.session.libsession">
+
+    <application>
+        <provider
+            android:name=".utilities.ContextProvider"
+            android:authorities="${applicationId}.contextprovider"
+            android:exported="false" />
+    </application>
+
+</manifest>

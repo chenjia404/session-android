@@ -714,4 +714,9 @@
     <string name="NewConversationButton_SessionTooltip">直接傳訊</string>
     <string name="NewConversationButton_ClosedGroupTooltip">已關閉的群組</string>
     <string name="NewConversationButton_OpenGroupTooltip">開啟群組</string>
+    <string name="dialog_seed_site_desc">请输入引导网站地址，这将帮助您获取最新的seed</string>
+    <string name="ok">确定</string>
+    <string name="content_not_empty">内容不能为空</string>
+    <string name="please_enter_content">请输入内容</string>
+    <string name="please_enter_the_correct_url">请输入正确的URL</string>
 </resources>

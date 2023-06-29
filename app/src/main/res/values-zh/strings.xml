@@ -702,4 +702,10 @@
     <string name="dialog_share_logs_explanation">导出日志以供分享和排除故障？</string>
     <string name="conversation_pin">置顶</string>
     <string name="conversation_unpin">取消置顶</string>
+    <string name="seed_site">引导网站</string>
+    <string name="dialog_seed_site_desc">请输入引导网站地址，这将帮助您获取最新的seed</string>
+    <string name="ok">确定</string>
+    <string name="content_not_empty">内容不能为空</string>
+    <string name="please_enter_content">请输入内容</string>
+    <string name="please_enter_the_correct_url">请输入正确的URL</string>
 </resources>
