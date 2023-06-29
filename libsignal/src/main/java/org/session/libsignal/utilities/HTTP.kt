@@ -79,8 +79,6 @@ object HTTP {
             .url("https://1.1.1.1/dns-query".toHttpUrl())
             .bootstrapDnsHosts(InetAddress.getByName("8.8.4.4"), InetAddress.getByName("8.8.8.8"))
             .build()
-        bootstrapClient.newBuilder()
-            .dns(dns)
         return bootstrapClient.newBuilder()
             .dns(dns)
             .sslSocketFactory(sslContext.socketFactory, trustManager)
