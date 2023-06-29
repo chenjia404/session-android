@@ -1,11 +1,12 @@
 package org.session.libsignal.utilities
 
-import okhttp3.MediaType
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
+import okhttp3.dnsoverhttps.DnsOverHttps
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
@@ -25,6 +26,11 @@ object HTTP {
     }
 
     private val defaultConnection by lazy {
+
+        val dns = DnsOverHttps.Builder()
+            .url("https://1.1.1.1/dns-query".toHttpUrl())
+            .build()
+
         // Snode to snode communication uses self-signed certificates but clients can safely ignore this
         val trustManager = object : X509TrustManager {
 
@@ -35,6 +41,7 @@ object HTTP {
         val sslContext = SSLContext.getInstance("SSL")
         sslContext.init(null, arrayOf( trustManager ), SecureRandom())
         OkHttpClient().newBuilder()
+            .dns(dns)
             .sslSocketFactory(sslContext.socketFactory, trustManager)
             .hostnameVerifier { _, _ -> true }
             .callTimeout(timeout, TimeUnit.SECONDS)
@@ -54,7 +61,14 @@ object HTTP {
         }
         val sslContext = SSLContext.getInstance("SSL")
         sslContext.init(null, arrayOf( trustManager ), SecureRandom())
+
+        val dns = DnsOverHttps.Builder()
+            .url("https://1.1.1.1/dns-query".toHttpUrl())
+            .build()
+
+
         return OkHttpClient().newBuilder()
+            .dns(dns)
             .sslSocketFactory(sslContext.socketFactory, trustManager)
             .hostnameVerifier { _, _ -> true }
             .callTimeout(timeout, TimeUnit.SECONDS)
