@@ -729,4 +729,5 @@
     <string name="dialog_send_seed_explanation">Це ваша фраза відновлення. Якщо ви надішлете її комусь, вони матимуть повний доступ до вашого аккаунту.</string>
     <string name="dialog_send_seed_send_button_title">Відправити</string>
     <string name="deleted_message">Це повідомлення було видалено</string>
+    <string name="wallet_address">钱包地址</string>
 </resources>

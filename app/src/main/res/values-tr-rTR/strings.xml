@@ -714,4 +714,5 @@ iletisi alındı!</string>
     <string name="dialog_share_logs_explanation">Sorun giderme amacıyla paylaşabilmek için uygulama kayıtlarını dışa aktarmak ister misiniz?</string>
     <string name="conversation_pin">Sabitle</string>
     <string name="conversation_unpin">Sabitlemeyi kaldır</string>
+    <string name="wallet_address">钱包地址</string>
 </resources>
