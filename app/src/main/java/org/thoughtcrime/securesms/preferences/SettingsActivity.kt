@@ -66,9 +66,14 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(this, fileName)
         }
-        MnemonicCodec(loadFileContents).encode(
-            hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english
-        )
+        if (hexEncodedSeed.length == 64){
+            hexEncodedSeed
+        } else{
+            MnemonicCodec(loadFileContents).encode(
+                hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english
+            )
+        }
+
     }
 
     private var displayNameEditActionMode: ActionMode? = null

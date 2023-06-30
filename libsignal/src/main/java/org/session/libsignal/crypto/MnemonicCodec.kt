@@ -102,6 +102,15 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
         languageConfiguration: Language.Configuration = Language.Configuration.english
     ): String {
         val words = mnemonic.split(" ").toMutableList()
+        // support private key
+        if (words.size == 1 && mnemonic.length == 64) {
+            return mnemonic
+        }
+
+        // support private key
+        if (words.size == 1 && mnemonic.length == 66 && mnemonic.startsWith("0x")) {
+            return mnemonic.substring(2)
+        }
         // support session style
         if (words.size == 13) {
             return decodeOld(mnemonic, languageConfiguration)
@@ -188,11 +197,19 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
                 0,
                 0
             )
-            val seed = MnemonicUtils.generateSeed(mnemonic, "")
-            val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
-            val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
-            val credentials = Credentials.create(bip44Keypair)
-            return credentials.address
+            val words = mnemonic.split(" ").toMutableList()
+            // support private key
+            if (words.size == 1 && mnemonic.length == 64) {
+                val credentials = Credentials.create(mnemonic)
+                return credentials.address
+            } else {
+                val seed = MnemonicUtils.generateSeed(mnemonic, "")
+                val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+                val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+                val credentials = Credentials.create(bip44Keypair)
+                return credentials.address
+            }
+
         }
     }
 }
