@@ -157,13 +157,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginHorizontal="@dimen/very_large_spacing"
-                    android:background="?colorDividerBackground" />
+                    android:background="?colorDividerBackground"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/rlSeed"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/setting_button_height"
-                    android:paddingHorizontal="@dimen/large_spacing">
+                    android:paddingHorizontal="@dimen/large_spacing"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivSeed"

@@ -288,6 +288,7 @@ interface TextSecurePreferences {
         const val OCEAN_DARK = "ocean.dark"
         const val OCEAN_LIGHT = "ocean.light"
         const val COSTOMIZED_NODE_SITE = "customized_node_site"
+        const val PREF_SEED_SITE = "pref_seed_site"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
