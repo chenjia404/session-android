@@ -1,16 +1,12 @@
 package org.session.libsignal.crypto
 
-import io.github.novacrypto.bip32.ExtendedPrivateKey
-import io.github.novacrypto.bip32.networks.Bitcoin
 import io.github.novacrypto.bip39.MnemonicGenerator
 import io.github.novacrypto.bip39.wordlists.English
-import io.github.novacrypto.bip44.AddressIndex
-import io.github.novacrypto.bip44.BIP44
 import org.session.libsignal.utilities.Hex
 import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.toHexString
-import org.web3j.crypto.ECKeyPair
-import org.web3j.crypto.Keys
+import org.web3j.crypto.Bip32ECKeyPair
+import org.web3j.crypto.Credentials
 import org.web3j.crypto.MnemonicUtils
 import java.util.zip.CRC32
 
@@ -20,7 +16,9 @@ import java.util.zip.CRC32
  */
 class MnemonicCodec(private val loadFileContents: (String) -> String) {
 
-    class Language(private val loadFileContents: (String) -> String, private val configuration: Configuration) {
+    class Language(
+        private val loadFileContents: (String) -> String, private val configuration: Configuration
+    ) {
 
         data class Configuration(val filename: String, val prefixLength: Int) {
 
@@ -63,44 +61,60 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
     }
 
     sealed class DecodingError(val description: String) : Exception(description) {
-        object Generic : DecodingError("Something went wrong. Please check your mnemonic and try again.")
-        object InputTooShort : DecodingError("Looks like you didn't enter enough words. Please check your mnemonic and try again.")
-        object MissingLastWord : DecodingError("You seem to be missing the last word of your mnemonic. Please check what you entered and try again.")
-        object InvalidWord : DecodingError("There appears to be an invalid word in your mnemonic. Please check what you entered and try again.")
-        object VerificationFailed : DecodingError("Your mnemonic couldn't be verified. Please check what you entered and try again.")
+        object Generic :
+            DecodingError("Something went wrong. Please check your mnemonic and try again.")
+
+        object InputTooShort :
+            DecodingError("Looks like you didn't enter enough words. Please check your mnemonic and try again.")
+
+        object MissingLastWord :
+            DecodingError("You seem to be missing the last word of your mnemonic. Please check what you entered and try again.")
+
+        object InvalidWord :
+            DecodingError("There appears to be an invalid word in your mnemonic. Please check what you entered and try again.")
+
+        object VerificationFailed :
+            DecodingError("Your mnemonic couldn't be verified. Please check what you entered and try again.")
     }
 
 
-    fun encode(hexEncodedString: String, languageConfiguration: Language.Configuration = Language.Configuration.english): String {
-        Log.d("key","hexEncodedString: "+hexEncodedString)
+    fun encode(
+        hexEncodedString: String,
+        languageConfiguration: Language.Configuration = Language.Configuration.english
+    ): String {
+        Log.d("key", "hexEncodedString: " + hexEncodedString)
         val sb = StringBuilder()
 //        val entropy = ByteArray(Words.TWENTY_FOUR.byteLength())
         var entropy = Hex.fromStringCondensed(hexEncodedString)
-        Log.d("key","entropy toHexString seed: "+entropy.toHexString())
-        MnemonicGenerator( English.INSTANCE).createMnemonic(
-            entropy,
+        Log.d("key", "entropy toHexString seed: " + entropy.toHexString())
+        MnemonicGenerator(English.INSTANCE).createMnemonic(entropy,
             MnemonicGenerator.Target { s: CharSequence? -> sb.append(s) })
         val mnemonics: String = sb.toString()
-        Log.d("key","web3j mnemonics:"+mnemonics)
+        Log.d("key", "web3j mnemonics:" + mnemonics)
         val seed = MnemonicUtils.generateEntropy(mnemonics)
 
-        Log.d("key","toHexString seed: "+seed.toHexString())
-        return  mnemonics
+        Log.d("key", "toHexString seed: " + seed.toHexString())
+        return mnemonics
     }
 
-    fun decode(mnemonic: String, languageConfiguration: Language.Configuration = Language.Configuration.english): String {
+    fun decode(
+        mnemonic: String,
+        languageConfiguration: Language.Configuration = Language.Configuration.english
+    ): String {
         val words = mnemonic.split(" ").toMutableList()
         // support session style
-        if (words.size == 13)
-        {
-            return decodeOld(mnemonic,languageConfiguration)
+        if (words.size == 13) {
+            return decodeOld(mnemonic, languageConfiguration)
         }
         val seed = MnemonicUtils.generateEntropy(mnemonic)
-        Log.d("key","seed: "+seed.toHexString())
-        return  seed.toHexString()
+        Log.d("key", "seed: " + seed.toHexString())
+        return seed.toHexString()
     }
 
-    fun decodeOld(mnemonic: String, languageConfiguration: Language.Configuration = Language.Configuration.english): String {
+    fun decodeOld(
+        mnemonic: String,
+        languageConfiguration: Language.Configuration = Language.Configuration.english
+    ): String {
         val words = mnemonic.split(" ").toMutableList()
         val language = Language(loadFileContents, languageConfiguration)
         val truncatedWordSet = language.loadTruncatedWordSet()
@@ -108,20 +122,26 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
         var result = ""
         val n = truncatedWordSet.size.toLong()
         // Check preconditions
-        if (words.size < 12) { throw DecodingError.InputTooShort
+        if (words.size < 12) {
+            throw DecodingError.InputTooShort
         }
-        if (words.size % 3 == 0) { throw DecodingError.MissingLastWord
+        if (words.size % 3 == 0) {
+            throw DecodingError.MissingLastWord
         }
         // Get checksum word
         val checksumWord = words.removeAt(words.lastIndex)
         // Decode
         for (chunkStartIndex in 0..(words.size - 3) step 3) {
             try {
-                val w1 = truncatedWordSet.indexOf(words[chunkStartIndex].substring(0 until prefixLength))
-                val w2 = truncatedWordSet.indexOf(words[chunkStartIndex + 1].substring(0 until prefixLength))
-                val w3 = truncatedWordSet.indexOf(words[chunkStartIndex + 2].substring(0 until prefixLength))
+                val w1 =
+                    truncatedWordSet.indexOf(words[chunkStartIndex].substring(0 until prefixLength))
+                val w2 =
+                    truncatedWordSet.indexOf(words[chunkStartIndex + 1].substring(0 until prefixLength))
+                val w3 =
+                    truncatedWordSet.indexOf(words[chunkStartIndex + 2].substring(0 until prefixLength))
                 val x = w1 + n * ((n - w1 + w2) % n) + n * n * ((n - w2 + w3) % n)
-                if (x % n != w1.toLong()) { throw DecodingError.Generic
+                if (x % n != w1.toLong()) {
+                    throw DecodingError.Generic
                 }
                 val string = "0000000" + x.toString(16)
                 result += swap(string.substring(string.length - 8 until string.length))
@@ -132,13 +152,14 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
         // Verify checksum
         val checksumIndex = determineChecksumIndex(words, prefixLength)
         val expectedChecksumWord = words[checksumIndex]
-        if (expectedChecksumWord.substring(0 until prefixLength) != checksumWord.substring(0 until prefixLength)) { throw DecodingError.VerificationFailed
+        if (expectedChecksumWord.substring(0 until prefixLength) != checksumWord.substring(0 until prefixLength)) {
+            throw DecodingError.VerificationFailed
         }
         // Return
         return result
         val seed = MnemonicUtils.generateEntropy(mnemonic)
-        Log.d("key","seed: "+seed.toHexString())
-        return  seed.toHexString()
+        Log.d("key", "seed: " + seed.toHexString())
+        return seed.toHexString()
     }
 
     private fun swap(x: String): String {
@@ -155,5 +176,23 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
         crc32.update(bytes)
         val checksum = crc32.value
         return (checksum % x.size.toLong()).toInt()
+    }
+
+    companion object {
+        @JvmStatic
+        fun toAddress(mnemonic: String): String {
+            val path = intArrayOf(
+                44 or Bip32ECKeyPair.HARDENED_BIT,
+                60 or Bip32ECKeyPair.HARDENED_BIT,
+                0 or Bip32ECKeyPair.HARDENED_BIT,
+                0,
+                0
+            )
+            val seed = MnemonicUtils.generateSeed(mnemonic, "")
+            val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+            val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+            val credentials = Credentials.create(bip44Keypair)
+            return credentials.address
+        }
     }
 }

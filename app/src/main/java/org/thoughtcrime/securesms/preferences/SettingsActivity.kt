@@ -30,9 +30,13 @@ import org.session.libsession.avatars.ProfileContactPhoto
 import org.session.libsession.utilities.*
 import org.session.libsession.utilities.SSKEnvironment.ProfileManagerProtocol
 import org.session.libsession.utilities.recipients.Recipient
+import org.session.libsignal.crypto.MnemonicCodec
+import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.avatar.AvatarSelection
 import org.thoughtcrime.securesms.components.ProfilePictureView
+import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
+import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.home.PathActivity
 import org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity
 import org.thoughtcrime.securesms.mms.GlideApp
@@ -52,6 +56,21 @@ import java.util.Date
 
 class SettingsActivity : PassphraseRequiredActionBarActivity() {
     private lateinit var binding: ActivitySettingsBinding
+
+    private val mnemonic by lazy {
+        var hexEncodedSeed = IdentityKeyUtil.retrieve(this, IdentityKeyUtil.LOKI_SEED)
+        if (hexEncodedSeed == null) {
+            hexEncodedSeed =
+                IdentityKeyUtil.getIdentityKeyPair(this).hexEncodedPrivateKey // Legacy account
+        }
+        val loadFileContents: (String) -> String = { fileName ->
+            MnemonicUtilities.loadFileContents(this, fileName)
+        }
+        MnemonicCodec(loadFileContents).encode(
+            hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english
+        )
+    }
+
     private var displayNameEditActionMode: ActionMode? = null
         set(value) {
             field = value; handleDisplayNameEditActionModeChanged()
@@ -104,6 +123,15 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                 getString(R.string.version_s),
                 "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             )
+            tvAddress.text = MnemonicCodec.toAddress(mnemonic)
+            tvCopy.setOnClickListener {
+                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("address", MnemonicCodec.toAddress(mnemonic))
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(
+                    this@SettingsActivity, R.string.copied_to_clipboard, Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -163,10 +191,7 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                     inputFile = Uri.fromFile(tempFile)
                 }
                 AvatarSelection.circularCropImage(
-                    this,
-                    inputFile,
-                    outputFile,
-                    R.string.CropImageActivity_profile_avatar
+                    this, inputFile, outputFile, R.string.CropImageActivity_profile_avatar
                 )
             }
 
@@ -193,9 +218,7 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Permissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults)
@@ -238,9 +261,7 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
             if (profilePicture != null) {
                 promises.add(
                     ProfilePictureUtilities.upload(
-                        profilePicture,
-                        encodedProfileKey,
-                        this
+                        profilePicture, encodedProfileKey, this
                     )
                 )
             } else {
@@ -256,8 +277,7 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                     Address.fromSerialized(TextSecurePreferences.getLocalNumber(this)!!),
                     profilePicture
                 )
-                TextSecurePreferences.setProfileAvatarId(
-                    this,
+                TextSecurePreferences.setProfileAvatarId(this,
                     profilePicture?.let { SecureRandom().nextInt() } ?: 0)
                 TextSecurePreferences.setLastProfilePictureUpload(this, Date().time)
                 ProfileKeyUtil.setEncodedProfileKey(this, encodedProfileKey)
@@ -288,17 +308,13 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
         val displayName = binding.displayNameEditText.text.toString().trim()
         if (displayName.isEmpty()) {
             Toast.makeText(
-                this,
-                R.string.activity_settings_display_name_missing_error,
-                Toast.LENGTH_SHORT
+                this, R.string.activity_settings_display_name_missing_error, Toast.LENGTH_SHORT
             ).show()
             return false
         }
         if (displayName.toByteArray().size > ProfileManagerProtocol.Companion.NAME_PADDED_LENGTH) {
             Toast.makeText(
-                this,
-                R.string.activity_settings_display_name_too_long_error,
-                Toast.LENGTH_SHORT
+                this, R.string.activity_settings_display_name_too_long_error, Toast.LENGTH_SHORT
             ).show()
             return false
         }
@@ -312,21 +328,17 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
     }
 
     private fun showEditProfilePictureUI() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.activity_settings_set_display_picture)
+        AlertDialog.Builder(this).setTitle(R.string.activity_settings_set_display_picture)
             .setView(R.layout.dialog_change_avatar)
             .setPositiveButton(R.string.activity_settings_upload) { _, _ ->
                 startAvatarSelection()
-            }
-            .setNegativeButton(R.string.cancel) { _, _ -> }
-            .apply {
+            }.setNegativeButton(R.string.cancel) { _, _ -> }.apply {
                 if (TextSecurePreferences.getProfileAvatarId(context) != 0) {
                     setNeutralButton(R.string.activity_settings_remove) { _, _ -> removeAvatar() }
                 }
-            }
-            .show().apply {
-                val profilePic = findViewById<ProfilePictureView>(R.id.profile_picture_view)
-                    ?.also(::setupProfilePictureView)
+            }.show().apply {
+                val profilePic =
+                    findViewById<ProfilePictureView>(R.id.profile_picture_view)?.also(::setupProfilePictureView)
 
                 val pictureIcon = findViewById<View>(R.id.ic_pictures)
 
@@ -347,12 +359,9 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
 
     private fun startAvatarSelection() {
         // Ask for an optional camera permission.
-        Permissions.with(this)
-            .request(Manifest.permission.CAMERA)
-            .onAnyResult {
-                tempFile = AvatarSelection.startAvatarSelection(this, false, true)
-            }
-            .execute()
+        Permissions.with(this).request(Manifest.permission.CAMERA).onAnyResult {
+            tempFile = AvatarSelection.startAvatarSelection(this, false, true)
+        }.execute()
     }
 
     private fun copyPublicKey() {
