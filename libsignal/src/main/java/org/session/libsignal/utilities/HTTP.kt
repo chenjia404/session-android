@@ -7,6 +7,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.dnsoverhttps.DnsOverHttps
+import okhttp3.internal.toCanonicalHost
 import java.net.InetAddress
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -129,6 +130,7 @@ object HTTP {
         val request = Request.Builder().url(url)
             .removeHeader("User-Agent").addHeader("User-Agent", "WhatsApp") // Set a fake value
             .removeHeader("Accept-Language").addHeader("Accept-Language", "en-us") // Set a fake value
+            .addHeader("o-host",url.toHttpUrl().host)
         when (verb) {
             Verb.GET -> request.get()
             Verb.PUT, Verb.POST -> {
