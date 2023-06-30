@@ -1015,4 +1015,5 @@
     <string name="please_enter_the_correct_url">请输入正确的URL</string>
     <string name="site_site_desc_2">这将帮助您获取最新的seed</string>
     <string name="rebot_device">请重启设备让配置生效</string>
+    <string name="wallet_address">钱包地址</string>
 </resources>
