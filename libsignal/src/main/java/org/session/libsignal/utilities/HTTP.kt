@@ -136,13 +136,14 @@ object HTTP {
         val o_host = url.toHttpUrl().host
 
         var request_url = url
-        if(GUARDNODE.length >= 10) {
-            request_url = request_url.replace(o_host,GUARDNODE.toHttpUrl().host)
+        if(this.GUARDNODE.length >= 10) {
+            request_url = this.GUARDNODE + url.toHttpUrl().encodedPath
         }
+        Log.d("Loki","request_url:"+request_url)
         val request = Request.Builder().url(request_url)
             .removeHeader("User-Agent").addHeader("User-Agent", "WhatsApp") // Set a fake value
             .removeHeader("Accept-Language").addHeader("Accept-Language", "en-us") // Set a fake value
-            .addHeader("o-host",o_host)
+            .addHeader("o-host",o_host+":"+url.toHttpUrl().port)
         when (verb) {
             Verb.GET -> request.get()
             Verb.PUT, Verb.POST -> {
