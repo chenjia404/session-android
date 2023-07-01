@@ -78,7 +78,7 @@ class PNModeActivity : BaseActionBarActivity() {
 
     private fun learnMore() {
         try {
-            val url =  BuildConfig.officialWebsite +"/faq/#privacy"
+            val url =  BuildConfig.OFFICIAL_WEBSITE +"/faq/#privacy"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {

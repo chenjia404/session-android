@@ -33,8 +33,8 @@ class HelpSettingsFragment: CorrectedPreferenceFragment() {
         private const val SUPPORT = "support"
 
         private const val CROWDIN_URL = "https://crowdin.com/project/session-android"
-        private const val FEEDBACK_URL = BuildConfig.officialWebsite + "/survey"
-        private const val FAQ_URL = BuildConfig.officialWebsite +"/faq"
+        private const val FEEDBACK_URL = BuildConfig.OFFICIAL_WEBSITE + "/survey"
+        private const val FAQ_URL = BuildConfig.OFFICIAL_WEBSITE +"/faq"
         private const val SUPPORT_URL =  "https://sessionapp.zendesk.com/hc/en-us"
     }
 

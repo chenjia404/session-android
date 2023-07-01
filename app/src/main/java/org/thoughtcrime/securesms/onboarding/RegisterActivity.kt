@@ -25,7 +25,6 @@ import org.session.libsignal.crypto.ecc.ECKeyPair
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.utilities.KeyHelper
 import org.session.libsignal.utilities.Log
-import org.session.libsignal.utilities.Log.Logger
 import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.BaseActionBarActivity
@@ -61,14 +60,14 @@ class RegisterActivity : BaseActionBarActivity() {
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL(BuildConfig.officialWebsite + "/terms-of-service/")
+                openURL(BuildConfig.OFFICIAL_WEBSITE + "/terms-of-service/")
             }
         }, 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL(BuildConfig.officialWebsite + "/privacy-policy/")
+                openURL(BuildConfig.OFFICIAL_WEBSITE + "/privacy-policy/")
             }
         }, 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.termsTextView.movementMethod = LinkMovementMethod.getInstance()

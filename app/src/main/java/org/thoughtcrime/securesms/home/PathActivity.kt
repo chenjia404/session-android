@@ -170,7 +170,7 @@ class PathActivity : PassphraseRequiredActionBarActivity() {
     // region Interaction
     private fun learnMore() {
         try {
-            val url =  BuildConfig.officialWebsite +"/faq/#onion-routing"
+            val url =  BuildConfig.OFFICIAL_WEBSITE +"/faq/#onion-routing"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {
