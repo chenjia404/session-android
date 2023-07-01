@@ -270,6 +270,7 @@ android {
             buildConfigField "String", "defaultServer", "\"https://communities.qki.network\""
             buildConfigField "String", "defaultServerPublicKey", "\"70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e\""
             buildConfigField "String", "updateServer", "\"https://qki.network/\""
+            buildConfigField "String", "officialWebsite", "\"https://qki.network\""
 
         }
     }

@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import network.qki.messenger.BuildConfig
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityPathBinding
 import org.session.libsession.snode.OnionRequestAPI
@@ -169,7 +170,7 @@ class PathActivity : PassphraseRequiredActionBarActivity() {
     // region Interaction
     private fun learnMore() {
         try {
-            val url = "https://qki.network/faq/#onion-routing"
+            val url =  BuildConfig.officialWebsite +"/faq/#onion-routing"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {

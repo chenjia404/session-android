@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import network.qki.messenger.BuildConfig
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityPnModeBinding
 import org.session.libsession.utilities.TextSecurePreferences
@@ -77,7 +78,7 @@ class PNModeActivity : BaseActionBarActivity() {
 
     private fun learnMore() {
         try {
-            val url = "https://qki.network/faq/#privacy"
+            val url =  BuildConfig.officialWebsite +"/faq/#privacy"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         } catch (e: Exception) {

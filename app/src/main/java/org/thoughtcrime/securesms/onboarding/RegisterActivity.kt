@@ -16,6 +16,7 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
 import com.goterl.lazysodium.utils.KeyPair
+import network.qki.messenger.BuildConfig
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityRegisterBinding
 import org.session.libsession.snode.SnodeModule
@@ -60,14 +61,14 @@ class RegisterActivity : BaseActionBarActivity() {
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://qki.network/terms-of-service/")
+                openURL(BuildConfig.officialWebsite + "/terms-of-service/")
             }
         }, 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         termsExplanation.setSpan(object : ClickableSpan() {
 
             override fun onClick(widget: View) {
-                openURL("https://qki.network/privacy-policy/")
+                openURL(BuildConfig.officialWebsite + "/privacy-policy/")
             }
         }, 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.termsTextView.movementMethod = LinkMovementMethod.getInstance()
