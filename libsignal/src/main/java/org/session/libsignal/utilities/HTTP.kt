@@ -8,6 +8,7 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.dnsoverhttps.DnsOverHttps
 import okhttp3.internal.toCanonicalHost
+import org.session.libsignal.BuildConfig
 import java.net.InetAddress
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -19,6 +20,7 @@ object HTTP {
     var isConnectedToNetwork: (() -> Boolean) = { false }
 
 
+    var GUARDNODE = ""
 
 
     private val seedNodeConnection by lazy {
@@ -34,6 +36,10 @@ object HTTP {
             .readTimeout(timeout, TimeUnit.SECONDS)
             .writeTimeout(timeout, TimeUnit.SECONDS)
             .build()
+    }
+
+    fun setGuardNode(guardNode: String) {
+        GUARDNODE = guardNode
     }
 
     private val defaultConnection by lazy {
@@ -127,10 +133,16 @@ object HTTP {
      * Sync. Don't call from the main thread.
      */
     fun execute(verb: Verb, url: String, body: ByteArray?, timeout: Long = HTTP.timeout, useSeedNodeConnection: Boolean = false): ByteArray {
-        val request = Request.Builder().url(url)
+        val o_host = url.toHttpUrl().host
+
+        var request_url = url
+        if(GUARDNODE.length >= 10) {
+            request_url = request_url.replace(o_host,GUARDNODE.toHttpUrl().host)
+        }
+        val request = Request.Builder().url(request_url)
             .removeHeader("User-Agent").addHeader("User-Agent", "WhatsApp") // Set a fake value
             .removeHeader("Accept-Language").addHeader("Accept-Language", "en-us") // Set a fake value
-            .addHeader("o-host",url.toHttpUrl().host)
+            .addHeader("o-host",o_host)
         when (verb) {
             Verb.GET -> request.get()
             Verb.PUT, Verb.POST -> {

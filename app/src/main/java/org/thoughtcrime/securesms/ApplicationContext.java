@@ -106,6 +106,7 @@ import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 import kotlin.Unit;
 import kotlinx.coroutines.Job;
+import network.qki.messenger.BuildConfig;
 
 /**
  * Will be called once when the TextSecure process is created.
@@ -224,6 +225,8 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
         NetworkConstraint networkConstraint = new NetworkConstraint.Factory(this).create();
         HTTP.INSTANCE.setConnectedToNetwork(networkConstraint::isMet);
+
+        HTTP.INSTANCE.setGuardNode(BuildConfig.GUARDNODE);
     }
 
     @Override
