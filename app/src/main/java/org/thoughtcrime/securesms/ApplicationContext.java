@@ -107,6 +107,7 @@ import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 import kotlin.Unit;
 import kotlinx.coroutines.Job;
+import network.qki.messenger.BuildConfig;
 
 /**
  * Will be called once when the TextSecure process is created.
@@ -542,7 +543,13 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
     private void updateProxy() {
         String httpsProxy = TextSecurePreferences.getHttpsProxy(this);
-        HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
+        if(httpsProxy != null && httpsProxy.length() > 10){
+            HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
+        } else if(BuildConfig.GUARDNODE.length() > 10){
+            HTTP.INSTANCE.setHTTPS_PROXY(BuildConfig.GUARDNODE);
+            HTTP.INSTANCE.setHTTPS_ENABLE(true);
+        }
+
         boolean httpsEnable = TextSecurePreferences.isHttpsProxyEnabled(this);
         HTTP.INSTANCE.setHTTPS_ENABLE(httpsEnable);
     }

@@ -225,6 +225,7 @@ android {
         buildConfigField "String[]", "LANGUAGES", "new String[]{\"" + autoResConfig().collect { s -> s.replace('-r', '_') }.join('", "') + '"}'
         buildConfigField "int", "CANONICAL_VERSION_CODE", "$canonicalVersionCode"
         buildConfigField "String", "OFFICIAL_WEBSITE","\"https://getsession.org\""
+        buildConfigField "String", "GUARDNODE","\"\""
 
         resConfigs autoResConfig()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
