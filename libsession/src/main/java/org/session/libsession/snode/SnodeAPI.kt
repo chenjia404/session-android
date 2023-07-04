@@ -84,9 +84,6 @@ object SnodeAPI {
             setOf( "http://public.loki.foundation:38157" )
         } else {
             setOf(
-                "https://node1.ethtweet.io",
-                "https://node2.ethtweet.io",
-                "https://node3.ethtweet.io",
                 "https://seed1.getsession.org:$seedNodePort",
                 "https://seed2.getsession.org:$seedNodePort",
                 "https://seed3.getsession.org:$seedNodePort",
