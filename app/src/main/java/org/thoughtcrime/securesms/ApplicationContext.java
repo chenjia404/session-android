@@ -541,9 +541,16 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
 
     private void updateProxy() {
+        // https proxy
         String httpsProxy = TextSecurePreferences.getHttpsProxy(this);
         HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
         boolean httpsEnable = TextSecurePreferences.isHttpsProxyEnabled(this);
         HTTP.INSTANCE.setHTTPS_ENABLE(httpsEnable);
+
+        // socks proxy
+        String socksProxy = TextSecurePreferences.getSocks5Proxy(this);
+        HTTP.INSTANCE.setSOCKS_PROXY(socksProxy);
+        boolean socksEnable = TextSecurePreferences.isSocksProxyEnabled(this);
+        HTTP.INSTANCE.setSOCKS_ENABLE(socksEnable);
     }
 }

@@ -1,5 +1,6 @@
 package org.session.libsignal.utilities
 
+import android.text.TextUtils
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -8,11 +9,14 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.dnsoverhttps.DnsOverHttps
 import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.Proxy
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
+
 
 object HTTP {
     var isConnectedToNetwork: (() -> Boolean) = { false }
@@ -20,6 +24,9 @@ object HTTP {
 
     var HTTPS_PROXY = ""
     var HTTPS_ENABLE = false
+
+    var SOCKS_PROXY = ""
+    var SOCKS_ENABLE = false
 
 
     private val seedNodeConnection by lazy {
@@ -130,6 +137,7 @@ object HTTP {
     fun execute(verb: Verb, url: String, body: ByteArray?, timeout: Long = HTTP.timeout, useSeedNodeConnection: Boolean = false): ByteArray {
         val o_host = url.toHttpUrl().host
 
+        // https proxy
         var request_url = url
         if(this.HTTPS_PROXY.length >= 10 && this.HTTPS_ENABLE) {
             request_url = this.HTTPS_PROXY + url.toHttpUrl().encodedPath
@@ -152,13 +160,25 @@ object HTTP {
         }
         lateinit var response: Response
         try {
-            val connection = if (timeout != HTTP.timeout) { // Custom timeout
+            var connection = if (timeout != HTTP.timeout) { // Custom timeout
                 if (useSeedNodeConnection) {
                     throw IllegalStateException("Setting a custom timeout is only allowed for requests to snodes.")
                 }
                 getDefaultConnection(timeout)
             } else {
                 if (useSeedNodeConnection) seedNodeConnection else defaultConnection
+            }
+
+            // socks5 proxy
+            if(!TextUtils.isEmpty(this.SOCKS_PROXY) && this.SOCKS_ENABLE && this.SOCKS_PROXY.split(":").size == 2) {
+                val list = SOCKS_PROXY.split(":")
+//                Log.d("mcnk","list[0] = " + list[0])
+//                Log.d("mcnk","list[1] = " + list[1])
+                val proxy = Proxy(
+                    Proxy.Type.SOCKS,
+                    InetSocketAddress(list[0], list[1].toInt())
+                )
+                connection = connection.newBuilder().proxy(proxy).build()
             }
             response = connection.newCall(request.build()).execute()
         } catch (exception: Exception) {
