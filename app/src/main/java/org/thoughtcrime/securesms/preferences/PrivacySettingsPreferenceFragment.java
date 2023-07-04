@@ -55,14 +55,19 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
             showHttpsProxy(enabled);
             return false;
         });
-
+        this.findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5).setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean enabled = (boolean) newValue;
+            Logger.INSTANCE.d("enable = " + enabled);
+            showSocks5Proxy(enabled);
+            return false;
+        });
         this.findPreference(TextSecurePreferences.SCREEN_LOCK).setOnPreferenceChangeListener(new ScreenLockListener());
 
         this.findPreference(TextSecurePreferences.READ_RECEIPTS_PREF).setOnPreferenceChangeListener(new ReadReceiptToggleListener());
         this.findPreference(TextSecurePreferences.TYPING_INDICATORS).setOnPreferenceChangeListener(new TypingIndicatorsToggleListener());
         this.findPreference(TextSecurePreferences.LINK_PREVIEWS).setOnPreferenceChangeListener(new LinkPreviewToggleListener());
         this.findPreference(TextSecurePreferences.CALL_NOTIFICATIONS_ENABLED).setOnPreferenceChangeListener(new CallToggleListener(this, this::setCall));
-        updateHttpsSummary();
+        updateProxySummary(-1);
         initializeVisibility();
     }
 
@@ -233,7 +238,7 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
                 ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(!TextUtils.isEmpty(s));
                 HTTP.INSTANCE.setHTTPS_PROXY(s);
                 HTTP.INSTANCE.setHTTPS_ENABLE(!TextUtils.isEmpty(s));
-                updateHttpsSummary();
+                updateProxySummary(0);
                 return null;
             }, () -> {
 //                ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(false);
@@ -245,12 +250,52 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
         }
     }
 
-    private void updateHttpsSummary() {
-        String httpsProxy = TextSecurePreferences.getHttpsProxy(getContext());
-        if (TextUtils.isEmpty(httpsProxy)) {
-            this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(R.string.https_proxy_desc);
+    private void showSocks5Proxy(boolean enable) {
+        if (enable) {
+            new ProxyDialog(1, s -> {
+                TextSecurePreferences.setSocks5Proxy(getContext(), s);
+                ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5)).setChecked(!TextUtils.isEmpty(s));
+                HTTP.INSTANCE.setSOCKS_PROXY(s);
+                HTTP.INSTANCE.setSOCKS_ENABLE(!TextUtils.isEmpty(s));
+                updateProxySummary(1);
+                return null;
+            }, () -> null).show(getActivity().getSupportFragmentManager(), "https proxy");
         } else {
-            this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(httpsProxy);
+            ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5)).setChecked(false);
+            HTTP.INSTANCE.setSOCKS_ENABLE(false);
         }
+    }
+
+    private void updateProxySummary(int type) {
+        if (type == 0) {
+            String httpsProxy = TextSecurePreferences.getHttpsProxy(getContext());
+            if (TextUtils.isEmpty(httpsProxy)) {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(R.string.https_proxy_desc);
+            } else {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(httpsProxy);
+            }
+        } else if(type == 1){
+            String socksProxy = TextSecurePreferences.getSocks5Proxy(getContext());
+            if (TextUtils.isEmpty(socksProxy)) {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5).setSummary(R.string.socks5_proxy_desc);
+            } else {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5).setSummary(socksProxy);
+            }
+        } else {
+            String httpsProxy = TextSecurePreferences.getHttpsProxy(getContext());
+            if (TextUtils.isEmpty(httpsProxy)) {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(R.string.https_proxy_desc);
+            } else {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(httpsProxy);
+            }
+
+            String socksProxy = TextSecurePreferences.getSocks5Proxy(getContext());
+            if (TextUtils.isEmpty(socksProxy)) {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5).setSummary(R.string.socks5_proxy_desc);
+            } else {
+                this.findPreference(TextSecurePreferences.PREF_PROXY_SOCKS5).setSummary(socksProxy);
+            }
+        }
+
     }
 }
