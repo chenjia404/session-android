@@ -721,4 +721,7 @@
     <string name="please_enter_the_correct_url">请输入正确的URL</string>
     <string name="site_site_desc_2">这将帮助您获取最新的seed</string>
     <string name="rebot_device">请重启设备让配置生效</string>
+    <string name="custom_settings">自定义设置</string>
+    <string name="https_proxy_desc">这将帮助您更快的访问节点</string>
+    <string name="socks5_proxy_desc">使用本地代理服务帮助访问网络</string>
 </resources>

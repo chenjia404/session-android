@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,12 +21,14 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 
 import org.session.libsession.utilities.TextSecurePreferences;
+import org.session.libsignal.utilities.HTTP;
 import org.thoughtcrime.securesms.ApplicationContext;
 import org.thoughtcrime.securesms.components.SwitchPreferenceCompat;
 import org.thoughtcrime.securesms.permissions.Permissions;
 import org.thoughtcrime.securesms.service.KeyCachingService;
 import org.thoughtcrime.securesms.util.CallNotificationBuilder;
 import org.thoughtcrime.securesms.util.IntentUtils;
+import org.thoughtcrime.securesms.util.Logger;
 
 import kotlin.jvm.functions.Function1;
 import network.qki.messenger.BuildConfig;
@@ -47,13 +49,20 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
             showSeedWebsite();
             return false;
         });
+        this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setOnPreferenceChangeListener((preference, newValue) -> {
+            boolean enabled = (boolean) newValue;
+            Logger.INSTANCE.d("enable = " + enabled);
+            showHttpsProxy(enabled);
+            return false;
+        });
+
         this.findPreference(TextSecurePreferences.SCREEN_LOCK).setOnPreferenceChangeListener(new ScreenLockListener());
 
         this.findPreference(TextSecurePreferences.READ_RECEIPTS_PREF).setOnPreferenceChangeListener(new ReadReceiptToggleListener());
         this.findPreference(TextSecurePreferences.TYPING_INDICATORS).setOnPreferenceChangeListener(new TypingIndicatorsToggleListener());
         this.findPreference(TextSecurePreferences.LINK_PREVIEWS).setOnPreferenceChangeListener(new LinkPreviewToggleListener());
         this.findPreference(TextSecurePreferences.CALL_NOTIFICATIONS_ENABLED).setOnPreferenceChangeListener(new CallToggleListener(this, this::setCall));
-
+        updateHttpsSummary();
         initializeVisibility();
     }
 
@@ -214,4 +223,34 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
         }).show(getActivity().getSupportFragmentManager(), "show seed site");
     }
 
+    private void showHttpsProxy(boolean enable) {
+        if (enable) {
+            new ProxyDialog(0, s -> {
+                if (!TextUtils.isEmpty(s) && s.endsWith("/")) {
+                    s = s.substring(0, s.length() - 1);
+                }
+                TextSecurePreferences.setHttpsProxy(getContext(), s);
+                ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(!TextUtils.isEmpty(s));
+                HTTP.INSTANCE.setHttpsProxy(s);
+                HTTP.INSTANCE.setHTTPS_ENABLE(!TextUtils.isEmpty(s));
+                updateHttpsSummary();
+                return null;
+            }, () -> {
+//                ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(false);
+                return null;
+            }).show(getActivity().getSupportFragmentManager(), "https proxy");
+        } else {
+            ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(false);
+            HTTP.INSTANCE.setHTTPS_ENABLE(false);
+        }
+    }
+
+    private void updateHttpsSummary() {
+        String httpsProxy = TextSecurePreferences.getHttpsProxy(getContext());
+        if (TextUtils.isEmpty(httpsProxy)) {
+            this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(R.string.https_proxy_desc);
+        } else {
+            this.findPreference(TextSecurePreferences.PREF_PROXY_HTTPS).setSummary(httpsProxy);
+        }
+    }
 }

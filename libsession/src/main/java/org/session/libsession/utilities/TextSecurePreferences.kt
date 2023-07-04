@@ -18,7 +18,6 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.AUTOPLAY
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CALL_NOTIFICATIONS_ENABLED
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_DARK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
-import org.session.libsession.utilities.TextSecurePreferences.Companion.COSTOMIZED_NODE_SITE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
@@ -27,6 +26,7 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_LI
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SELECTED_STYLE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_NOTIFICATION
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_WARNING
+import org.session.libsignal.utilities.HTTP
 import org.session.libsignal.utilities.Log
 import java.io.IOException
 import java.util.Arrays
@@ -287,18 +287,53 @@ interface TextSecurePreferences {
         const val CLASSIC_LIGHT = "classic.light"
         const val OCEAN_DARK = "ocean.dark"
         const val OCEAN_LIGHT = "ocean.light"
-        const val COSTOMIZED_NODE_SITE = "customized_node_site"
+        const val KEY_COSTOMIZED_NODE_SITE = "customized_node_site"
+        const val KEY_PROXY_HTTPS = "https_proxy"
+        const val KEY_PROXY_SOCKS = "socks_proxy"
         const val PREF_SEED_SITE = "pref_seed_site"
+        const val PREF_PROXY_HTTPS = "pref_proxy_https"
+        const val PREF_PROXY_SOCKS5 = "pref_proxy_socks5"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
-            setStringPreference(context, COSTOMIZED_NODE_SITE, site)
+            setStringPreference(context, KEY_COSTOMIZED_NODE_SITE, site)
         }
 
         @JvmStatic
         fun getCustomizedNodeSite(context: Context): String? {
-            return getStringPreference(context, COSTOMIZED_NODE_SITE, null)
+            return getStringPreference(context, KEY_COSTOMIZED_NODE_SITE, null)
         }
+
+        @JvmStatic
+        fun setHttpsProxy(context: Context, proxy: String) {
+            setStringPreference(context, KEY_PROXY_HTTPS, proxy)
+        }
+
+        @JvmStatic
+        fun getHttpsProxy(context: Context): String? {
+            return getStringPreference(context, KEY_PROXY_HTTPS, "")
+        }
+
+        @JvmStatic
+        fun isHttpsProxyEnabled(context: Context): Boolean {
+            return getBooleanPreference(context, PREF_PROXY_HTTPS, false)
+        }
+
+        @JvmStatic
+        fun setSocks5Proxy(context: Context, proxy: String) {
+            setStringPreference(context, KEY_PROXY_SOCKS, proxy)
+        }
+
+        @JvmStatic
+        fun getSocks5Proxy(context: Context): String? {
+            return getStringPreference(context, KEY_PROXY_SOCKS, "")
+        }
+
+        @JvmStatic
+        fun isSocksProxyEnabled(context: Context): Boolean {
+            return getBooleanPreference(context, PREF_PROXY_SOCKS5, false)
+        }
+
 
         @JvmStatic
         fun getLastConfigurationSyncTime(context: Context): Long {

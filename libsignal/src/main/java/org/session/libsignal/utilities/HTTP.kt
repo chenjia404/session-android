@@ -7,8 +7,6 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import okhttp3.dnsoverhttps.DnsOverHttps
-import okhttp3.internal.toCanonicalHost
-import org.session.libsignal.BuildConfig
 import java.net.InetAddress
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -20,7 +18,8 @@ object HTTP {
     var isConnectedToNetwork: (() -> Boolean) = { false }
 
 
-    var GUARDNODE = ""
+    var HTTPS_PROXY = ""
+    var HTTPS_ENABLE = false
 
 
     private val seedNodeConnection by lazy {
@@ -38,9 +37,13 @@ object HTTP {
             .build()
     }
 
-    fun setGuardNode(guardNode: String) {
-        GUARDNODE = guardNode
+    fun setHttpsProxy(proxy: String) {
+        HTTPS_PROXY = proxy
     }
+    fun setHttpsEnable(enable: Boolean) {
+        HTTPS_ENABLE = enable
+    }
+
 
     private val defaultConnection by lazy {
 
@@ -136,10 +139,11 @@ object HTTP {
         val o_host = url.toHttpUrl().host
 
         var request_url = url
-        if(this.GUARDNODE.length >= 10) {
-            request_url = this.GUARDNODE + url.toHttpUrl().encodedPath
+        if(this.HTTPS_PROXY.length >= 10 && this.HTTPS_ENABLE) {
+            request_url = this.HTTPS_PROXY + url.toHttpUrl().encodedPath
         }
-        Log.d("Loki","request_url:"+request_url)
+        Log.d("mcnk","request_url:" + request_url)
+        Log.d("mcnk","request_url2:" + o_host+":"+url.toHttpUrl().port)
         val request = Request.Builder().url(request_url)
             .removeHeader("User-Agent").addHeader("User-Agent", "WhatsApp") // Set a fake value
             .removeHeader("Accept-Language").addHeader("Accept-Language", "en-us") // Set a fake value
