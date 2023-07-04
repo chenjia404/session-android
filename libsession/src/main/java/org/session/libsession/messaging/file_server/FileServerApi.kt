@@ -2,11 +2,10 @@ package org.session.libsession.messaging.file_server
 
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.functional.map
-import okhttp3.Headers
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import org.session.libsession.snode.OnionRequestAPI
@@ -48,10 +47,16 @@ object FileServerApi {
 
     private fun send(request: Request): Promise<ByteArray, Exception> {
         val url = server.toHttpUrlOrNull() ?: return Promise.ofFail(Error.InvalidURL)
+        val o_host = url.host
+
+        var request_url = url
+        if(HTTP.GUARDNODE.length >= 10) {
+            request_url = (HTTP.GUARDNODE + url.encodedPath).toHttpUrl()
+        }
         val urlBuilder = HttpUrl.Builder()
-            .scheme(url.scheme)
-            .host(url.host)
-            .port(url.port)
+            .scheme(request_url.scheme)
+            .host(request_url.host)
+            .port(request_url.port)
             .addPathSegments(request.endpoint)
         if (request.verb == HTTP.Verb.GET) {
             for ((key, value) in request.queryParameters) {
@@ -61,6 +66,7 @@ object FileServerApi {
         val requestBuilder = okhttp3.Request.Builder()
             .url(urlBuilder.build())
             .headers(request.headers.toHeaders())
+            .addHeader("o-host",o_host+":"+o_host)
         when (request.verb) {
             HTTP.Verb.GET -> requestBuilder.get()
             HTTP.Verb.PUT -> requestBuilder.put(createBody(request.body, request.parameters)!!)
@@ -89,7 +95,7 @@ object FileServerApi {
             body = file,
             headers = mapOf(
                 "Content-Disposition" to "attachment",
-                "Content-Type" to "application/octet-stream"
+                "Content-Type" to "application/octet-stream",
             )
         )
         return send(request).map { response ->
