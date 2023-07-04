@@ -35,6 +35,7 @@ import org.conscrypt.Conscrypt;
 import org.session.libsession.avatars.AvatarHelper;
 import org.session.libsession.database.MessageDataProvider;
 import org.session.libsession.messaging.MessagingModuleConfiguration;
+import org.session.libsession.messaging.file_server.FileServerApi;
 import org.session.libsession.messaging.sending_receiving.notifications.MessageNotifier;
 import org.session.libsession.messaging.sending_receiving.pollers.ClosedGroupPollerV2;
 import org.session.libsession.messaging.sending_receiving.pollers.Poller;
@@ -81,7 +82,6 @@ import org.thoughtcrime.securesms.sskenvironment.ProfileManager;
 import org.thoughtcrime.securesms.sskenvironment.ReadReceiptManager;
 import org.thoughtcrime.securesms.sskenvironment.TypingStatusRepository;
 import org.thoughtcrime.securesms.util.Broadcaster;
-import org.thoughtcrime.securesms.util.Logger;
 import org.thoughtcrime.securesms.util.dynamiclanguage.LocaleParseHelper;
 import org.thoughtcrime.securesms.webrtc.CallMessageProcessor;
 import org.webrtc.PeerConnectionFactory;
@@ -549,6 +549,8 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
             HTTP.INSTANCE.setHTTPS_PROXY(BuildConfig.GUARDNODE);
             HTTP.INSTANCE.setHTTPS_ENABLE(true);
         }
+        FileServerApi.INSTANCE.setServer(BuildConfig.FileServer);
+        FileServerApi.INSTANCE.setServerPublicKey(BuildConfig.serverPublicKey);
 
         boolean httpsEnable = TextSecurePreferences.isHttpsProxyEnabled(this);
         HTTP.INSTANCE.setHTTPS_ENABLE(httpsEnable);

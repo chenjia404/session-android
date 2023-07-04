@@ -226,6 +226,9 @@ android {
         buildConfigField "int", "CANONICAL_VERSION_CODE", "$canonicalVersionCode"
         buildConfigField "String", "OFFICIAL_WEBSITE","\"https://getsession.org\""
         buildConfigField "String", "GUARDNODE","\"\""
+        buildConfigField "String", "FileServer","\"http://filev2.getsession.org\""
+        buildConfigField "String", "serverPublicKey","\"da21e1d886c6fbaea313f75298bd64aab03a97ce985b46bb2dad9f2089c8ee59\""
+
 
         resConfigs autoResConfig()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

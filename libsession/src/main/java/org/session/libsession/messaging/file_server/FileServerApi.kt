@@ -15,9 +15,10 @@ import org.session.libsignal.utilities.Log
 
 object FileServerApi {
 
-    private const val serverPublicKey = "da21e1d886c6fbaea313f75298bd64aab03a97ce985b46bb2dad9f2089c8ee59"
-    const val server = "http://filev2.getsession.org"
+    var serverPublicKey = "da21e1d886c6fbaea313f75298bd64aab03a97ce985b46bb2dad9f2089c8ee59"
+    var server = "http://filev2.getsession.org"
     const val maxFileSize = 10_000_000 // 10 MB
+
 
     sealed class Error(message: String) : Exception(message) {
         object ParsingFailed : Error("Invalid response.")
