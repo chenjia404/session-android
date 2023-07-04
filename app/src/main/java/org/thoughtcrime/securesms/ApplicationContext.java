@@ -81,6 +81,7 @@ import org.thoughtcrime.securesms.sskenvironment.ProfileManager;
 import org.thoughtcrime.securesms.sskenvironment.ReadReceiptManager;
 import org.thoughtcrime.securesms.sskenvironment.TypingStatusRepository;
 import org.thoughtcrime.securesms.util.Broadcaster;
+import org.thoughtcrime.securesms.util.Logger;
 import org.thoughtcrime.securesms.util.dynamiclanguage.LocaleParseHelper;
 import org.thoughtcrime.securesms.webrtc.CallMessageProcessor;
 import org.webrtc.PeerConnectionFactory;
@@ -106,7 +107,6 @@ import dagger.hilt.EntryPoints;
 import dagger.hilt.android.HiltAndroidApp;
 import kotlin.Unit;
 import kotlinx.coroutines.Job;
-import network.qki.messenger.BuildConfig;
 
 /**
  * Will be called once when the TextSecure process is created.
@@ -137,10 +137,14 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     private Handler conversationListHandler;
     private PersistentLogger persistentLogger;
 
-    @Inject LokiAPIDatabase lokiAPIDatabase;
-    @Inject Storage storage;
-    @Inject MessageDataProvider messageDataProvider;
-    @Inject TextSecurePreferences textSecurePreferences;
+    @Inject
+    LokiAPIDatabase lokiAPIDatabase;
+    @Inject
+    Storage storage;
+    @Inject
+    MessageDataProvider messageDataProvider;
+    @Inject
+    TextSecurePreferences textSecurePreferences;
     CallMessageProcessor callMessageProcessor;
     MessagingModuleConfiguration messagingModuleConfiguration;
 
@@ -192,7 +196,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         messagingModuleConfiguration = new MessagingModuleConfiguration(this,
                 storage,
                 messageDataProvider,
-                ()-> KeyPairUtilities.INSTANCE.getUserED25519KeyPair(this));
+                () -> KeyPairUtilities.INSTANCE.getUserED25519KeyPair(this));
         callMessageProcessor = new CallMessageProcessor(this, textSecurePreferences, ProcessLifecycleOwner.get().getLifecycle(), storage);
         Log.i(TAG, "onCreate()");
         startKovenant();
@@ -226,7 +230,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         NetworkConstraint networkConstraint = new NetworkConstraint.Factory(this).create();
         HTTP.INSTANCE.setConnectedToNetwork(networkConstraint::isMet);
 
-        HTTP.INSTANCE.setGuardNode(BuildConfig.GUARDNODE);
+        updateProxy();
     }
 
     @Override
@@ -241,7 +245,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
             return;
         }
 
-        ThreadUtils.queue(()->{
+        ThreadUtils.queue(() -> {
             if (poller != null) {
                 poller.setCaughtUp(false);
             }
@@ -408,14 +412,15 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         super.attachBaseContext(DynamicLanguageContextWrapper.updateContext(base, TextSecurePreferences.getLanguage(base)));
     }
 
-    private static class ProviderInitializationException extends RuntimeException { }
+    private static class ProviderInitializationException extends RuntimeException {
+    }
 
     public void registerForFCMIfNeeded(final Boolean force) {
         if (firebaseInstanceIdJob != null && firebaseInstanceIdJob.isActive() && !force) return;
         if (force && firebaseInstanceIdJob != null) {
             firebaseInstanceIdJob.cancel(null);
         }
-        firebaseInstanceIdJob = FcmUtils.getFcmInstanceId(task->{
+        firebaseInstanceIdJob = FcmUtils.getFcmInstanceId(task -> {
             if (!task.isSuccessful()) {
                 Log.w("Loki", "FirebaseInstanceId.getInstance().getInstanceId() failed." + task.getException());
                 return Unit.INSTANCE;
@@ -533,4 +538,12 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     }
 
     // endregion
+
+
+    private void updateProxy() {
+        String httpsProxy = TextSecurePreferences.getHttpsProxy(this);
+        HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
+        boolean httpsEnable = TextSecurePreferences.isHttpsProxyEnabled(this);
+        HTTP.INSTANCE.setHTTPS_ENABLE(httpsEnable);
+    }
 }

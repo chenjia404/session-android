@@ -50,8 +50,8 @@ object FileServerApi {
         val o_host = url.host
 
         var request_url = url
-        if(HTTP.GUARDNODE.length >= 10) {
-            request_url = (HTTP.GUARDNODE + url.encodedPath).toHttpUrl()
+        if(HTTP.HTTPS_PROXY.length >= 10 && HTTP.HTTPS_ENABLE) {
+            request_url = (HTTP.HTTPS_PROXY + url.encodedPath).toHttpUrl()
         }
         val urlBuilder = HttpUrl.Builder()
             .scheme(request_url.scheme)

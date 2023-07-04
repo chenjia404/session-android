@@ -2,13 +2,25 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/seed_site">
+    <PreferenceCategory android:title="@string/custom_settings">
 
         <Preference
             android:defaultValue="false"
             android:key="pref_seed_site"
             android:summary="@string/site_site_desc_2"
             android:title="@string/seed_site" />
+
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_proxy_https"
+            android:summary="@string/https_proxy_desc"
+            android:title="Https Proxy" />
+
+        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_proxy_socks5"
+            android:summary="@string/socks5_proxy_desc"
+            android:title="Socks5 Proxy" />
 
     </PreferenceCategory>
 

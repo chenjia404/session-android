@@ -1030,4 +1030,7 @@
     <string name="site_site_desc_2">Help you get the latest seeds</string>
     <string name="rebot_device">Please restart the device for the configuration to take effect</string>
     <string name="wallet_address">Wallet Address</string>
+    <string name="custom_settings">Custom Settings</string>
+    <string name="https_proxy_desc">This will help you access nodes faster</string>
+    <string name="socks5_proxy_desc">Use a local proxy service to help access the web</string>
 </resources>
