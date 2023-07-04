@@ -37,14 +37,6 @@ object HTTP {
             .build()
     }
 
-    fun setHttpsProxy(proxy: String) {
-        HTTPS_PROXY = proxy
-    }
-    fun setHttpsEnable(enable: Boolean) {
-        HTTPS_ENABLE = enable
-    }
-
-
     private val defaultConnection by lazy {
 
         // Snode to snode communication uses self-signed certificates but clients can safely ignore this

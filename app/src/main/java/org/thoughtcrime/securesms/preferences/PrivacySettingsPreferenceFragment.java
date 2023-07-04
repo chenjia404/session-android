@@ -231,7 +231,7 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
                 }
                 TextSecurePreferences.setHttpsProxy(getContext(), s);
                 ((SwitchPreferenceCompat) findPreference(TextSecurePreferences.PREF_PROXY_HTTPS)).setChecked(!TextUtils.isEmpty(s));
-                HTTP.INSTANCE.setHttpsProxy(s);
+                HTTP.INSTANCE.setHTTPS_PROXY(s);
                 HTTP.INSTANCE.setHTTPS_ENABLE(!TextUtils.isEmpty(s));
                 updateHttpsSummary();
                 return null;
