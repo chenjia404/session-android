@@ -49,11 +49,8 @@ class PeerConnectionWrapper(private val context: Context,
     private var isInitiator = false
 
     private fun initPeerConnection() {
-        val random = SecureRandom().asKotlinRandom()
-        val iceServers = listOf("freyr","fenrir","frigg","angus","hereford","holstein", "brahman").shuffled(random).take(2).map { sub ->
-            PeerConnection.IceServer.builder("turn:$sub.getsession.org")
-                .setUsername("session202111")
-                .setPassword("053c268164bc7bd7")
+        val iceServers = listOf("stun:stun.qq.com:3478","stun:stun.newrocktech.com:3478","stun:stun.miwifi.com:3478","stun:stun.syncthing.net:3478","stun:stun1.l.google.com:19302","stun:stun.ethtweet.io:3478").map { sub ->
+            PeerConnection.IceServer.builder(sub)
                 .createIceServer()
         }
 
