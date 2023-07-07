@@ -222,6 +222,9 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
 
     private void showSeedWebsite() {
         new SeedSiteDialog(s -> {
+            if (!TextUtils.isEmpty(s) && s.endsWith("/")) {
+                s = s.substring(0, s.length() - 1);
+            }
             TextSecurePreferences.setCustomizedNodeSite(getContext(), s);
             Toast.makeText(requireContext(), getString(R.string.rebot_device), Toast.LENGTH_SHORT).show();
             return null;
