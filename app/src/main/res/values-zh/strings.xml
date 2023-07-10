@@ -713,4 +713,7 @@
     <string name="custom_settings">自定义设置</string>
     <string name="https_proxy_desc">这将帮助您更快的访问节点</string>
     <string name="socks5_proxy_desc">使用本地代理服务帮助访问网络</string>
+
+    <string name="menu_dao">DAO</string>
+    <string name="exit_again">再按一次退出</string>
 </resources>

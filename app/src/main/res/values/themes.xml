@@ -386,6 +386,9 @@
         <item name="scroll_to_bottom_button_border">@color/classic_dark_3</item>
         <item name="conversation_unread_count_indicator_background">@color/classic_dark_4</item>
         <item name="message_selected">@color/classic_dark_2</item>
+
+        <item name="mainColor">@color/core_black</item>
+        <item name="reverseMainColor">@color/core_white</item>
     </style>
 
     <style name="Classic.Light">
@@ -471,6 +474,9 @@
         <item name="scroll_to_bottom_button_border">@color/classic_light_2</item>
         <item name="conversation_unread_count_indicator_background">@color/classic_dark_4</item>
         <item name="message_selected">@color/classic_light_4</item>
+
+        <item name="mainColor">@color/core_white</item>
+        <item name="reverseMainColor">@color/core_black</item>
 
     </style>
 

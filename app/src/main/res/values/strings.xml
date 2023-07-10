@@ -1033,4 +1033,9 @@
     <string name="custom_settings">Custom Settings</string>
     <string name="https_proxy_desc">This will help you access nodes faster</string>
     <string name="socks5_proxy_desc">Use a local proxy service to help access the web</string>
+
+
+    <string name="menu_dao">DAO</string>
+    <string name="exit_again">Press again to exit</string>
+
 </resources>

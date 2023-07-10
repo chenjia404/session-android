@@ -375,4 +375,7 @@
     <attr name="reactionsPillNormalBackground" format="color|reference"/>
     <attr name="reactionsPillNormalTextColor" format="color|reference"/>
 
+    <attr name="mainColor" format="reference|color"/>
+    <attr name="reverseMainColor" format="reference|color"/>
+
 </resources>
