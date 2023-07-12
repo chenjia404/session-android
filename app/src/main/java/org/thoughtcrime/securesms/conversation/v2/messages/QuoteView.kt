@@ -130,9 +130,9 @@ class QuoteView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     @ColorInt private fun getTextColor(isOutgoingMessage: Boolean): Int {
         if (mode == Mode.Draft) { return context.getColorFromAttr(android.R.attr.textColorPrimary) }
         return if (!isOutgoingMessage) {
-            context.getColorFromAttr(R.attr.message_received_text_color)
+            context.getColorFromAttr(R.attr.chat_received_text_color)
         } else  {
-            context.getColorFromAttr(R.attr.message_sent_text_color)
+            context.getColorFromAttr(R.attr.chat_sent_text_color)
         }
     }
 

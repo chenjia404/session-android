@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Session</string>
+    <string name="app_name">EthMessenger</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="delete">删除</string>
@@ -58,7 +58,7 @@
     <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">抱歉，设置附件时出错。</string>
     <string name="ConversationActivity_message">消息</string>
     <string name="ConversationActivity_compose">撰写</string>
-    <string name="ConversationActivity_muted_until_date">禁言至 %1$s</string>
+    <string name="ConversationActivity_muted_until_date">静音至 %1$s</string>
     <string name="ConversationActivity_muted_forever">已静音</string>
     <string name="ConversationActivity_member_count">%1$d 位成员</string>
     <string name="ConversationActivity_open_group_guidelines">社群准则</string>

@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -53,23 +52,24 @@ class ConversationView : LinearLayout {
         } else {
             binding.conversationViewDisplayNameTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
         }
-        binding.root.background = if (thread.unreadCount > 0) {
-            ContextCompat.getDrawable(context, R.drawable.conversation_unread_background)
-        } else {
-            ContextCompat.getDrawable(context, R.drawable.conversation_view_background)
-        }
+//        binding.root.background = if (thread.unreadCount > 0) {
+//            ContextCompat.getDrawable(context, R.drawable.conversation_unread_background)
+//        } else {
+//            ContextCompat.getDrawable(context, R.drawable.conversation_view_background)
+//        }
+        binding.root.background = ContextCompat.getDrawable(context, R.drawable.conversation_view_background)
         binding.profilePictureView.root.glide = glide
         val unreadCount = thread.unreadCount
         if (thread.recipient.isBlocked) {
             binding.accentView.setBackgroundResource(R.color.destructive)
-            binding.accentView.visibility = View.VISIBLE
+            binding.accentView.visibility = View.GONE
         } else {
             val accentColor = context.getAccentColor()
             val background = ColorDrawable(accentColor)
             binding.accentView.background = background
             // Using thread.isRead we can determine if the last message was our own, and display it as 'read' even though previous messages may not be
             // This would also not trigger the disappearing message timer which may or may not be desirable
-            binding.accentView.visibility = if (unreadCount > 0 && !thread.isRead) View.VISIBLE else View.INVISIBLE
+            //binding.accentView.visibility = if (unreadCount > 0 && !thread.isRead) View.VISIBLE else View.INVISIBLE
         }
         val formattedUnreadCount = if (thread.isRead) {
             null

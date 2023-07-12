@@ -1,11 +1,13 @@
 package org.thoughtcrime.securesms.home
 
-import android.content.BroadcastReceiver
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import com.azhon.appupdate.manager.DownloadManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -36,7 +38,6 @@ import javax.inject.Inject
 class HomeActivity : PassphraseRequiredActionBarActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private var broadcastReceiver: BroadcastReceiver? = null
 
     @Inject
     lateinit var threadDb: ThreadDatabase
@@ -53,14 +54,16 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
     @Inject
     lateinit var textSecurePreferences: TextSecurePreferences
 
+    private val homeViewModel by viewModels<HomeViewModel>()
 
-    private var navigationTitleList = arrayOf(
+
+    private var tabTitles = arrayOf(
         R.string.activity_settings_chats_button_title,
         R.string.menu_dao,
         R.string.activity_settings_title
     )
 
-    var navigationIconList = arrayOf(
+    private var tabIcons = arrayOf(
         R.drawable.ic_chat,
         R.drawable.ic_dao,
         R.drawable.ic_setting
@@ -81,6 +84,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         binding.viewpager.adapter = viewPagerAdapter
         binding.viewpager.isUserInputEnabled = false
         intTabLayout()
+        checkUpdate()
     }
 
     override fun onBackPressed() {
@@ -91,6 +95,16 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         } else if (now - lastPressTime < 2 * 1000) super.onBackPressed()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (supportFragmentManager.fragments.isNotEmpty()) {
+            val currentItem = binding.viewpager.currentItem
+            val fragment = supportFragmentManager.fragments[currentItem]
+            if (fragment is SettingFragment) {
+                fragment.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
 
     private fun checkUpdate() {
         val client = OkHttpClient.Builder()
@@ -146,18 +160,26 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
 
     private fun intTabLayout() {
         binding.viewpager.adapter = viewPagerAdapter
-        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
-            tab.text = getString(navigationTitleList[position])
+        TabLayoutMediator(binding.tabLayout, binding.viewpager, false, false) { tab, position ->
+            tab.text = getString(tabTitles[position])
+
         }.attach()
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             // 页面被选中
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val tvTitle = tab.customView?.findViewById<TextView>(R.id.tvTitle)
                 val ivIcon = tab?.customView?.findViewById<ImageView>(R.id.ivIcon)
-                tvTitle?.visibility = View.VISIBLE
+                tvTitle?.visibility = View.GONE
                 tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
+                if (tab.position === 0) {
+                    window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
+                } else if (tab.position === 2) {
+                    window?.statusBarColor = getColorFromAttr(R.attr.settingBgColor)
+                } else {
+                    window?.statusBarColor = getColorFromAttr(R.attr.colorPrimary)
+                }
             }
 
             // 页面切换到其他
@@ -172,21 +194,30 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-        for (i in navigationTitleList.indices) {
+        for (i in tabTitles.indices) {
             val tab = binding.tabLayout.getTabAt(i)
             tab?.setCustomView(R.layout.item_home_tab)
             val tvTitle = tab?.customView?.findViewById<TextView>(R.id.tvTitle)
             val ivIcon = tab?.customView?.findViewById<ImageView>(R.id.ivIcon)
-            tvTitle?.text = getString(navigationTitleList[i])
-            ivIcon?.setImageResource(navigationIconList[i])
+            tvTitle?.text = getString(tabTitles[i])
+            tvTitle?.visibility = View.GONE
+            tvTitle?.setTextColor(getColorFromAttr(R.attr.reverseMainColor))
+            ivIcon?.imageTintList =
+                ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor))
+            ivIcon?.setImageResource(tabIcons[i])
             if (i == 0) {
-                tvTitle?.visibility = View.VISIBLE
+                tvTitle?.visibility = View.GONE
                 tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
+                window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
             }
         }
         binding.tabLayout.getTabAt(0)?.select()
+    }
+
+    fun showTabLayout(isShow: Boolean) {
+        binding.cardView.isVisible = isShow
     }
 
 

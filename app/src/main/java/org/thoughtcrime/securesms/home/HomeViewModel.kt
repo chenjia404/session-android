@@ -1,16 +1,22 @@
 package org.thoughtcrime.securesms.home
 
+import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.cash.copper.flow.observeQuery
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import kotlinx.coroutines.withContext
+import org.thoughtcrime.securesms.BaseViewModel
 import org.thoughtcrime.securesms.database.DatabaseContentProviders
 import org.thoughtcrime.securesms.database.ThreadDatabase
 import org.thoughtcrime.securesms.database.model.ThreadRecord
@@ -18,7 +24,7 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val threadDb: ThreadDatabase): ViewModel() {
+class HomeViewModel @Inject constructor(application: Application, private val threadDb: ThreadDatabase): BaseViewModel(application) {
 
     private val executor = viewModelScope + SupervisorJob()
     private var lastContext: WeakReference<Context>? = null
@@ -67,5 +73,4 @@ class HomeViewModel @Inject constructor(private val threadDb: ThreadDatabase): V
         }
         return conversations
     }
-
 }

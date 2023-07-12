@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_spacing"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/preference_single_no_padding"
+                android:background="@drawable/shape_bg_top_20"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/large_spacing"
                 android:layout_marginTop="@dimen/large_spacing"
-                android:background="@drawable/preference_single_no_padding"
+                android:background="@drawable/shape_bg_top_20"
                 android:orientation="vertical">
 
                 <!-- Path -->
