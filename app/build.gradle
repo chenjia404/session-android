@@ -135,6 +135,11 @@ dependencies {
     implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.6-androidx'
     // web3j
     implementation ('org.web3j:core:4.8.8-android')
+    implementation('org.bitcoinj:bitcoinj-core:0.15.10'){
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on-1.70'
+        exclude group: 'org.bouncycastle', module: 'jetified-bcprov-jdk15to18-1.68'
+        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15to18'
+    }
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.11.1'

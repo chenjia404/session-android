@@ -70,6 +70,8 @@ import splitties.systemservices.inputMethodManager
 import java.io.File
 import java.security.SecureRandom
 import java.util.Date
+import javax.inject.Inject
+
 
 /**
  * Created by Yaakov on
@@ -90,7 +92,11 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(requireContext(), fileName)
         }
-        MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        if (hexEncodedSeed.length == 64 && textSecurePreferences.isImportByPk()) {
+            hexEncodedSeed
+        } else {
+            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        }
     }
 
     private var displayNameEditActionMode: ActionMode? = null
@@ -99,6 +105,9 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
         }
     private lateinit var glide: GlideRequests
     private var tempFile: File? = null
+
+    @Inject
+    lateinit var textSecurePreferences: TextSecurePreferences
 
     private val hexEncodedPublicKey: String
         get() {

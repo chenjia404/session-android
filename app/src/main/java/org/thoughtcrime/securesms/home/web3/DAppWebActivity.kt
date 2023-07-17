@@ -19,6 +19,7 @@ import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.databinding.ActivityDappWebBinding
+import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.utilities.hexEncodedPrivateKey
@@ -27,6 +28,7 @@ import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
 import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.home.DaoViewModel
 import org.thoughtcrime.securesms.util.Logger
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -35,6 +37,10 @@ class DAppWebActivity : PassphraseRequiredActionBarActivity() {
     private lateinit var binding: ActivityDappWebBinding
 
     private val viewModel by viewModels<DaoViewModel>()
+
+
+    @Inject
+    lateinit var textSecurePreferences: TextSecurePreferences
 
     private lateinit var agentWeb: AgentWeb
 
@@ -52,7 +58,11 @@ class DAppWebActivity : PassphraseRequiredActionBarActivity() {
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(this, fileName)
         }
-        MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        if (hexEncodedSeed.length == 64 && textSecurePreferences.isImportByPk()) {
+            hexEncodedSeed
+        } else {
+            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {

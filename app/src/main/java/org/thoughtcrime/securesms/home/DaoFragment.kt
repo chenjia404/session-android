@@ -48,7 +48,11 @@ class DaoFragment : BaseFragment<DaoViewModel>(R.layout.fragment_dao) {
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(requireContext(), fileName)
         }
-        MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        if (hexEncodedSeed.length == 64) {
+            hexEncodedSeed
+        } else {
+            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+        }
     }
 
     // region Lifecycle

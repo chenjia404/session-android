@@ -200,17 +200,16 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
             )
             val words = mnemonic.split(" ").toMutableList()
             // support private key
-            if (words.size == 1 && mnemonic.length == 64) {
+            return if (words.size == 1 && mnemonic.length == 64) {
                 val credentials = Credentials.create(mnemonic)
-                return credentials.address
+                credentials.address
             } else {
                 val seed = MnemonicUtils.generateSeed(mnemonic, "")
                 val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
                 val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
                 val credentials = Credentials.create(bip44Keypair)
-                return credentials.address
+                credentials.address
             }
-
         }
 
         @JvmStatic
@@ -222,14 +221,22 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
                 0,
                 0
             )
-            val seed = MnemonicUtils.generateSeed(mnemonic, "")
-            val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
-            val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
-            val credentials = Credentials.create(bip44Keypair)
-            val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
-            val address = credentials.address
-            return Wallet(mnemonic, pk, address)
+            val words = mnemonic.split(" ").toMutableList()
+            // support private key
+            return if (words.size == 1 && mnemonic.length == 64) {
+                val credentials = Credentials.create(mnemonic)
+                val pk = "0x$mnemonic"
+                val address = credentials.address
+                Wallet("", pk, address)
+            } else {
+                val seed = MnemonicUtils.generateSeed(mnemonic, "")
+                val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+                val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+                val credentials = Credentials.create(bip44Keypair)
+                val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
+                val address = credentials.address
+                Wallet(mnemonic, pk, address)
+            }
         }
-
     }
 }

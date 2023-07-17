@@ -19,6 +19,7 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.CALL_NOT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_DARK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
+import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_IMPORT_BY_PK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_DARK
@@ -26,7 +27,6 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_LI
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SELECTED_STYLE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_NOTIFICATION
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_WARNING
-import org.session.libsignal.utilities.HTTP
 import org.session.libsignal.utilities.Log
 import java.io.IOException
 import java.util.Arrays
@@ -184,6 +184,10 @@ interface TextSecurePreferences {
     fun hasPreference(key: String): Boolean
     fun clearAll()
 
+    fun setImportByPk(isPk: Boolean)
+
+    fun isImportByPk(): Boolean
+
     companion object {
         val TAG = TextSecurePreferences::class.simpleName
 
@@ -293,6 +297,7 @@ interface TextSecurePreferences {
         const val PREF_SEED_SITE = "pref_seed_site"
         const val PREF_PROXY_HTTPS = "pref_proxy_https"
         const val PREF_PROXY_SOCKS5 = "pref_proxy_socks5"
+        const val KEY_IMPORT_BY_PK = "import_by_pk"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
@@ -1826,5 +1831,13 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun clearAll() {
         getDefaultSharedPreferences(context).edit().clear().commit()
+    }
+
+    override fun setImportByPk(isPk: Boolean) {
+        setBooleanPreference(KEY_IMPORT_BY_PK, isPk)
+    }
+
+    override fun isImportByPk(): Boolean {
+        return getBooleanPreference(KEY_IMPORT_BY_PK, false)
     }
 }
