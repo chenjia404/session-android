@@ -313,10 +313,10 @@ class VisibleMessageContentView : ConstraintLayout {
         fun getTextColor(context: Context, message: MessageRecord): Int {
             val colorAttribute = if (message.isOutgoing) {
                 // sent
-                R.attr.message_sent_text_color
+                R.attr.chat_sent_text_color
             } else {
                 // received
-                R.attr.message_received_text_color
+                R.attr.chat_received_text_color
             }
             return context.getColorFromAttr(colorAttribute)
         }

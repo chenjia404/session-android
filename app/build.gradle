@@ -126,7 +126,15 @@ dependencies {
     implementation "com.opencsv:opencsv:4.6"
     implementation("com.louiscad.splitties:splitties-systemservices:3.0.0")
     implementation("com.louiscad.splitties:splitties-appctx:3.0.0")
-
+    // https://github.com/zhpanvip/BannerViewPager
+    implementation 'com.github.zhpanvip:BannerViewPager:3.5.0'
+    // https://github.com/trustwallet/trust-web3-provider
+    implementation 'com.github.trustwallet:trust-web3-provider:2.0.3'
+    // https://github.com/Justson/AgentWeb
+    implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx'
+    implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.6-androidx'
+    // web3j
+    implementation ('org.web3j:core:4.8.8-android')
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.11.1'

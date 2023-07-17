@@ -5,7 +5,7 @@
     android:id="@+id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?chatsToolbarColor"
+    android:background="?attr/chatsToolbarColor"
     android:orientation="vertical"
     tools:context="org.thoughtcrime.securesms.home.HomeActivity">
 
@@ -119,7 +119,7 @@
             android:clipToPadding="false"
             android:paddingBottom="172dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="6"
+            tools:itemCount="12"
             tools:listitem="@layout/view_conversation" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -155,7 +155,9 @@
                 android:layout_width="196dp"
                 android:layout_height="@dimen/medium_button_height"
                 android:layout_marginTop="@dimen/medium_spacing"
-                android:text="@string/activity_home_empty_state_button_title" />
+                android:background="@drawable/shape_bottom_left"
+                android:text="@string/activity_home_empty_state_button_title"
+                android:textColor="?attr/reverseMainColor" />
 
         </LinearLayout>
 

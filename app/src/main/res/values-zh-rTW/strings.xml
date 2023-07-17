@@ -724,4 +724,14 @@
     <string name="custom_settings">自定义设置</string>
     <string name="https_proxy_desc">这将帮助您更快的访问节点</string>
     <string name="socks5_proxy_desc">使用本地代理服务帮助访问网络</string>
+    <string name="mute">静音</string>
+    <string name="group_setting">群组设置</string>
+    <string name="recovery">恢复</string>
+    <string name="create">创建</string>
+    <string name="banner_desc_1">A Decentralized social network Ethereum Messenger protocol</string>
+    <string name="banner_desc_2">Everyone can connect Ethmessenger supports Chat/Team Chat, video and picture posts</string>
+    <string name="banner_desc_3">Ethmessenger gives you control over your privacy while allowing you to communicate securely with anyone\n</string>
+    <string name="banner_desc_2_1">Chat Phone Media</string>
+    <string name="banner_desc_3_1">Top- notch Security</string>
+    <string name="enter_correct_phrase">请输入正确的口令</string>
 </resources>

@@ -8,6 +8,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.Rect
@@ -28,13 +29,16 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.DimenRes
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.core.widget.ImageViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -51,6 +55,9 @@ import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityConversationV2Binding
 import network.qki.messenger.databinding.ViewVisibleMessageBinding
 import nl.komponents.kovenant.ui.successUi
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.contacts.Contact
 import org.session.libsession.messaging.jobs.AttachmentDownloadJob
@@ -73,10 +80,12 @@ import org.session.libsession.messaging.utilities.SessionId
 import org.session.libsession.snode.SnodeAPI
 import org.session.libsession.utilities.Address
 import org.session.libsession.utilities.Address.Companion.fromSerialized
+import org.session.libsession.utilities.ExpirationUtil
 import org.session.libsession.utilities.GroupUtil
 import org.session.libsession.utilities.MediaTypes
 import org.session.libsession.utilities.Stub
 import org.session.libsession.utilities.TextSecurePreferences
+import org.session.libsession.utilities.UserEvent
 import org.session.libsession.utilities.concurrent.SimpleTask
 import org.session.libsession.utilities.getColorFromAttr
 import org.session.libsession.utilities.isScrolledToBottom
@@ -156,6 +165,7 @@ import org.thoughtcrime.securesms.reactions.any.ReactWithAnyEmojiDialogFragment
 import org.thoughtcrime.securesms.util.ActivityDispatcher
 import org.thoughtcrime.securesms.util.ConfigurationMessageUtilities
 import org.thoughtcrime.securesms.util.DateUtils
+import org.thoughtcrime.securesms.util.Logger
 import org.thoughtcrime.securesms.util.MediaUtil
 import org.thoughtcrime.securesms.util.SaveAttachmentTask
 import org.thoughtcrime.securesms.util.drawToBitmap
@@ -380,6 +390,7 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         const val PICK_GIF = 10
         const val PICK_FROM_LIBRARY = 12
         const val INVITE_CONTACTS = 124
+        const val SEARCH = 125
 
     }
     // endregion
@@ -390,6 +401,8 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         binding = ActivityConversationV2Binding.inflate(layoutInflater)
         setContentView(binding!!.root)
         window?.statusBarColor = getColorFromAttr(R.attr.settingBgColor)
+
+        EventBus.getDefault().register(this)
         // messageIdToScroll
         messageToScrollTimestamp.set(intent.getLongExtra(SCROLL_MESSAGE_ID, -1))
         messageToScrollAuthor.set(intent.getParcelableExtra(SCROLL_MESSAGE_AUTHOR))
@@ -434,7 +447,7 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         updateSendAfterApprovalText()
         showOrHideInputIfNeeded()
         setUpMessageRequestsBar()
-
+        setUpSearchView()
         val weakActivity = WeakReference(this)
 
         lifecycleScope.launch(Dispatchers.IO) {
@@ -562,6 +575,26 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         MentionManagerUtilities.populateUserPublicKeyCacheIfNeeded(viewModel.threadId, this)
         val profilePictureView = binding.toolbarContent.profilePictureView.root
         viewModel.recipient?.let(profilePictureView::update)
+        // menu
+
+        // call
+        binding.toolbarContent.ivPhone.isVisible = !recipient.isGroupRecipient && recipient.hasApprovedMe()
+
+        // Expiring messages
+        updateExpireMessages(recipient)
+
+        binding.toolbarContent.ivMore.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            intent.putExtra(UserActivity.RECIPIENT_ID, viewModel.threadId)
+            startActivityForResult(intent, SEARCH)
+        }
+        binding.toolbarContent.ivPhone.setOnClickListener {
+            if (!isMessageRequestThread()) {
+                ConversationMenuHelper.call(this, recipient)
+            }
+
+        }
+
     }
 
     // called from onCreate
@@ -642,13 +675,13 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
     // called from onCreate
     private fun setUpTypingObserver() {
         ApplicationContext.getInstance(this).typingStatusRepository.getTypists(viewModel.threadId).observe(this) { state ->
-                val recipients = if (state != null) state.typists else listOf()
-                // FIXME: Also checking isScrolledToBottom is a quick fix for an issue where the
-                //        typing indicator overlays the recycler view when scrolled up
-                val viewContainer = binding?.typingIndicatorViewContainer ?: return@observe
-                viewContainer.isVisible = recipients.isNotEmpty() && isScrolledToBottom
-                viewContainer.setTypists(recipients)
-            }
+            val recipients = if (state != null) state.typists else listOf()
+            // FIXME: Also checking isScrolledToBottom is a quick fix for an issue where the
+            //        typing indicator overlays the recycler view when scrolled up
+            val viewContainer = binding?.typingIndicatorViewContainer ?: return@observe
+            viewContainer.isVisible = recipients.isNotEmpty() && isScrolledToBottom
+            viewContainer.setTypists(recipients)
+        }
         if (textSecurePreferences.isTypingIndicatorsEnabled()) {
             binding!!.inputBar.addTextChangedListener(object : SimpleTextWatcher() {
 
@@ -735,16 +768,17 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val recipient = viewModel.recipient ?: return false
-        if (!isMessageRequestThread()) {
-            ConversationMenuHelper.onPrepareOptionsMenu(
-                menu, menuInflater, recipient, viewModel.threadId, this
-            ) { onOptionsItemSelected(it) }
-        }
+//        val recipient = viewModel.recipient ?: return false
+//        if (!isMessageRequestThread()) {
+//            ConversationMenuHelper.onPrepareOptionsMenu(
+//                menu, menuInflater, recipient, viewModel.threadId, this
+//            ) { onOptionsItemSelected(it) }
+//        }
         return true
     }
 
     override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
         viewModel.saveDraft(binding?.inputBar?.text?.trim() ?: "")
         tearDownRecipientObserver()
         super.onDestroy()
@@ -1075,18 +1109,19 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         return viewModel.recipient?.let { recipient ->
             ConversationMenuHelper.onOptionItemSelected(this, item, recipient)
         } ?: false
+        return false
     }
 
     override fun block(deleteThread: Boolean) {
         val title = R.string.RecipientPreferenceActivity_block_this_contact_question
         val message = R.string.RecipientPreferenceActivity_you_will_no_longer_receive_messages_and_calls_from_this_contact
         val dialog = AlertDialog.Builder(this).setTitle(title).setMessage(message).setNegativeButton(android.R.string.cancel, null).setPositiveButton(R.string.RecipientPreferenceActivity_block) { _, _ ->
-                viewModel.block(this@ConversationActivityV2)
-                if (deleteThread) {
-                    viewModel.deleteThread()
-                    finish()
-                }
-            }.show()
+            viewModel.block(this@ConversationActivityV2)
+            if (deleteThread) {
+                viewModel.deleteThread()
+                finish()
+            }
+        }.show()
         val button = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
         button.setContentDescription("Confirm block")
     }
@@ -1127,7 +1162,7 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
             val expiringMessageManager = ApplicationContext.getInstance(this).expiringMessageManager
             expiringMessageManager.setExpirationTimer(message)
             MessageSender.send(message, thread.address)
-            invalidateOptionsMenu()
+            updateExpireMessages(thread)
         }
     }
 
@@ -1135,8 +1170,8 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         val title = R.string.ConversationActivity_unblock_this_contact_question
         val message = R.string.ConversationActivity_you_will_once_again_be_able_to_receive_messages_and_calls_from_this_contact
         AlertDialog.Builder(this).setTitle(title).setMessage(message).setNegativeButton(android.R.string.cancel, null).setPositiveButton(R.string.ConversationActivity_unblock) { _, _ ->
-                viewModel.unblock(this@ConversationActivityV2)
-            }.show()
+            viewModel.unblock(this@ConversationActivityV2)
+        }.show()
     }
 
     // `position` is the adapter position; not the visual position
@@ -1725,6 +1760,11 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
                 }
                 viewModel.inviteContacts(recipients)
             }
+
+            SEARCH -> {
+                Logger.d("-----")
+                searchViewModel.onSearchOpened()
+            }
         }
     }
 
@@ -1752,8 +1792,8 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
             ) // Limit voice messages to 1 minute each
         } else {
             Permissions.with(this).request(Manifest.permission.RECORD_AUDIO).withRationaleDialog(
-                    getString(R.string.ConversationActivity_to_send_audio_messages_allow_signal_access_to_your_microphone), R.drawable.ic_baseline_mic_48
-                ).withPermanentDenialDialog(getString(R.string.ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages)).execute()
+                getString(R.string.ConversationActivity_to_send_audio_messages_allow_signal_access_to_your_microphone), R.drawable.ic_baseline_mic_48
+            ).withPermanentDenialDialog(getString(R.string.ConversationActivity_signal_requires_the_microphone_permission_in_order_to_send_audio_messages)).execute()
         }
     }
 
@@ -1982,10 +2022,10 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
                 }.onAllGranted {
                     endActionMode()
                     val attachments: List<SaveAttachmentTask.Attachment?> = Stream.of(message.slideDeck.slides).filter { s: Slide -> s.uri != null && (s.hasImage() || s.hasVideo() || s.hasAudio() || s.hasDocument()) }.map { s: Slide ->
-                            SaveAttachmentTask.Attachment(
-                                s.uri!!, s.contentType, message.dateReceived, s.fileName.orNull()
-                            )
-                        }.toList()
+                        SaveAttachmentTask.Attachment(
+                            s.uri!!, s.contentType, message.dateReceived, s.fileName.orNull()
+                        )
+                    }.toList()
                     if (attachments.isNotEmpty()) {
                         val saveTask = SaveAttachmentTask(this)
                         saveTask.executeOnExecutor(
@@ -2140,4 +2180,68 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
         }
     }
 
+    private fun updateExpireMessages(recipient: Recipient) {
+        if (!recipient.isOpenGroupRecipient && (recipient.hasApprovedMe() || recipient.isClosedGroupRecipient)) {
+            if (recipient.expireMessages > 0) {
+                binding?.toolbarContent?.menuBadgeIcon?.isVisible = true
+                binding?.toolbarContent?.expirationBadge?.isVisible = true
+                binding?.toolbarContent?.expirationBadge?.text = ExpirationUtil.getExpirationAbbreviatedDisplayValue(this, recipient.expireMessages)
+                binding?.toolbarContent?.menuBadgeIcon?.setOnClickListener {
+                    ConversationMenuHelper.showExpiringMessagesDialog(this, recipient)
+                }
+                binding?.toolbarContent?.expirationBadge?.setOnClickListener {
+                    ConversationMenuHelper.showExpiringMessagesDialog(this, recipient)
+                }
+            } else {
+                binding?.toolbarContent?.menuBadgeIcon?.isVisible = false
+                binding?.toolbarContent?.expirationBadge?.isVisible = false
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: UserEvent) {
+        when (event.type) {
+            UserEvent.EXPIRATION -> {
+                updateExpireMessages(event.recipient)
+            }
+
+            UserEvent.BLOCK -> {
+                block(false)
+            }
+
+            UserEvent.UNBLOCK -> {
+                unblock()
+            }
+
+            UserEvent.SEARCH -> {
+                binding?.toolbarContent?.searchView?.isVisible = true
+                binding?.toolbarContent?.clContent?.isVisible = false
+                onSearchOpened()
+            }
+        }
+    }
+
+    private fun setUpSearchView() {
+        val ivClose = binding?.toolbarContent?.searchView?.findViewById<ImageView>(R.id.search_close_btn)
+        ImageViewCompat.setImageTintList(ivClose!!, ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor)))
+        val queryListener = object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                onSearchQueryUpdated(query)
+                return true
+            }
+        }
+        binding?.toolbarContent?.searchView?.setOnQueryTextListener(queryListener)
+        binding?.toolbarContent?.searchView?.setOnCloseListener {
+            binding?.toolbarContent?.searchView?.setOnQueryTextListener(null)
+            onSearchClosed()
+            binding?.toolbarContent?.searchView?.isVisible = false
+            binding?.toolbarContent?.clContent?.isVisible = true
+            true
+        }
+    }
 }

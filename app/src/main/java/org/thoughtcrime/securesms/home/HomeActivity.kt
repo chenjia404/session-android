@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.azhon.appupdate.manager.DownloadManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -29,6 +30,7 @@ import org.thoughtcrime.securesms.database.GroupDatabase
 import org.thoughtcrime.securesms.database.MmsSmsDatabase
 import org.thoughtcrime.securesms.database.RecipientDatabase
 import org.thoughtcrime.securesms.database.ThreadDatabase
+import org.thoughtcrime.securesms.home.web3.DAppWebActivity
 import org.thoughtcrime.securesms.util.toastOnUi
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -64,9 +66,9 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
     )
 
     private var tabIcons = arrayOf(
-        R.drawable.ic_chat,
-        R.drawable.ic_dao,
-        R.drawable.ic_setting
+        R.drawable.bg_nav_tab_0,
+        R.drawable.bg_nav_tab_1,
+        R.drawable.bg_nav_tab_2
     )
 
     private var lastPressTime: Long = 0
@@ -80,7 +82,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         super.onCreate(savedInstanceState, isReady)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.viewpager.offscreenPageLimit = 3
         binding.viewpager.adapter = viewPagerAdapter
         binding.viewpager.isUserInputEnabled = false
         intTabLayout()
@@ -102,6 +104,12 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
             val fragment = supportFragmentManager.fragments[currentItem]
             if (fragment is SettingFragment) {
                 fragment.onActivityResult(requestCode, resultCode, data)
+            }
+        }
+
+        when (requestCode) {
+            DAppWebActivity.FINISH -> {
+                binding.viewpager.currentItem = 0
             }
         }
     }
@@ -145,7 +153,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         val manager = DownloadManager.Builder(this).run {
             apkUrl(jsonObject.getString("url"))
             apkName(jsonObject.getString("versionName") + ".apk")
-            smallIcon(R.mipmap.ic_launcher)
+            smallIcon(R.drawable.ic_launcher)
             //设置了此参数，那么内部会自动判断是否需要显示更新对话框，否则需要自己判断是否需要更新
             apkVersionCode(jsonObject.getInt("versionCode"))
             //同时下面三个参数也必须要设置
@@ -162,8 +170,22 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         binding.viewpager.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewpager, false, false) { tab, position ->
             tab.text = getString(tabTitles[position])
-
         }.attach()
+        binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    1 -> {
+                        val intent = Intent(this@HomeActivity, DAppWebActivity::class.java)
+                        startActivityForResult(intent, DAppWebActivity.FINISH)
+                    }
+
+                    else -> {}
+                }
+            }
+
+        })
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             // 页面被选中
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -180,6 +202,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 } else {
                     window?.statusBarColor = getColorFromAttr(R.attr.colorPrimary)
                 }
+
             }
 
             // 页面切换到其他

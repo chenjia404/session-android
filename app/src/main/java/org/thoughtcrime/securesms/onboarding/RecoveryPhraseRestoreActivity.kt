@@ -34,7 +34,7 @@ class RecoveryPhraseRestoreActivity : BaseActionBarActivity() {
     // region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpActionBarSessionLogo()
+        //setUpActionBarSessionLogo()
         TextSecurePreferences.apply {
             setHasViewedSeed(this@RecoveryPhraseRestoreActivity, true)
             setConfigurationMessageSynced(this@RecoveryPhraseRestoreActivity, false)

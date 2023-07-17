@@ -37,7 +37,7 @@ import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragment
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragmentDelegate
 import org.thoughtcrime.securesms.util.push
-import org.thoughtcrime.securesms.util.setUpActionBarSessionLogo
+import org.thoughtcrime.securesms.util.toastOnUi
 
 class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDelegate {
     private lateinit var binding: ActivityLinkDeviceBinding
@@ -54,7 +54,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
     // region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpActionBarSessionLogo()
+        //setUpActionBarSessionLogo()
         TextSecurePreferences.apply {
             setHasViewedSeed(this@LinkDeviceActivity, true)
             setConfigurationMessageSynced(this@LinkDeviceActivity, false)
@@ -74,7 +74,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             val seed = Hex.fromStringCondensed(mnemonic)
             continueWithSeed(seed)
         } catch (e: Exception) {
-            Log.e("Loki","Error getting seed from QR code", e)
+            Log.e("Loki", "Error getting seed from QR code", e)
             Toast.makeText(this, "An error occurred.", Toast.LENGTH_LONG).show()
         }
     }
@@ -120,8 +120,8 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             TextSecurePreferences.setHasViewedSeed(this@LinkDeviceActivity, true)
 
             binding.loader.isVisible = true
-            val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt,Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.registration_activity__skip) { register(true) }
+            val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.registration_activity__skip) { register(true) }
 
             val skipJob = launch {
                 delay(30_000L)
@@ -171,6 +171,7 @@ private class LinkDeviceActivityAdapter(private val activity: LinkDeviceActivity
                 result.message = activity.getString(R.string.activity_link_device_qr_message)
                 result
             }
+
             else -> throw IllegalStateException()
         }
     }
@@ -215,7 +216,12 @@ class RecoveryPhraseFragment : Fragment() {
 
     private fun handleContinueButtonTapped() {
         val mnemonic = binding.mnemonicEditText.text?.trim().toString()
-        (requireActivity() as LinkDeviceActivity).continueWithMnemonic(mnemonic)
+        if (mnemonic.split(" ").size === 24) {
+            (requireActivity() as LinkDeviceActivity).continueWithMnemonic(mnemonic)
+        } else {
+            toastOnUi(R.string.enter_correct_phrase)
+        }
+
     }
 }
 // endregion

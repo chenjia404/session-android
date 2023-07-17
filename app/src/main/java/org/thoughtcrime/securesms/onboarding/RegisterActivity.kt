@@ -4,19 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.StyleSpan
-import android.view.View
 import android.widget.Toast
 import com.goterl.lazysodium.utils.KeyPair
-import network.qki.messenger.BuildConfig
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityRegisterBinding
 import org.session.libsession.snode.SnodeModule
@@ -30,7 +22,6 @@ import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.crypto.KeyPairUtilities
 import org.thoughtcrime.securesms.util.push
-import org.thoughtcrime.securesms.util.setUpActionBarSessionLogo
 
 class RegisterActivity : BaseActionBarActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -46,7 +37,6 @@ class RegisterActivity : BaseActionBarActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setUpActionBarSessionLogo()
         TextSecurePreferences.apply {
             setHasViewedSeed(this@RegisterActivity, false)
             setConfigurationMessageSynced(this@RegisterActivity, true)
@@ -55,23 +45,6 @@ class RegisterActivity : BaseActionBarActivity() {
         }
         binding.registerButton.setOnClickListener { register() }
         binding.copyButton.setOnClickListener { copyPublicKey() }
-        val termsExplanation = SpannableStringBuilder("By using this service, you agree to our Terms of Service and Privacy Policy")
-        termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        termsExplanation.setSpan(object : ClickableSpan() {
-
-            override fun onClick(widget: View) {
-                openURL(BuildConfig.OFFICIAL_WEBSITE + "/terms-of-service/")
-            }
-        }, 40, 56, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        termsExplanation.setSpan(StyleSpan(Typeface.BOLD), 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        termsExplanation.setSpan(object : ClickableSpan() {
-
-            override fun onClick(widget: View) {
-                openURL(BuildConfig.OFFICIAL_WEBSITE + "/privacy-policy/")
-            }
-        }, 61, 75, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.termsTextView.movementMethod = LinkMovementMethod.getInstance()
-        binding.termsTextView.text = termsExplanation
         updateKeyPair()
     }
     // endregion

@@ -14,7 +14,7 @@ abstract class BaseFragment<VM : ViewModel>(@LayoutRes layoutID: Int) : Fragment
     protected abstract val viewModel: VM
 
 
-    val Fragment.defaultSessionRequestCode: Int
+    private val defaultSessionRequestCode: Int
         get() = 42
 
     fun Fragment.push(intent: Intent, isForResult: Boolean = false) {

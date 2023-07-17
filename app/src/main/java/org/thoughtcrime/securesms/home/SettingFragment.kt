@@ -85,20 +85,12 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
     private val mnemonic by lazy {
         var hexEncodedSeed = IdentityKeyUtil.retrieve(requireContext(), IdentityKeyUtil.LOKI_SEED)
         if (hexEncodedSeed == null) {
-            hexEncodedSeed =
-                IdentityKeyUtil.getIdentityKeyPair(requireContext()).hexEncodedPrivateKey // Legacy account
+            hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(requireContext()).hexEncodedPrivateKey // Legacy account
         }
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(requireContext(), fileName)
         }
-        if (hexEncodedSeed.length == 64) {
-            hexEncodedSeed
-        } else {
-            MnemonicCodec(loadFileContents).encode(
-                hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english
-            )
-        }
-
+        MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
     }
 
     private var displayNameEditActionMode: ActionMode? = null

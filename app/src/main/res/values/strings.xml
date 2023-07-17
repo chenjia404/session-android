@@ -1037,5 +1037,15 @@
 
     <string name="menu_dao">DAO</string>
     <string name="exit_again">Press again to exit</string>
+    <string name="mute">Mute</string>
+    <string name="group_setting">Group Settings</string>
+    <string name="recovery">Recovery</string>
+    <string name="create">Create</string>
+    <string name="banner_desc_1">A Decentralized social network Ethereum Messenger protocol</string>
+    <string name="banner_desc_2">Everyone can connect Ethmessenger supports Chat/Team Chat, video and picture posts</string>
+    <string name="banner_desc_3">Ethmessenger gives you control over your privacy while allowing you to communicate securely with anyone\n</string>
+    <string name="banner_desc_2_1">Chat Phone Media</string>
+    <string name="banner_desc_3_1">Top- notch Security</string>
+    <string name="enter_correct_phrase">Enter your correct recovery phrase</string>
 
 </resources>
