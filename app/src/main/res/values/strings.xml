@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Session</string>
+    <string name="app_name" translatable="false">EthMessenger</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="delete">Delete</string>
@@ -1033,4 +1033,19 @@
     <string name="custom_settings">Custom Settings</string>
     <string name="https_proxy_desc">This will help you access nodes faster</string>
     <string name="socks5_proxy_desc">Use a local proxy service to help access the web</string>
+
+
+    <string name="menu_dao">DAO</string>
+    <string name="exit_again">Press again to exit</string>
+    <string name="mute">Mute</string>
+    <string name="group_setting">Group Settings</string>
+    <string name="recovery">Recovery</string>
+    <string name="create">Create</string>
+    <string name="banner_desc_1">A Decentralized social network Ethereum Messenger protocol</string>
+    <string name="banner_desc_2">Everyone can connect Ethmessenger supports Chat/Team Chat, video and picture posts</string>
+    <string name="banner_desc_3">Ethmessenger gives you control over your privacy while allowing you to communicate securely with anyone\n</string>
+    <string name="banner_desc_2_1">Chat Phone Media</string>
+    <string name="banner_desc_3_1">Top- notch Security</string>
+    <string name="enter_correct_phrase">Enter your correct recovery phrase</string>
+
 </resources>

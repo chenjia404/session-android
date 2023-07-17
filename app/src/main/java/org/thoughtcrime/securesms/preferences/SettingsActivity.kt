@@ -1,8 +1,10 @@
 package org.thoughtcrime.securesms.preferences
 
-import android.Manifest
 import android.app.Activity
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -27,9 +29,13 @@ import nl.komponents.kovenant.ui.alwaysUi
 import nl.komponents.kovenant.ui.successUi
 import org.session.libsession.avatars.AvatarHelper
 import org.session.libsession.avatars.ProfileContactPhoto
-import org.session.libsession.utilities.*
+import org.session.libsession.utilities.Address
+import org.session.libsession.utilities.ProfileKeyUtil
+import org.session.libsession.utilities.ProfilePictureUtilities
 import org.session.libsession.utilities.SSKEnvironment.ProfileManagerProtocol
+import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient
+import org.session.libsession.utilities.truncateIdForDisplay
 import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
@@ -364,9 +370,9 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
 
     private fun startAvatarSelection() {
         // Ask for an optional camera permission.
-        Permissions.with(this).request(Manifest.permission.CAMERA).onAnyResult {
-            tempFile = AvatarSelection.startAvatarSelection(this, false, true)
-        }.execute()
+//        Permissions.with(this).request(Manifest.permission.CAMERA).onAnyResult {
+//            tempFile = AvatarSelection.startAvatarSelection(this, false, true)
+//        }.execute()
     }
 
     private fun copyPublicKey() {

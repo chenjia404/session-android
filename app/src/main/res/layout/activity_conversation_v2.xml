@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:focusable="false"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/settingBgColor"
+    android:focusable="false"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorPrimary"
-        app:contentInsetStart="0dp">
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp">
 
-        <include android:id="@+id/toolbarContent"
+        <include
+            android:id="@+id/toolbarContent"
             layout="@layout/activity_conversation_v2_action_bar" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <org.thoughtcrime.securesms.conversation.v2.ConversationRecyclerView
-        android:focusable="false"
         android:id="@+id/conversationRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/typingIndicatorViewContainer"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_bg_chat_top_20"
+        android:focusable="false"
+        android:paddingTop="16dp" />
 
     <org.thoughtcrime.securesms.conversation.v2.components.TypingIndicatorViewContainer
-        android:focusable="false"
         android:id="@+id/typingIndicatorViewContainer"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:visibility="gone"
         android:layout_above="@+id/textSendAfterApproval"
-        />
+        android:focusable="false"
+        android:visibility="gone" />
 
     <org.thoughtcrime.securesms.conversation.v2.input_bar.InputBar
         android:id="@+id/inputBar"
@@ -49,98 +52,98 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <FrameLayout
-        android:focusable="false"
         android:id="@+id/reactions_shade"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/reactions_screen_light_shade_color"
+        android:focusable="false"
         android:foreground="@color/reactions_screen_dark_shade_color"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ViewStub
-        android:focusable="false"
         android:id="@+id/conversation_reaction_scrubber_stub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="false"
         android:inflatedId="@+id/conversation_reaction_scrubber"
-        android:layout="@layout/conversation_reaction_scrubber"/>
+        android:layout="@layout/conversation_reaction_scrubber" />
 
     <FrameLayout
         android:id="@+id/additionalContentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/conversationRecyclerView"/>
+        android:layout_alignBottom="@+id/conversationRecyclerView" />
 
     <LinearLayout
         android:id="@+id/attachmentOptionsContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_spacing"
-        android:elevation="8dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/small_spacing"
         android:layout_marginBottom="60dp"
+        android:elevation="8dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/gifButtonContainer"
             android:layout_width="@dimen/input_bar_button_expanded_size"
             android:layout_height="@dimen/input_bar_button_expanded_size"
-            android:contentDescription="@string/AccessibilityId_gif_button"
-            android:alpha="0" />
+            android:alpha="0"
+            android:contentDescription="@string/AccessibilityId_gif_button" />
 
         <RelativeLayout
             android:id="@+id/documentButtonContainer"
-            android:layout_marginTop="8dp"
             android:layout_width="@dimen/input_bar_button_expanded_size"
             android:layout_height="@dimen/input_bar_button_expanded_size"
-            android:contentDescription="@string/AccessibilityId_documents_folder"
-            android:alpha="0" />
+            android:layout_marginTop="8dp"
+            android:alpha="0"
+            android:contentDescription="@string/AccessibilityId_documents_folder" />
 
         <RelativeLayout
             android:id="@+id/libraryButtonContainer"
-            android:layout_marginTop="8dp"
             android:layout_width="@dimen/input_bar_button_expanded_size"
             android:layout_height="@dimen/input_bar_button_expanded_size"
-            android:contentDescription="@string/AccessibilityId_images_folder"
-            android:alpha="0" />
+            android:layout_marginTop="8dp"
+            android:alpha="0"
+            android:contentDescription="@string/AccessibilityId_images_folder" />
 
         <RelativeLayout
             android:id="@+id/cameraButtonContainer"
-            android:layout_marginTop="8dp"
             android:layout_width="@dimen/input_bar_button_expanded_size"
             android:layout_height="@dimen/input_bar_button_expanded_size"
-            android:contentDescription="@string/AccessibilityId_select_camera_button"
-            android:alpha="0" />
+            android:layout_marginTop="8dp"
+            android:alpha="0"
+            android:contentDescription="@string/AccessibilityId_select_camera_button" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/textSendAfterApproval"
-        android:text="@string/ConversationActivity_send_after_approval"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textColor="@color/classic_light_2"
-        android:padding="22dp"
-        android:textSize="12sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_above="@id/messageRequestBar"/>
+        android:layout_above="@id/messageRequestBar"
+        android:padding="22dp"
+        android:text="@string/ConversationActivity_send_after_approval"
+        android:textAlignment="center"
+        android:textColor="@color/classic_light_2"
+        android:textSize="12sp"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/scrollToBottomButton"
-        android:visibility="gone"
         android:layout_width="40dp"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/messageRequestBar"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_above="@+id/messageRequestBar"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="32dp">
+        android:layout_marginBottom="32dp"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="40dp"
@@ -162,23 +165,23 @@
         <RelativeLayout
             android:id="@+id/unreadCountIndicator"
             android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_rectangle"
+            android:backgroundTint="?conversation_unread_count_indicator_background"
             android:maxWidth="40dp"
             android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_height="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/rounded_rectangle"
-            android:backgroundTint="?conversation_unread_count_indicator_background">
+            android:paddingRight="4dp">
 
             <TextView
                 android:id="@+id/unreadCountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="@dimen/very_small_font_size"
+                android:text="8"
                 android:textColor="?android:textColorPrimary"
-                android:text="8" />
+                android:textSize="@dimen/very_small_font_size" />
 
         </RelativeLayout>
 
@@ -188,27 +191,27 @@
         android:id="@+id/inputBarRecordingView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="-12dp"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/blockedBanner"
-        android:contentDescription="@string/AccessibilityId_blocked_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:background="@color/destructive"
+        android:contentDescription="@string/AccessibilityId_blocked_banner"
         android:visibility="gone"
         tools:visibility="visible">
 
         <TextView
             android:id="@+id/blockedBannerTextView"
-            android:contentDescription="@string/AccessibilityId_blocked_banner_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/medium_spacing"
+            android:contentDescription="@string/AccessibilityId_blocked_banner_text"
             android:textColor="@color/white"
             android:textSize="@dimen/small_font_size"
             android:textStyle="bold"
@@ -232,11 +235,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/AccessibilityId_block_message_request_button"
-            android:textColor="@color/destructive"
             android:paddingHorizontal="@dimen/massive_spacing"
             android:paddingVertical="@dimen/small_spacing"
-            android:textSize="@dimen/text_size"
-            android:text="@string/activity_conversation_block_user"/>
+            android:text="@string/activity_conversation_block_user"
+            android:textColor="@color/destructive"
+            android:textSize="@dimen/text_size" />
 
         <TextView
             android:id="@+id/sendAcceptsTextView"
@@ -258,20 +261,20 @@
             <Button
                 android:id="@+id/acceptMessageRequestButton"
                 style="@style/Widget.Session.Button.Common.ProminentOutline"
-                android:contentDescription="@string/AccessibilityId_accept_message_request_button"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/medium_button_height"
                 android:layout_weight="1"
+                android:contentDescription="@string/AccessibilityId_accept_message_request_button"
                 android:text="@string/accept" />
 
             <Button
                 android:id="@+id/declineMessageRequestButton"
                 style="@style/Widget.Session.Button.Common.DestructiveOutline"
-                android:contentDescription="@string/AccessibilityId_decline_message_request_button"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/medium_button_height"
                 android:layout_marginStart="@dimen/medium_spacing"
                 android:layout_weight="1"
+                android:contentDescription="@string/AccessibilityId_decline_message_request_button"
                 android:text="@string/decline" />
 
         </LinearLayout>

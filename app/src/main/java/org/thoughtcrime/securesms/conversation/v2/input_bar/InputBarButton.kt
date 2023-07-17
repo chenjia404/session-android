@@ -14,6 +14,7 @@ import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import network.qki.messenger.R
 import org.session.libsession.utilities.getColorFromAttr
@@ -28,8 +29,11 @@ class InputBarButton : RelativeLayout {
     private val gestureHandler = Handler(Looper.getMainLooper())
     private var isSendButton = false
     private var hasOpaqueBackground = false
+    @ColorInt
+    private var iconTintColor = 0
     private var isGIFButton = false
-    @DrawableRes private var iconID = 0
+    @DrawableRes
+    private var iconID = 0
     private var longPressCallback: Runnable? = null
     private var onDownTimestamp = 0L
     var snIsEnabled = true
@@ -45,7 +49,12 @@ class InputBarButton : RelativeLayout {
     }
 
     private val expandedImageViewPosition by lazy { PointF(0.0f, 0.0f) }
-    private val collapsedImageViewPosition by lazy { PointF((expandedSize - collapsedSize) / 2, (expandedSize - collapsedSize) / 2) }
+    private val collapsedImageViewPosition by lazy {
+        PointF(
+            (expandedSize - collapsedSize) / 2,
+            (expandedSize - collapsedSize) / 2
+        )
+    }
     private val colorID by lazy {
         if (hasOpaqueBackground) {
             R.attr.input_bar_button_background_opaque
@@ -66,31 +75,49 @@ class InputBarButton : RelativeLayout {
         result.setBackgroundResource(R.drawable.input_bar_button_background)
         result.mainColor = context.getColorFromAttr(colorID)
         if (hasOpaqueBackground) {
-            result.strokeColor = context.getColorFromAttr(R.attr.input_bar_button_background_opaque_border)
+            result.strokeColor =
+                context.getColorFromAttr(R.attr.input_bar_button_background_opaque_border)
         }
         result
     }
 
     private val imageView by lazy {
         val result = ImageView(context)
-        val size = if (isGIFButton) toPx(24, resources) else toPx(16, resources)
+        val size = if (isGIFButton) toPx(28, resources) else toPx(28, resources)
         result.layoutParams = LayoutParams(size, size)
         result.scaleType = ImageView.ScaleType.CENTER_INSIDE
         result.setImageResource(iconID)
-        result.imageTintList = ColorStateList.valueOf(context.getColorFromAttr(R.attr.input_bar_button_text_color))
+        result.imageTintList =
+            ColorStateList.valueOf(iconTintColor)
         result
     }
 
-    constructor(context: Context) : super(context) { throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.") }
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.") }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.") }
+    constructor(context: Context) : super(context) {
+        throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.")
+    }
 
-    constructor(context: Context, @DrawableRes iconID: Int, isSendButton: Boolean = false,
-        hasOpaqueBackground: Boolean = false, isGIFButton: Boolean = false) : super(context) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.")
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        throw IllegalAccessException("Use InputBarButton(context:iconID:) instead.")
+    }
+
+    constructor(
+        context: Context, @DrawableRes iconID: Int, isSendButton: Boolean = false,
+        hasOpaqueBackground: Boolean = false, isGIFButton: Boolean = false,
+        @ColorInt iconTintColor: Int = context.getColorFromAttr(R.attr.input_bar_button_text_color)
+    ) : super(context) {
         this.isSendButton = isSendButton
         this.iconID = iconID
         this.hasOpaqueBackground = hasOpaqueBackground
         this.isGIFButton = isGIFButton
+        this.iconTintColor = iconTintColor
         val size = resources.getDimension(R.dimen.input_bar_button_expanded_size).toInt()
         val layoutParams = LayoutParams(size, size)
         this.layoutParams = layoutParams
@@ -111,8 +138,15 @@ class InputBarButton : RelativeLayout {
         val fromColor = context.getColorFromAttr(colorID)
         val toColor = context.getAccentColor()
         GlowViewUtilities.animateColorChange(imageViewContainer, fromColor, toColor)
-        imageViewContainer.animateSizeChange(R.dimen.input_bar_button_collapsed_size, R.dimen.input_bar_button_expanded_size, animationDuration)
-        animateImageViewContainerPositionChange(collapsedImageViewPosition, expandedImageViewPosition)
+        imageViewContainer.animateSizeChange(
+            R.dimen.input_bar_button_collapsed_size,
+            R.dimen.input_bar_button_expanded_size,
+            animationDuration
+        )
+        animateImageViewContainerPositionChange(
+            collapsedImageViewPosition,
+            expandedImageViewPosition
+        )
     }
 
     fun collapse() {
@@ -120,11 +154,21 @@ class InputBarButton : RelativeLayout {
         val toColor = context.getColorFromAttr(colorID)
 
         GlowViewUtilities.animateColorChange(imageViewContainer, fromColor, toColor)
-        imageViewContainer.animateSizeChange(R.dimen.input_bar_button_expanded_size, R.dimen.input_bar_button_collapsed_size, animationDuration)
-        animateImageViewContainerPositionChange(expandedImageViewPosition, collapsedImageViewPosition)
+        imageViewContainer.animateSizeChange(
+            R.dimen.input_bar_button_expanded_size,
+            R.dimen.input_bar_button_collapsed_size,
+            animationDuration
+        )
+        animateImageViewContainerPositionChange(
+            expandedImageViewPosition,
+            collapsedImageViewPosition
+        )
     }
 
-    private fun animateImageViewContainerPositionChange(startPosition: PointF, endPosition: PointF) {
+    private fun animateImageViewContainerPositionChange(
+        startPosition: PointF,
+        endPosition: PointF
+    ) {
         val animation = ValueAnimator.ofObject(PointFEvaluator(), startPosition, endPosition)
         animation.duration = animationDuration
         animation.addUpdateListener { animator ->
@@ -136,7 +180,9 @@ class InputBarButton : RelativeLayout {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (!snIsEnabled) { return false }
+        if (!snIsEnabled) {
+            return false
+        }
         when (event.action) {
             MotionEvent.ACTION_DOWN -> onDown(event)
             MotionEvent.ACTION_MOVE -> onMove(event)

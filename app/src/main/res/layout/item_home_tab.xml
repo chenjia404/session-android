@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="66dp"
+    android:layout_height="48dp"
+    android:background="@drawable/bg_navigation_bottom"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:tint="@color/selector_tab_color"
+        tools:src="@drawable/ic_chat" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="test"
+        android:textColor="@color/selector_tab_color"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+</LinearLayout>

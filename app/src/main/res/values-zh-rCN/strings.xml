@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Session</string>
+    <string name="app_name" translatable="false">EthMessenger</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="delete">删除</string>
@@ -198,7 +198,7 @@
     <string name="ConversationActivity_sorry_there_was_an_error_setting_your_attachment">抱歉，设置附件时出错</string>
     <string name="ConversationActivity_message">消息</string>
     <string name="ConversationActivity_compose">撰写</string>
-    <string name="ConversationActivity_muted_until_date">禁言至 %1$s</string>
+    <string name="ConversationActivity_muted_until_date">静音至 %1$s</string>
     <string name="ConversationActivity_muted_forever">已静音</string>
     <string name="ConversationActivity_member_count">%1$d 位成员</string>
     <string name="ConversationActivity_active_member_count">%1$d 活跃用户</string>
@@ -1019,4 +1019,14 @@
     <string name="custom_settings">自定义设置</string>
     <string name="https_proxy_desc">这将帮助您更快的访问节点</string>
     <string name="socks5_proxy_desc">使用本地代理服务帮助访问网络</string>
+    <string name="mute">静音</string>
+    <string name="group_setting">群组设置</string>
+    <string name="recovery">恢复</string>
+    <string name="create">创建</string>
+    <string name="banner_desc_1">A Decentralized social network Ethereum Messenger protocol</string>
+    <string name="banner_desc_2">Everyone can connect Ethmessenger supports Chat/Team Chat, video and picture posts</string>
+    <string name="banner_desc_3">Ethmessenger gives you control over your privacy while allowing you to communicate securely with anyone\n</string>
+    <string name="banner_desc_2_1">Chat Phone Media</string>
+    <string name="banner_desc_3_1">Top- notch Security</string>
+    <string name="enter_correct_phrase">请输入正确的口令</string>
 </resources>

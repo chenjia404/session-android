@@ -18,6 +18,7 @@ import network.qki.messenger.R
 import network.qki.messenger.databinding.ViewInputBarBinding
 import org.session.libsession.messaging.sending_receiving.link_preview.LinkPreview
 import org.session.libsession.utilities.TextSecurePreferences
+import org.session.libsession.utilities.getColorFromAttr
 import org.session.libsession.utilities.recipients.Recipient
 import org.thoughtcrime.securesms.conversation.v2.components.LinkPreviewDraftView
 import org.thoughtcrime.securesms.conversation.v2.components.LinkPreviewDraftViewDelegate
@@ -42,7 +43,9 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
     var quote: MessageRecord? = null
     var linkPreview: LinkPreview? = null
     var showInput: Boolean = true
-        set(value) { field = value; showOrHideInputIfNeeded() }
+        set(value) {
+            field = value; showOrHideInputIfNeeded()
+        }
     var showMediaControls: Boolean = true
         set(value) {
             field = value
@@ -51,20 +54,36 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
         }
 
     var text: String
-        get() { return binding.inputBarEditText.text?.toString() ?: "" }
-        set(value) { binding.inputBarEditText.setText(value) }
+        get() {
+            return binding.inputBarEditText.text?.toString() ?: ""
+        }
+        set(value) {
+            binding.inputBarEditText.setText(value)
+        }
 
     val attachmentButtonsContainerHeight: Int
         get() = binding.attachmentsButtonContainer.height
 
-    private val attachmentsButton by lazy { InputBarButton(context, R.drawable.ic_plus_24).apply { contentDescription = context.getString(R.string.AccessibilityId_attachments_button)} }
-    private val microphoneButton by lazy { InputBarButton(context, R.drawable.ic_microphone).apply { contentDescription = context.getString(R.string.AccessibilityId_microphone_button)} }
-    private val sendButton by lazy { InputBarButton(context, R.drawable.ic_arrow_up, true).apply { contentDescription = context.getString(R.string.AccessibilityId_send_message_button)} }
+    private val attachmentsButton by lazy { InputBarButton(context, R.drawable.ic_plus_24).apply { contentDescription = context.getString(R.string.AccessibilityId_attachments_button) } }
+    private val microphoneButton by lazy { InputBarButton(context, R.drawable.ic_microphone).apply { contentDescription = context.getString(R.string.AccessibilityId_microphone_button) } }
+    private val sendButton by lazy {
+        InputBarButton(context, R.drawable.ic_arrow_up, true, iconTintColor = context.getColorFromAttr(R.attr.iconTintBlueColor)).apply {
+            contentDescription = context.getString(R.string.AccessibilityId_send_message_button)
+        }
+    }
 
     // region Lifecycle
-    constructor(context: Context) : super(context) { initialize() }
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { initialize() }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initialize() }
+    constructor(context: Context) : super(context) {
+        initialize()
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        initialize()
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initialize()
+    }
 
     private fun initialize() {
         binding = ViewInputBarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -98,7 +117,7 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
             binding.inputBarEditText.imeOptions = EditorInfo.IME_ACTION_NONE
             binding.inputBarEditText.inputType =
                 binding.inputBarEditText.inputType or
-                InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
         }
         val incognitoFlag = if (TextSecurePreferences.isIncognitoKeyboardEnabled(context)) 16777216 else 0
         binding.inputBarEditText.imeOptions = binding.inputBarEditText.imeOptions or incognitoFlag // Always use incognito keyboard if setting enabled
@@ -154,8 +173,10 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
         binding.inputBarAdditionalContentContainer.addView(layout)
         val attachments = (message as? MmsMessageRecord)?.slideDeck
         val sender = if (message.isOutgoing) TextSecurePreferences.getLocalNumber(context)!! else message.individualRecipient.address.serialize()
-        quoteView.bind(sender, message.body, attachments,
-            thread, true, message.isOpenGroupInvitation, message.threadId, false, glide)
+        quoteView.bind(
+            sender, message.body, attachments,
+            thread, true, message.isOpenGroupInvitation, message.threadId, false, glide
+        )
         requestLayout()
     }
 
@@ -182,7 +203,9 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
     }
 
     override fun cancelLinkPreviewDraft() {
-        if (quote != null) { return }
+        if (quote != null) {
+            return
+        }
         linkPreview = null
         binding.inputBarAdditionalContentContainer.removeAllViews()
         requestLayout()
@@ -190,13 +213,13 @@ class InputBar : RelativeLayout, InputBarEditTextDelegate, QuoteViewDelegate, Li
 
     private fun showOrHideInputIfNeeded() {
         if (showInput) {
-            setOf( binding.inputBarEditText, attachmentsButton ).forEach { it.isVisible = true }
+            setOf(binding.inputBarEditText, attachmentsButton).forEach { it.isVisible = true }
             microphoneButton.isVisible = text.isEmpty()
             sendButton.isVisible = text.isNotEmpty()
         } else {
             cancelQuoteDraft()
             cancelLinkPreviewDraft()
-            val views = setOf( binding.inputBarEditText, attachmentsButton, microphoneButton, sendButton )
+            val views = setOf(binding.inputBarEditText, attachmentsButton, microphoneButton, sendButton)
             views.forEach { it.isVisible = false }
         }
     }

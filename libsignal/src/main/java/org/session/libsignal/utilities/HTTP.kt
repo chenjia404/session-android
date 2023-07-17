@@ -142,8 +142,8 @@ object HTTP {
         if(this.HTTPS_PROXY.length >= 10 && this.HTTPS_ENABLE) {
             request_url = this.HTTPS_PROXY + url.toHttpUrl().encodedPath
         }
-        Log.d("mcnk","request_url:" + request_url)
-        Log.d("mcnk","request_url2:" + o_host+":"+url.toHttpUrl().port)
+//        Log.d("mcnk","request_url:" + request_url)
+//        Log.d("mcnk","request_url2:" + o_host+":"+url.toHttpUrl().port)
         val request = Request.Builder().url(request_url)
             .removeHeader("User-Agent").addHeader("User-Agent", "WhatsApp") // Set a fake value
             .removeHeader("Accept-Language").addHeader("Accept-Language", "en-us") // Set a fake value

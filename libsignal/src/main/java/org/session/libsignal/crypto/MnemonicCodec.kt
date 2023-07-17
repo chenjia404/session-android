@@ -8,6 +8,7 @@ import org.session.libsignal.utilities.toHexString
 import org.web3j.crypto.Bip32ECKeyPair
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.MnemonicUtils
+import org.web3j.utils.Numeric
 import java.util.zip.CRC32
 
 
@@ -211,5 +212,24 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
             }
 
         }
+
+        @JvmStatic
+        fun toWallet(mnemonic: String): Wallet {
+            val path = intArrayOf(
+                44 or Bip32ECKeyPair.HARDENED_BIT,
+                60 or Bip32ECKeyPair.HARDENED_BIT,
+                0 or Bip32ECKeyPair.HARDENED_BIT,
+                0,
+                0
+            )
+            val seed = MnemonicUtils.generateSeed(mnemonic, "")
+            val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+            val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+            val credentials = Credentials.create(bip44Keypair)
+            val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
+            val address = credentials.address
+            return Wallet(mnemonic, pk, address)
+        }
+
     }
 }

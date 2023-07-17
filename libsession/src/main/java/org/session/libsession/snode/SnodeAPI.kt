@@ -145,7 +145,7 @@ object SnodeAPI {
 
     fun getRandomSnode(): Promise<Snode, Exception> {
         val site = TextSecurePreferences.getCustomizedNodeSite(MessagingModuleConfiguration.shared.context)
-        Logger.d("site = $site")
+        //Logger.d("site = $site")
         return site?.let {
             getRandomSnodeCustomized(site)
         }?: getRandomSnodeOld()

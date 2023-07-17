@@ -213,12 +213,13 @@ class InputBarButtonImageViewContainer : RelativeLayout, GlowView {
 
     // region Updating
     override fun onDraw(c: Canvas) {
-        val w = width.toFloat()
-        val h = height.toFloat()
-        c.drawCircle(w / 2, h / 2, w / 2, fillPaint)
-        if (strokeColor != 0) {
-            c.drawCircle(w / 2, h / 2, w / 2, strokePaint)
-        }
+        // TODO: mcnk
+//        val w = width.toFloat()
+//        val h = height.toFloat()
+//        c.drawCircle(w / 2, h / 2, w / 2, fillPaint)
+//        if (strokeColor != 0) {
+//            c.drawCircle(w / 2, h / 2, w / 2, strokePaint)
+//        }
         super.onDraw(c)
     }
     // endregion

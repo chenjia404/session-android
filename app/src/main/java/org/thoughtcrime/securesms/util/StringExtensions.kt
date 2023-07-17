@@ -114,3 +114,10 @@ fun String?.isValidURL(): Boolean {
         false
     }
 }
+
+fun String.formatAddress(): String {
+    if (this.isEmpty()) {
+        return ""
+    }
+    return this.substring(0, 6) + "...." + this.substring(this.length - 6)
+}
