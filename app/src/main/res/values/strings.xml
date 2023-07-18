@@ -1047,5 +1047,7 @@
     <string name="banner_desc_2_1">Chat Phone Media</string>
     <string name="banner_desc_3_1">Top- notch Security</string>
     <string name="enter_correct_phrase">Enter your correct recovery phrase</string>
+    <string name="following">Following</string>
+    <string name="explore">Explore</string>
 
 </resources>

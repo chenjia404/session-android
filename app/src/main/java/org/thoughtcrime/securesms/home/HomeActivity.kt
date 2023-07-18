@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.azhon.appupdate.manager.DownloadManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -171,21 +170,21 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewpager, false, false) { tab, position ->
             tab.text = getString(tabTitles[position])
         }.attach()
-        binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                when (position) {
-                    1 -> {
-                        val intent = Intent(this@HomeActivity, DAppWebActivity::class.java)
-                        startActivityForResult(intent, DAppWebActivity.FINISH)
-                    }
-
-                    else -> {}
-                }
-            }
-
-        })
+//        binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+//
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                when (position) {
+//                    1 -> {
+//                        val intent = Intent(this@HomeActivity, DAppWebActivity::class.java)
+//                        startActivityForResult(intent, DAppWebActivity.FINISH)
+//                    }
+//
+//                    else -> {}
+//                }
+//            }
+//
+//        })
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             // 页面被选中
             override fun onTabSelected(tab: TabLayout.Tab) {

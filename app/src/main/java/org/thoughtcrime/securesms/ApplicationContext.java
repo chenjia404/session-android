@@ -82,6 +82,7 @@ import org.thoughtcrime.securesms.sskenvironment.ProfileManager;
 import org.thoughtcrime.securesms.sskenvironment.ReadReceiptManager;
 import org.thoughtcrime.securesms.sskenvironment.TypingStatusRepository;
 import org.thoughtcrime.securesms.util.Broadcaster;
+import org.thoughtcrime.securesms.util.GlideHelper;
 import org.thoughtcrime.securesms.util.dynamiclanguage.LocaleParseHelper;
 import org.thoughtcrime.securesms.webrtc.CallMessageProcessor;
 import org.webrtc.PeerConnectionFactory;
@@ -200,6 +201,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
                 () -> KeyPairUtilities.INSTANCE.getUserED25519KeyPair(this));
         callMessageProcessor = new CallMessageProcessor(this, textSecurePreferences, ProcessLifecycleOwner.get().getLifecycle(), storage);
         Log.i(TAG, "onCreate()");
+        GlideHelper.INSTANCE.initGlideHelper(this);
         startKovenant();
         initializeSecurityProvider();
         initializeLogging();
@@ -544,9 +546,9 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     private void updateProxy() {
         // https proxy
         String httpsProxy = TextSecurePreferences.getHttpsProxy(this);
-        if(httpsProxy != null && httpsProxy.length() > 10){
+        if (httpsProxy != null && httpsProxy.length() > 10) {
             HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
-        } else if(BuildConfig.GUARDNODE.length() > 10){
+        } else if (BuildConfig.GUARDNODE.length() > 10) {
             HTTP.INSTANCE.setHTTPS_PROXY(BuildConfig.GUARDNODE);
             HTTP.INSTANCE.setHTTPS_ENABLE(true);
         }

@@ -29,7 +29,7 @@ configurations.all {
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+//    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "com.google.android.material:material:$materialVersion"
     implementation 'com.google.android:flexbox:2.0.1'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
@@ -135,11 +135,11 @@ dependencies {
     implementation 'com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.6-androidx'
     // web3j
     implementation ('org.web3j:core:4.8.8-android')
-    implementation('org.bitcoinj:bitcoinj-core:0.15.10'){
-        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15on-1.70'
-        exclude group: 'org.bouncycastle', module: 'jetified-bcprov-jdk15to18-1.68'
-        exclude group: 'org.bouncycastle', module: 'bcprov-jdk15to18'
-    }
+    implementation "io.github.cymchad:BaseRecyclerViewAdapterHelper:3.0.11"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.11.1'

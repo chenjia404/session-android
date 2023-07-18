@@ -726,4 +726,6 @@
     <string name="banner_desc_2_1">聊天 电话 视频</string>
     <string name="banner_desc_3_1">一流的安全</string>
     <string name="enter_correct_phrase">请输入正确的口令</string>
+    <string name="following">Following</string>
+    <string name="explore">Explore</string>
 </resources>
