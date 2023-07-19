@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import network.qki.messenger.R
+import org.thoughtcrime.securesms.conversation.v2.ViewUtil
 
 /**
  * Created by Author on 2020/4/30
@@ -92,7 +93,7 @@ object GlideHelper {
             )
         if (roundRadius != 0) {
             options.transform(
-                CenterCrop(), RoundedCorners(roundRadius)
+                CenterCrop(), RoundedCorners(ViewUtil.dpToPx(roundRadius))
             )
         }
         val builder: RequestBuilder<*> = Glide.with(mContext!!).load(url).apply(options)

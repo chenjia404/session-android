@@ -6,6 +6,7 @@ import android.icu.text.Collator
 import android.icu.util.ULocale
 import android.net.Uri
 import android.text.Editable
+import org.thoughtcrime.securesms.home.Media
 import java.io.File
 import java.lang.Character.codePointCount
 import java.lang.Character.offsetByCodePoints
@@ -121,3 +122,32 @@ fun String.formatAddress(): String {
     }
     return this.substring(0, 6) + "...." + this.substring(this.length - 6)
 }
+
+val picsList = listOf(
+    "jpeg", "jpg", "gif", "png", "bmp", "webp", "svg"
+)
+
+val mediasList = listOf(
+    "swf", "avi", "flv", "mpg", "rm", "mov", "wav", "asf", "3gp", "mkv", "rmvb", "mp4"
+)
+
+fun String?.formatMedias(): List<Media> = this?.run {
+    val list = arrayListOf<Media>()
+    val str = this.trim()
+    for (attach in str.split(",")) {
+        val split = attach.split(".")
+//        if (split.size === 1) {
+//            list.add(Media(0, attach))
+//            continue
+//        }
+        val picFilter = picsList.filter { s -> split[split.size - 1].startsWith(s, true) }
+        if (!picFilter.isNullOrEmpty()) {
+            list.add(Media(0, attach))
+        }
+        val mediaFilter = mediasList.filter { s -> split[split.size - 1].startsWith(s, true) }
+        if (!mediaFilter.isNullOrEmpty()) {
+            list.add(Media(1, attach))
+        }
+    }
+    list
+} ?: emptyList()

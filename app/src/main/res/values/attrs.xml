@@ -390,5 +390,6 @@
     <attr name="chatBgColor" format="reference|color" />
     <attr name="chat_received_text_color" format="reference|color" />
     <attr name="chat_sent_text_color" format="reference|color" />
+    <attr name="tab_select_text_color" format="reference|color" />
 
 </resources>

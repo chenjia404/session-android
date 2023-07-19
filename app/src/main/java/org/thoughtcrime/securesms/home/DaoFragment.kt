@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
-import com.just.agentweb.AgentWeb
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.FragmentDaoBinding
@@ -24,8 +23,6 @@ class DaoFragment : BaseFragment<DaoViewModel>(R.layout.fragment_dao) {
 
     private val binding by viewBinding(FragmentDaoBinding::bind)
     override val viewModel by viewModels<DaoViewModel>()
-
-    private lateinit var agentWeb: AgentWeb
 
     private val mnemonic by lazy {
         var hexEncodedSeed = IdentityKeyUtil.retrieve(requireContext(), IdentityKeyUtil.LOKI_SEED)

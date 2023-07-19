@@ -31,3 +31,11 @@ data class UserInfo(
     var Nickname: String,
     var UserAddress: String
 ) : Parcelable
+
+
+@Parcelize
+data class Media(
+    // 0 pic 1 video 2 more
+    var type: Int,
+    var url: String
+) : Parcelable

@@ -76,7 +76,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
-<!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
+        <!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
     </style>
 
     <style name="Theme.Session.DayNight.FlatActionBar">
@@ -425,6 +425,7 @@
         <item name="chatBgColor">@color/classic_dark_1</item>
         <item name="chat_received_text_color">@color/core_white</item>
         <item name="chat_sent_text_color">@color/core_white</item>
+        <item name="tab_select_text_color">@color/color606060</item>
 
     </style>
 
@@ -527,6 +528,7 @@
         <item name="chatBgColor">@color/colorF9FAFA</item>
         <item name="chat_received_text_color">@color/classic_light_0</item>
         <item name="chat_sent_text_color">@color/core_white</item>
+        <item name="tab_select_text_color">@color/colorC2C9D1</item>
 
     </style>
 

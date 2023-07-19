@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,9 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:maxLines="1"
+                    android:text="1 hours ago"
                     android:textColor="?android:textColorTertiary"
-                    android:textSize="12sp"
-                    android:text="1 hours ago" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -81,11 +81,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
+            android:layout_marginTop="16dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:visibility="visible"
+            app:alignContent="flex_start"
+            app:dividerDrawable="@drawable/shape_space_divider"
             app:flexDirection="row"
-            app:flexWrap="wrap" />
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            app:showDivider="middle" />
+
+        <include
+            layout="@layout/layout_et_forward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"

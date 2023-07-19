@@ -199,7 +199,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 } else if (tab.position === 2) {
                     window?.statusBarColor = getColorFromAttr(R.attr.settingBgColor)
                 } else {
-                    window?.statusBarColor = getColorFromAttr(R.attr.colorPrimary)
+                    window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
                 }
 
             }
