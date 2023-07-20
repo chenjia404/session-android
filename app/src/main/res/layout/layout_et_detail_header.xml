@@ -161,6 +161,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llForward"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -188,12 +189,28 @@
 
         </LinearLayout>
 
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexboxFavorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:visibility="visible"
+            app:alignContent="flex_start"
+            app:dividerDrawable="@drawable/shape_space_divider_4dp"
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            app:showDivider="middle" />
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginStart="88dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="?borderColor" />
 

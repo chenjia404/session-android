@@ -5,7 +5,7 @@ package org.session.libsignal.crypto
  * Describe:
  */
 data class Wallet(
-    val mnemonic: String? = null,
-    val pk: String? = null,
-    val address: String
+    var mnemonic: String? = null,
+    var pk: String? = null,
+    var address: String
 )

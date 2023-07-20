@@ -20,6 +20,7 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
 import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_IMPORT_BY_PK
+import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_X_TOKEN
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_DARK
@@ -185,8 +186,9 @@ interface TextSecurePreferences {
     fun clearAll()
 
     fun setImportByPk(isPk: Boolean)
-
     fun isImportByPk(): Boolean
+    fun setXToken(token: String)
+    fun getXToken(): String?
 
     companion object {
         val TAG = TextSecurePreferences::class.simpleName
@@ -298,6 +300,7 @@ interface TextSecurePreferences {
         const val PREF_PROXY_HTTPS = "pref_proxy_https"
         const val PREF_PROXY_SOCKS5 = "pref_proxy_socks5"
         const val KEY_IMPORT_BY_PK = "import_by_pk"
+        const val KEY_X_TOKEN = "x_token"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
@@ -1099,6 +1102,15 @@ interface TextSecurePreferences {
             getDefaultSharedPreferences(context).edit().clear().commit()
         }
 
+        @JvmStatic
+        fun setXToken(context: Context, token: String) {
+            setStringPreference(context, KEY_X_TOKEN, token)
+        }
+
+        @JvmStatic
+        fun getXToken(context: Context): String? {
+            return getStringPreference(context, KEY_X_TOKEN, null)
+        }
     }
 }
 
@@ -1839,5 +1851,13 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun isImportByPk(): Boolean {
         return getBooleanPreference(KEY_IMPORT_BY_PK, false)
+    }
+
+    override fun setXToken(token: String) {
+        setStringPreference(KEY_X_TOKEN, token)
+    }
+
+    override fun getXToken(): String? {
+        return getStringPreference(KEY_X_TOKEN, null)
     }
 }

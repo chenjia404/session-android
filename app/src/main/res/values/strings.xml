@@ -1049,5 +1049,7 @@
     <string name="enter_correct_phrase">Enter your correct recovery phrase</string>
     <string name="following">Following</string>
     <string name="explore">Explore</string>
+    <string name="comment_more">Comment...</string>
+    <string name="send">Send</string>
 
 </resources>

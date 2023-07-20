@@ -736,4 +736,6 @@
     <string name="enter_correct_phrase">请输入正确的口令</string>
     <string name="following">Following</string>
     <string name="explore">Explore</string>
+    <string name="comment_more">评论...</string>
+    <string name="send">发送</string>
 </resources>

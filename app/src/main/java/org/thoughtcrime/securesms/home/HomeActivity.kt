@@ -170,7 +170,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
         TabLayoutMediator(binding.tabLayout, binding.viewpager, false, false) { tab, position ->
             tab.text = getString(tabTitles[position])
         }.attach()
-//        binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+//        binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 //
 //            override fun onPageSelected(position: Int) {
 //                super.onPageSelected(position)

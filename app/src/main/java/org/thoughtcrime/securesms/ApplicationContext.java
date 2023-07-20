@@ -125,6 +125,8 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
     private static final String TAG = ApplicationContext.class.getSimpleName();
 
+    public static Context context;
+
     private ExpiringMessageManager expiringMessageManager;
     private TypingStatusRepository typingStatusRepository;
     private TypingStatusSender typingStatusSender;
@@ -192,6 +194,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
     @Override
     public void onCreate() {
+        context = getApplicationContext();
         DatabaseModule.init(this);
         MessagingModuleConfiguration.configure(this);
         super.onCreate();

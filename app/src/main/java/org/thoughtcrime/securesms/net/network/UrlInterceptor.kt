@@ -5,6 +5,8 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import org.session.libsession.utilities.TextSecurePreferences
+import org.thoughtcrime.securesms.ApplicationContext
 import org.thoughtcrime.securesms.constants.AppConst
 import java.io.IOException
 
@@ -33,10 +35,10 @@ class UrlInterceptor : Interceptor {
             var newBaseUrl: HttpUrl? = null
             newBaseUrl = when (headerValue) {
                 "base" -> {
-                    // TODO:
-                    builder.addHeader("x-token", "")
+                    builder.addHeader("x-token", TextSecurePreferences.getXToken(ApplicationContext.context) ?: "")
                     AppConst.URLS.BASE.toHttpUrlOrNull()
                 }
+
                 else -> {
                     oldHttpUrl
                 }
