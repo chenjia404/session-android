@@ -64,7 +64,7 @@ object OpenGroupApi {
     const val legacyDefaultServer = "http://116.203.70.33" // TODO: migrate all references to use new value
 
     /** For migration purposes only, don't use this value in joining groups */
-    const val httpDefaultServer = "https://communities.qki.network"
+    const val httpDefaultServer = "https://chat.ethtweet.io"
 
     var defaultServer = "https://chat.ethtweet.io"
 
