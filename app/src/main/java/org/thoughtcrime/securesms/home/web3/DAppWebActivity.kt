@@ -19,16 +19,10 @@ import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.databinding.ActivityDappWebBinding
-import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
-import org.session.libsignal.crypto.MnemonicCodec
-import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
-import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.home.DaoViewModel
 import org.thoughtcrime.securesms.util.Logger
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -38,31 +32,12 @@ class DAppWebActivity : PassphraseRequiredActionBarActivity() {
 
     private val viewModel by viewModels<DaoViewModel>()
 
-
-    @Inject
-    lateinit var textSecurePreferences: TextSecurePreferences
-
     private lateinit var agentWeb: AgentWeb
 
     companion object {
 
         // Request codes
         const val FINISH = 1001
-    }
-
-    private val mnemonic by lazy {
-        var hexEncodedSeed = IdentityKeyUtil.retrieve(this, IdentityKeyUtil.LOKI_SEED)
-        if (hexEncodedSeed == null) {
-            hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(this).hexEncodedPrivateKey // Legacy account
-        }
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(this, fileName)
-        }
-        if (hexEncodedSeed.length == 64 && textSecurePreferences.isImportByPk()) {
-            hexEncodedSeed
-        } else {
-            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
@@ -196,7 +171,7 @@ class DAppWebActivity : PassphraseRequiredActionBarActivity() {
         agentWeb = commonBuilder.createAgentWeb().ready().go(null)
         agentWeb.jsInterfaceHolder.addJavaObject(
             "_tw_", WebAppInterface(
-                MnemonicCodec.toWallet(mnemonic),
+                viewModel.wallet,
                 agentWeb.webCreator.webView,
                 viewModel
             )

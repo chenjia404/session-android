@@ -38,12 +38,9 @@ import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient
 import org.session.libsession.utilities.truncateIdForDisplay
 import org.session.libsignal.crypto.MnemonicCodec
-import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.BaseFragment
 import org.thoughtcrime.securesms.avatar.AvatarSelection
 import org.thoughtcrime.securesms.components.ProfilePictureView
-import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
-import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity
 import org.thoughtcrime.securesms.mms.GlideApp
 import org.thoughtcrime.securesms.mms.GlideRequests
@@ -82,22 +79,6 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
 
     private val binding by viewBinding(FragmentSettingBinding::bind)
     override val viewModel by viewModels<SettingViewModel>()
-
-
-    private val mnemonic by lazy {
-        var hexEncodedSeed = IdentityKeyUtil.retrieve(requireContext(), IdentityKeyUtil.LOKI_SEED)
-        if (hexEncodedSeed == null) {
-            hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(requireContext()).hexEncodedPrivateKey // Legacy account
-        }
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(requireContext(), fileName)
-        }
-        if (hexEncodedSeed.length == 64 && textSecurePreferences.isImportByPk()) {
-            hexEncodedSeed
-        } else {
-            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
-        }
-    }
 
     private var displayNameEditActionMode: ActionMode? = null
         set(value) {
@@ -149,9 +130,9 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
             helpButton.setOnClickListener { showHelp() }
             seedButton.setOnClickListener { showSeed() }
             clearAllDataButton.setOnClickListener { clearAllData() }
-            tvAddress.text = MnemonicCodec.toAddress(mnemonic)
+            tvAddress.text = MnemonicCodec.toAddress(viewModel.wallet.address)
             tvAddressCopy.setOnClickListener {
-                requireContext().sendToClip(MnemonicCodec.toAddress(mnemonic))
+                requireContext().sendToClip(viewModel.wallet.address)
             }
         }
     }

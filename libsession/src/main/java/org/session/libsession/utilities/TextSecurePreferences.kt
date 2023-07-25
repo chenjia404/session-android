@@ -19,7 +19,6 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.CALL_NOT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_DARK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
-import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_IMPORT_BY_PK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_X_TOKEN
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
@@ -185,8 +184,6 @@ interface TextSecurePreferences {
     fun hasPreference(key: String): Boolean
     fun clearAll()
 
-    fun setImportByPk(isPk: Boolean)
-    fun isImportByPk(): Boolean
     fun setXToken(token: String)
     fun getXToken(): String?
 
@@ -1103,6 +1100,16 @@ interface TextSecurePreferences {
         }
 
         @JvmStatic
+        fun setImportByPk(context: Context, isPk: Boolean) {
+            setBooleanPreference(context, KEY_IMPORT_BY_PK, isPk)
+        }
+
+        @JvmStatic
+        fun isImportByPk(context: Context): Boolean {
+            return getBooleanPreference(context, KEY_IMPORT_BY_PK, false)
+        }
+
+        @JvmStatic
         fun setXToken(context: Context, token: String) {
             setStringPreference(context, KEY_X_TOKEN, token)
         }
@@ -1843,14 +1850,6 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun clearAll() {
         getDefaultSharedPreferences(context).edit().clear().commit()
-    }
-
-    override fun setImportByPk(isPk: Boolean) {
-        setBooleanPreference(KEY_IMPORT_BY_PK, isPk)
-    }
-
-    override fun isImportByPk(): Boolean {
-        return getBooleanPreference(KEY_IMPORT_BY_PK, false)
     }
 
     override fun setXToken(token: String) {

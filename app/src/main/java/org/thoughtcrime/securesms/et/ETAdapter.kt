@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
@@ -13,6 +13,7 @@ import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.formatMedias
 
 class ETAdapter : BaseQuickAdapter<ET, BaseViewHolder>(R.layout.item_et), LoadMoreModule {
+
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         ItemEtBinding.bind(viewHolder.itemView)

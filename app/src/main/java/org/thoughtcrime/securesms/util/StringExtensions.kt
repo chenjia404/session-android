@@ -6,7 +6,7 @@ import android.icu.text.Collator
 import android.icu.util.ULocale
 import android.net.Uri
 import android.text.Editable
-import org.thoughtcrime.securesms.home.Media
+import org.thoughtcrime.securesms.et.Media
 import java.io.File
 import java.lang.Character.codePointCount
 import java.lang.Character.offsetByCodePoints

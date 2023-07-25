@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -65,4 +65,9 @@ data class Authorize(
     var PubKey: String,
     var Nickname: String,
     var Token: String
+)
+
+data class Create(
+    var Id: String,
+    var SignMsg: String
 )

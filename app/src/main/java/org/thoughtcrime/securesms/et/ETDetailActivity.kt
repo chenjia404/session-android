@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.conversation.v2
+package org.thoughtcrime.securesms.et
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,13 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexboxLayout
+import com.lxj.xpopup.XPopup
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityEtDetailBinding
 import network.qki.messenger.databinding.ItemEtAttachBinding
 import network.qki.messenger.databinding.LayoutEtDetailHeaderBinding
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.home.ET
-import org.thoughtcrime.securesms.home.ETDetailAdapter
-import org.thoughtcrime.securesms.home.ETDetailViewModel
-import org.thoughtcrime.securesms.home.ETFragment
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.formatMedias
 import org.thoughtcrime.securesms.util.parcelable
@@ -188,6 +185,20 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
             } else {
                 headerBinding.layoutForward.rootForward.isVisible = false
             }
+            headerBinding.llComment.setOnClickListener {
+                sendComment()
+            }
+            binding.llSend.setOnClickListener {
+                sendComment()
+            }
         }
+    }
+
+    private fun sendComment() {
+        XPopup.Builder(this@ETDetailActivity)
+            .asCustom(ETCommentPopupView(this@ETDetailActivity, et!!) { _, content ->
+                viewModel.releaseComment(et?.TwAddress ?: "", content)
+            })
+            .show()
     }
 }

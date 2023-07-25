@@ -39,6 +39,11 @@ class UrlInterceptor : Interceptor {
                     AppConst.URLS.BASE.toHttpUrlOrNull()
                 }
 
+                "ipfs" -> {
+                    builder.addHeader("x-token", TextSecurePreferences.getXToken(ApplicationContext.context) ?: "")
+                    AppConst.URLS.IPFS.toHttpUrlOrNull()
+                }
+
                 else -> {
                     oldHttpUrl
                 }

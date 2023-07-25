@@ -1,10 +1,12 @@
 package org.thoughtcrime.securesms.net.network
 
+import okhttp3.MultipartBody
 import org.thoughtcrime.securesms.constants.AppConst
-import org.thoughtcrime.securesms.home.Authorize
-import org.thoughtcrime.securesms.home.Comment
-import org.thoughtcrime.securesms.home.ET
-import org.thoughtcrime.securesms.home.Nonce
+import org.thoughtcrime.securesms.et.Authorize
+import org.thoughtcrime.securesms.et.Comment
+import org.thoughtcrime.securesms.et.Create
+import org.thoughtcrime.securesms.et.ET
+import org.thoughtcrime.securesms.et.Nonce
 
 /**
  * Created by Yaakov on
@@ -30,5 +32,21 @@ class ApiService {
 
     suspend fun authorize(nonce: String, sign: String, address: String): Authorize? {
         return api.authorize(nonce, sign, address).Data
+    }
+
+    suspend fun releaseComment(address: String, content: String): BaseResponse<Unit?> {
+        return api.releaseComment(address, content)
+    }
+
+    suspend fun create(content: String, attachment: String = "", forwardId: String = ""): BaseResponse<Create?> {
+        return api.create(content, attachment, forwardId)
+    }
+
+    suspend fun release(id: String, sign: String): BaseResponse<Unit?> {
+        return api.release(id, sign)
+    }
+
+    suspend fun uploadFile(part: MultipartBody.Part): IpfsResponse? {
+        return api.uploadFile(part)
     }
 }

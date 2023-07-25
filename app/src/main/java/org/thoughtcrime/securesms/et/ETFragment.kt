@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,15 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.FragmentEtBinding
-import org.session.libsession.utilities.TextSecurePreferences
-import org.session.libsignal.crypto.MnemonicCodec
-import org.session.libsignal.utilities.hexEncodedPrivateKey
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.thoughtcrime.securesms.BaseFragment
-import org.thoughtcrime.securesms.conversation.v2.ETDetailActivity
-import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
-import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
-import javax.inject.Inject
 
 /**
  * Created by Yaakov on
@@ -28,10 +24,10 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
     private val binding by viewBinding(FragmentEtBinding::bind)
     override val viewModel by viewModels<ETViewModel>()
 
-    @Inject
-    lateinit var textSecurePreferences: TextSecurePreferences
 
     private val adapter: ETAdapter = ETAdapter()
+
+    private var isFirst: Boolean = true
 
     // 0 Following 1 Explore
     var type: Int? = null
@@ -42,33 +38,26 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
 
     }
 
-    private val mnemonic by lazy {
-        var hexEncodedSeed = IdentityKeyUtil.retrieve(requireContext(), IdentityKeyUtil.LOKI_SEED)
-        if (hexEncodedSeed == null) {
-            hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(requireContext()).hexEncodedPrivateKey // Legacy account
-        }
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(requireContext(), fileName)
-        }
-        if (hexEncodedSeed.length == 64 && textSecurePreferences.isImportByPk()) {
-            hexEncodedSeed
-        } else {
-            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        EventBus.getDefault().register(this)
         initView()
         initObserver()
         initData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
     private fun initView() {
         binding.apply {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = adapter
-            adapter.loadMoreModule.setOnLoadMoreListener { viewModel.loadET() }
+            adapter.loadMoreModule.setOnLoadMoreListener {
+                loadET()
+            }
             adapter.loadMoreModule.isAutoLoadMore = true
             adapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             adapter.setOnItemClickListener { adapter, _, position ->
@@ -77,17 +66,32 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                 intent.putExtra(KEY_ET, et)
                 show(intent)
             }
+            adapter.addChildClickViewIds(R.id.llForward)
+            adapter.setOnItemChildClickListener { adapter, v, position ->
+                when (v.id) {
+                    R.id.llForward -> {
+                        val et = adapter.data[position] as ET
+                        val intent = Intent(context, ETPublishActivity::class.java)
+                        intent.putExtra(KEY_ET, et)
+                        show(intent)
+                    }
+
+                    else -> {
+
+                    }
+                }
+            }
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.cursor = ""
-                viewModel.loadET()
+                loadET()
             }
 
         }
     }
 
     private fun initData() {
-        viewModel.login(mnemonic)
-        viewModel.loadET()
+        viewModel.login()
+        loadET()
     }
 
     private fun initObserver() {
@@ -103,7 +107,26 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                 adapter.loadMoreModule.loadMoreComplete()
                 adapter.addData(it)
             }
+            viewModel.cursor = it?.last()?.Cursor ?: ""
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: RefreshEvent) {
+        viewModel.cursor = ""
+
+    }
+
+    private fun loadET() {
+        viewModel.loadET({
+//            if (isFirst) {
+//                showLoading()
+//            }
+        }, {
+//            isFirst = false
+//            hideLoading()
+            stopRefreshing(binding.swipeRefreshLayout)
+        })
     }
 
 

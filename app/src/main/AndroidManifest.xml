@@ -243,10 +243,17 @@
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
-            android:name="org.thoughtcrime.securesms.conversation.v2.ETDetailActivity"
-            android:label="@string/activity_settings_title"
+            android:name="org.thoughtcrime.securesms.et.ETDetailActivity"
+            android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
+        <activity
+            android:name="org.thoughtcrime.securesms.et.ETPublishActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="org.thoughtcrime.securesms.home.web3.DAppWebActivity"

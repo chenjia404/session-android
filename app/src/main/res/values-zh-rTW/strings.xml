@@ -738,4 +738,6 @@
     <string name="explore">Explore</string>
     <string name="comment_more">评论...</string>
     <string name="send">发送</string>
+    <string name="publish">发布</string>
+    <string name="enter_content">输入内容</string>
 </resources>

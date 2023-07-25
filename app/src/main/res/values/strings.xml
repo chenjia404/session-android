@@ -1051,5 +1051,7 @@
     <string name="explore">Explore</string>
     <string name="comment_more">Comment...</string>
     <string name="send">Send</string>
+    <string name="publish">Publish</string>
+    <string name="enter_content">Enter Content</string>
 
 </resources>

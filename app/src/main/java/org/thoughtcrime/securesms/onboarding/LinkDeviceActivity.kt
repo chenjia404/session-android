@@ -38,14 +38,11 @@ import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragment
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragmentDelegate
 import org.thoughtcrime.securesms.util.push
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDelegate {
     private lateinit var binding: ActivityLinkDeviceBinding
 
-    @Inject
-    lateinit var textSecurePreferences: TextSecurePreferences
     internal val database: LokiAPIDatabaseProtocol
         get() = SnodeModule.shared.storage
     private val adapter = LinkDeviceActivityAdapter(this)
@@ -127,7 +124,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             TextSecurePreferences.setLocalNumber(this@LinkDeviceActivity, userHexEncodedPublicKey)
             TextSecurePreferences.setRestorationTime(this@LinkDeviceActivity, System.currentTimeMillis())
             TextSecurePreferences.setHasViewedSeed(this@LinkDeviceActivity, true)
-            textSecurePreferences.setImportByPk(isPk)
+            TextSecurePreferences.setImportByPk(this@LinkDeviceActivity, isPk)
             binding.loader.isVisible = true
             val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.registration_activity__skip) { register(true) }

@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +25,16 @@ class ETDetailViewModel(application: Application) : BaseViewModel(application) {
             apiService.loadComments(address, page)
         }.onSuccess {
             commentsLiveData.postValue(it)
+        }.onError {
+            context.toastOnUi(it.message)
+        }
+    }
+
+    fun releaseComment(et_address: String, content: String) {
+        execute {
+            apiService.releaseComment(et_address, content)
+        }.onSuccess {
+            context.toastOnUi(it.Msg)
         }.onError {
             context.toastOnUi(it.message)
         }
