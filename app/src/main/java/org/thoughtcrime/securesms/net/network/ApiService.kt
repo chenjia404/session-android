@@ -2,11 +2,11 @@ package org.thoughtcrime.securesms.net.network
 
 import okhttp3.MultipartBody
 import org.thoughtcrime.securesms.constants.AppConst
-import org.thoughtcrime.securesms.et.Authorize
 import org.thoughtcrime.securesms.et.Comment
 import org.thoughtcrime.securesms.et.Create
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.Nonce
+import org.thoughtcrime.securesms.et.User
 
 /**
  * Created by Yaakov on
@@ -30,7 +30,7 @@ class ApiService {
         return api.loadNonce(address, sign).Data
     }
 
-    suspend fun authorize(nonce: String, sign: String, address: String): Authorize? {
+    suspend fun authorize(nonce: String, sign: String, address: String): User? {
         return api.authorize(nonce, sign, address).Data
     }
 
@@ -48,5 +48,9 @@ class ApiService {
 
     suspend fun uploadFile(part: MultipartBody.Part): IpfsResponse? {
         return api.uploadFile(part)
+    }
+
+    suspend fun loadETFollow(cursor: String = ""): List<ET>? {
+        return api.loadETFollow(cursor).Data
     }
 }

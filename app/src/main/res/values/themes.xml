@@ -426,6 +426,8 @@
         <item name="chat_received_text_color">@color/core_white</item>
         <item name="chat_sent_text_color">@color/core_white</item>
         <item name="tab_select_text_color">@color/color606060</item>
+        <item name="copyBgColor">@color/color272727</item>
+        <item name="thirdTextColor">@color/colorC2C9D1</item>
 
     </style>
 
@@ -529,6 +531,8 @@
         <item name="chat_received_text_color">@color/classic_light_0</item>
         <item name="chat_sent_text_color">@color/core_white</item>
         <item name="tab_select_text_color">@color/colorC2C9D1</item>
+        <item name="copyBgColor">#B4FFFFFF</item>
+        <item name="thirdTextColor">@color/color91979D</item>
 
     </style>
 

@@ -740,4 +740,5 @@
     <string name="send">发送</string>
     <string name="publish">发布</string>
     <string name="enter_content">输入内容</string>
+    <string name="follower">Follower</string>
 </resources>

@@ -298,6 +298,7 @@ interface TextSecurePreferences {
         const val PREF_PROXY_SOCKS5 = "pref_proxy_socks5"
         const val KEY_IMPORT_BY_PK = "import_by_pk"
         const val KEY_X_TOKEN = "x_token"
+        const val KEY_USER = "user"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
@@ -1117,6 +1118,16 @@ interface TextSecurePreferences {
         @JvmStatic
         fun getXToken(context: Context): String? {
             return getStringPreference(context, KEY_X_TOKEN, null)
+        }
+
+        @JvmStatic
+        fun setUser(context: Context, user: String) {
+            setStringPreference(context, KEY_USER, user)
+        }
+
+        @JvmStatic
+        fun getUser(context: Context): String? {
+            return getStringPreference(context, KEY_USER, null)
         }
     }
 }

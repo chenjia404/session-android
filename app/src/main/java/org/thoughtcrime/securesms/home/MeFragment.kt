@@ -1,69 +1,66 @@
-package org.thoughtcrime.securesms.et
+package org.thoughtcrime.securesms.home
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
-import network.qki.messenger.databinding.FragmentEtBinding
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import network.qki.messenger.databinding.FragmentMeBinding
 import org.thoughtcrime.securesms.BaseFragment
+import org.thoughtcrime.securesms.et.ET
+import org.thoughtcrime.securesms.et.ETDetailActivity
+import org.thoughtcrime.securesms.et.ETFragment
+import org.thoughtcrime.securesms.et.ETMeAdapter
+import org.thoughtcrime.securesms.et.ETPublishActivity
+import org.thoughtcrime.securesms.et.MeViewModel
 import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
+import java.lang.Float.max
+
 
 /**
  * Created by Yaakov on
  * Describe:
  */
 @AndroidEntryPoint
-class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
+class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
 
-    private val binding by viewBinding(FragmentEtBinding::bind)
-    override val viewModel by viewModels<ETViewModel>()
+    private val binding by viewBinding(FragmentMeBinding::bind)
+    override val viewModel by viewModels<MeViewModel>()
 
 
-    private val adapter: ETAdapter = ETAdapter()
-
-    private var isFirst: Boolean = true
-
-    // 0 Following 1 Explore
-    var type: Int? = null
-
-    companion object {
-        // Extras
-        const val KEY_ET = "et"
-
-    }
+    private val adapter: ETMeAdapter = ETMeAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        EventBus.getDefault().register(this)
         initView()
         initObserver()
         initData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        EventBus.getDefault().unregister(this)
-    }
-
     private fun initView() {
-        binding.apply {
+        with(binding) {
+            appBarLayout.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                swipeRefreshLayout.isEnabled = verticalOffset >= 0
+                val calcRange = appBarLayout.totalScrollRange / 2f
+                val calcOffset = max(0f, kotlin.math.abs(verticalOffset) - calcRange)
+                val offsetPercent = 1 - (calcOffset / calcRange)
+                val alpha = (255 * offsetPercent).toInt()
+                llWallet.alpha = alpha.toFloat()
+            })
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = adapter
             adapter.loadMoreModule.setOnLoadMoreListener {
-                loadET()
+                loadETFollow()
             }
             adapter.loadMoreModule.isAutoLoadMore = true
             adapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             adapter.setOnItemClickListener { adapter, _, position ->
                 val et = adapter.data[position] as ET
                 val intent = Intent(context, ETDetailActivity::class.java)
-                intent.putExtra(KEY_ET, et)
+                intent.putExtra(ETFragment.KEY_ET, et)
                 show(intent)
             }
             adapter.addChildClickViewIds(R.id.llForward)
@@ -72,7 +69,7 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                     R.id.llForward -> {
                         val et = adapter.data[position] as ET
                         val intent = Intent(context, ETPublishActivity::class.java)
-                        intent.putExtra(KEY_ET, et)
+                        intent.putExtra(ETFragment.KEY_ET, et)
                         show(intent)
                     }
 
@@ -83,15 +80,14 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
             }
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.cursor = ""
-                loadET()
+                loadETFollow()
             }
 
         }
     }
 
     private fun initData() {
-        viewModel.login()
-        loadET()
+        loadETFollow()
     }
 
     private fun initObserver() {
@@ -113,14 +109,8 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: RefreshEvent) {
-        viewModel.cursor = ""
-
-    }
-
-    private fun loadET() {
-        viewModel.loadET({
+    private fun loadETFollow() {
+        viewModel.loadETFollow({
 //            if (isFirst) {
 //                showLoading()
 //            }

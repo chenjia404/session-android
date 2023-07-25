@@ -1,11 +1,11 @@
 package org.thoughtcrime.securesms.net.network
 
 import okhttp3.MultipartBody
-import org.thoughtcrime.securesms.et.Authorize
 import org.thoughtcrime.securesms.et.Comment
 import org.thoughtcrime.securesms.et.Create
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.Nonce
+import org.thoughtcrime.securesms.et.User
 import retrofit2.http.*
 
 interface Api {
@@ -30,7 +30,7 @@ interface Api {
     @Headers(URL_BASE)
     @FormUrlEncoded
     @POST("/api/v0/authorize")
-    suspend fun authorize(@Field("nonce") nonce: String, @Field("sign") sign: String, @Field("user_address") address: String): BaseResponse<Authorize?>
+    suspend fun authorize(@Field("nonce") nonce: String, @Field("sign") sign: String, @Field("user_address") address: String): BaseResponse<User?>
 
     @Headers(URL_BASE)
     @FormUrlEncoded
@@ -51,5 +51,9 @@ interface Api {
     @Multipart
     @POST("/api/v0/add")
     suspend fun uploadFile(@Part part: MultipartBody.Part): IpfsResponse?
+
+    @Headers(URL_BASE)
+    @GET("/api/v0/tweets/follow")
+    suspend fun loadETFollow(@Query("cursor") cursor: String): BaseResponse<List<ET>?>
 
 }

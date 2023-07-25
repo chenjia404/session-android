@@ -30,6 +30,7 @@ import org.thoughtcrime.securesms.database.MmsSmsDatabase
 import org.thoughtcrime.securesms.database.RecipientDatabase
 import org.thoughtcrime.securesms.database.ThreadDatabase
 import org.thoughtcrime.securesms.home.web3.DAppWebActivity
+import org.thoughtcrime.securesms.util.StatusBarUtil
 import org.thoughtcrime.securesms.util.toastOnUi
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -195,11 +196,11 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
                 if (tab.position === 0) {
-                    window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
+                    StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
                 } else if (tab.position === 2) {
-                    window?.statusBarColor = getColorFromAttr(R.attr.settingBgColor)
+                    StatusBarUtil.setStatusColor(this@HomeActivity, true, false, R.color.core_white)
                 } else {
-                    window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
+                    StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
                 }
 
             }
@@ -232,7 +233,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
-                window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
+                StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
             }
         }
         binding.tabLayout.getTabAt(0)?.select()

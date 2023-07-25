@@ -59,12 +59,19 @@ data class Nonce(
     var UserAddress: String
 )
 
-data class Authorize(
+data class User(
     var ID: String,
     var UserAddress: String,
     var PubKey: String,
     var Nickname: String,
-    var Token: String
+    var Token: String,
+    var Avatar: String,
+    var Desc: String,
+    var FollowCount: String,
+    var FansCount: String,
+    var TokenStatus: Int,
+    var IpfsHash: String,
+    var TwCount: String
 )
 
 data class Create(

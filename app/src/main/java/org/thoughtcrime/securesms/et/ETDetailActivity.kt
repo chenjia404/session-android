@@ -13,6 +13,7 @@ import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityEtDetailBinding
 import network.qki.messenger.databinding.ItemEtAttachBinding
 import network.qki.messenger.databinding.LayoutEtDetailHeaderBinding
+import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.formatMedias
@@ -35,6 +36,7 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
         super.onCreate(savedInstanceState, ready)
         binding = ActivityEtDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar ?: return
         actionBar.title = ""
