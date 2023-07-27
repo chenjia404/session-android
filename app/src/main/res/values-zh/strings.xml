@@ -733,4 +733,18 @@
     <string name="publish">发布</string>
     <string name="enter_content">输入内容</string>
     <string name="follower">Follower</string>
+    <string name="theme_mode">主题模式</string>
+    <string name="language">语言</string>
+    <string name="clean_cache">清理缓存</string>
+    <string name="chat_setting">聊天设置</string>
+    <string name="about_us">关于我们</string>
+    <string name="website">官网</string>
+    <string name="follow_system">跟随系统</string>
+    <string name="tips">提示</string>
+    <string name="clean_cache_tip">确定清理缓存吗？</string>
+    <string name="exit">退出</string>
+    <string name="tip_exit">退出将删除您的所有数据，确定要退出吗？</string>
+    <string name="card">Card</string>
+    <string name="scan_with_me">扫描这个二维码和我聊天</string>
+    <string name="save_success">保存成功~</string>
 </resources>

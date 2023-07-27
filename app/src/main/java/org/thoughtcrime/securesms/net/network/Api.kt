@@ -6,6 +6,7 @@ import org.thoughtcrime.securesms.et.Create
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.Nonce
 import org.thoughtcrime.securesms.et.User
+import org.thoughtcrime.securesms.et.UserInfo
 import retrofit2.http.*
 
 interface Api {
@@ -55,5 +56,9 @@ interface Api {
     @Headers(URL_BASE)
     @GET("/api/v0/tweets/follow")
     suspend fun loadETFollow(@Query("cursor") cursor: String): BaseResponse<List<ET>?>
+
+    @Headers(URL_BASE)
+    @GET("/api/v0/users/main")
+    suspend fun loadUserInfo(@Query("user_address") address: String): BaseResponse<UserInfo?>
 
 }

@@ -63,10 +63,10 @@ public class PrivacySettingsPreferenceFragment extends ListSummaryPreferenceFrag
         });
         this.findPreference(TextSecurePreferences.SCREEN_LOCK).setOnPreferenceChangeListener(new ScreenLockListener());
 
-        this.findPreference(TextSecurePreferences.READ_RECEIPTS_PREF).setOnPreferenceChangeListener(new ReadReceiptToggleListener());
-        this.findPreference(TextSecurePreferences.TYPING_INDICATORS).setOnPreferenceChangeListener(new TypingIndicatorsToggleListener());
-        this.findPreference(TextSecurePreferences.LINK_PREVIEWS).setOnPreferenceChangeListener(new LinkPreviewToggleListener());
-        this.findPreference(TextSecurePreferences.CALL_NOTIFICATIONS_ENABLED).setOnPreferenceChangeListener(new CallToggleListener(this, this::setCall));
+//        this.findPreference(TextSecurePreferences.READ_RECEIPTS_PREF).setOnPreferenceChangeListener(new ReadReceiptToggleListener());
+//        this.findPreference(TextSecurePreferences.TYPING_INDICATORS).setOnPreferenceChangeListener(new TypingIndicatorsToggleListener());
+//        this.findPreference(TextSecurePreferences.LINK_PREVIEWS).setOnPreferenceChangeListener(new LinkPreviewToggleListener());
+//        this.findPreference(TextSecurePreferences.CALL_NOTIFICATIONS_ENABLED).setOnPreferenceChangeListener(new CallToggleListener(this, this::setCall));
         updateProxySummary(-1);
         initializeVisibility();
     }

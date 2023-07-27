@@ -7,7 +7,6 @@ import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseViewModel
 import org.thoughtcrime.securesms.home.web3.TransactionService
 import org.thoughtcrime.securesms.net.network.ApiService
-import org.thoughtcrime.securesms.util.Logger
 import org.thoughtcrime.securesms.util.toastOnUi
 
 /**
@@ -54,8 +53,7 @@ class ETViewModel(application: Application) : BaseViewModel(application) {
         }.onSuccess {
             if (it != null) {
                 val userJson = Gson().toJson(it)
-                Logger.d("userJson = $userJson")
-                TextSecurePreferences.setXToken(context, it.Token)
+                TextSecurePreferences.setXToken(context, it.Token ?: "")
                 TextSecurePreferences.setUser(context, userJson)
             }
 

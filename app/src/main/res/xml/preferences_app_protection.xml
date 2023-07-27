@@ -41,38 +41,38 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/preferences__read_receipts">
-        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="pref_read_receipts"
-            android:summary="@string/preferences__read_receipts_summary"
-            android:title="@string/preferences__read_receipts" />
-    </PreferenceCategory>
+<!--    <PreferenceCategory android:title="@string/preferences__read_receipts">-->
+<!--        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="pref_read_receipts"-->
+<!--            android:summary="@string/preferences__read_receipts_summary"-->
+<!--            android:title="@string/preferences__read_receipts" />-->
+<!--    </PreferenceCategory>-->
 
-    <PreferenceCategory android:title="@string/preferences__typing_indicators">
-        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="pref_typing_indicators"
-            android:summary="@string/preferences__typing_indicators_summary"
-            android:title="@string/preferences__typing_indicators" />
-    </PreferenceCategory>
+<!--    <PreferenceCategory android:title="@string/preferences__typing_indicators">-->
+<!--        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="pref_typing_indicators"-->
+<!--            android:summary="@string/preferences__typing_indicators_summary"-->
+<!--            android:title="@string/preferences__typing_indicators" />-->
+<!--    </PreferenceCategory>-->
 
-    <PreferenceCategory android:title="@string/preferences__link_previews">
+<!--    <PreferenceCategory android:title="@string/preferences__link_previews">-->
 
-        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="pref_link_previews"
-            android:summary="@string/preferences__link_previews_summary"
-            android:title="@string/preferences__send_link_previews" />
-    </PreferenceCategory>
+<!--        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat-->
+<!--            android:defaultValue="true"-->
+<!--            android:key="pref_link_previews"-->
+<!--            android:summary="@string/preferences__link_previews_summary"-->
+<!--            android:title="@string/preferences__send_link_previews" />-->
+<!--    </PreferenceCategory>-->
 
-    <PreferenceCategory android:title="@string/preferences__calls_beta">
-        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="pref_call_notifications_enabled"
-            android:summary="@string/preferences__allow_access_voice_video"
-            android:title="@string/preferences__voice_video_calls" />
-    </PreferenceCategory>
+<!--    <PreferenceCategory android:title="@string/preferences__calls_beta">-->
+<!--        <org.thoughtcrime.securesms.components.SwitchPreferenceCompat-->
+<!--            android:defaultValue="false"-->
+<!--            android:key="pref_call_notifications_enabled"-->
+<!--            android:summary="@string/preferences__allow_access_voice_video"-->
+<!--            android:title="@string/preferences__voice_video_calls" />-->
+<!--    </PreferenceCategory>-->
 
     <!-- <PreferenceCategory android:layout="@layout/preference_divider"/>
 
@@ -116,4 +116,7 @@
             android:title="@string/preferences__incognito_keyboard" />
     </PreferenceCategory>
 
+    <org.thoughtcrime.securesms.preferences.BlockedContactsPreference
+        android:key="blocked_contacts"
+        android:layout="@layout/blocked_contacts_preference" />
 </PreferenceScreen>

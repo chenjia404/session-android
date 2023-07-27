@@ -7,6 +7,7 @@ import org.thoughtcrime.securesms.et.Create
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.Nonce
 import org.thoughtcrime.securesms.et.User
+import org.thoughtcrime.securesms.et.UserInfo
 
 /**
  * Created by Yaakov on
@@ -52,5 +53,9 @@ class ApiService {
 
     suspend fun loadETFollow(cursor: String = ""): List<ET>? {
         return api.loadETFollow(cursor).Data
+    }
+
+    suspend fun loadUserInfo(address: String): UserInfo? {
+        return api.loadUserInfo(address).Data
     }
 }

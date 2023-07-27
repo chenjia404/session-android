@@ -36,7 +36,7 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
         super.onCreate(savedInstanceState, ready)
         binding = ActivityEtDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        window?.statusBarColor = getColorFromAttr(R.attr.chatsToolbarColor)
+        window?.statusBarColor = getColorFromAttr(R.attr.mainColor)
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar ?: return
         actionBar.title = ""

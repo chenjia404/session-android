@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/settingBgColor"
     android:orientation="vertical"
-    tools:context="org.thoughtcrime.securesms.conversation.v2.UserActivity"
+    tools:context="org.thoughtcrime.securesms.home.UserActivity"
     tools:theme="@style/Theme.Session.DayNight.NoActionBar">
 
     <androidx.appcompat.widget.Toolbar

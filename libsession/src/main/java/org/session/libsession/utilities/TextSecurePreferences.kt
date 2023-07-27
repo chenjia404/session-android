@@ -125,6 +125,7 @@ interface TextSecurePreferences {
     fun isNotificationVibrateEnabled(): Boolean
     fun getNotificationLedColor(): Int
     fun isThreadLengthTrimmingEnabled(): Boolean
+    fun setThreadLengthTrimmingEnabled(boolean: Boolean)
     fun isSystemEmojiPreferred(): Boolean
     fun getMobileMediaDownloadAllowed(): Set<String>?
     fun getWifiMediaDownloadAllowed(): Set<String>?
@@ -168,6 +169,7 @@ interface TextSecurePreferences {
     fun setShownCallWarning(): Boolean
     fun setShownCallNotification(): Boolean
     fun isCallNotificationsEnabled(): Boolean
+    fun setCallNotificationsEnabled(boolean: Boolean)
     fun getLastVacuum(): Long
     fun setLastVacuumNow()
     fun getFingerprintKeyGenerated(): Boolean
@@ -753,6 +755,11 @@ interface TextSecurePreferences {
         }
 
         @JvmStatic
+        fun setLanguage(context: Context, language: String) {
+            setStringPreference(context, LANGUAGE_PREF, language)
+        }
+
+        @JvmStatic
         fun hasSeenWelcomeScreen(context: Context): Boolean {
             return getBooleanPreference(context, SEEN_WELCOME_SCREEN_PREF, false)
         }
@@ -1093,6 +1100,18 @@ interface TextSecurePreferences {
                     else -> null
                 }
             )
+        }
+
+        @JvmStatic
+        fun setThemeStyle(context: Context, themeStyle: String) {
+            val safeTheme = if (themeStyle !in listOf(
+                    CLASSIC_DARK,
+                    CLASSIC_LIGHT,
+                    OCEAN_DARK,
+                    OCEAN_LIGHT
+                )
+            ) CLASSIC_DARK else themeStyle
+            setStringPreference(context, SELECTED_STYLE, safeTheme)
         }
 
         @JvmStatic
@@ -1533,6 +1552,10 @@ class AppTextSecurePreferences @Inject constructor(
         return getBooleanPreference(TextSecurePreferences.THREAD_TRIM_ENABLED, true)
     }
 
+    override fun setThreadLengthTrimmingEnabled(boolean: Boolean) {
+        setBooleanPreference(TextSecurePreferences.THREAD_TRIM_ENABLED, boolean)
+    }
+
     override fun isSystemEmojiPreferred(): Boolean {
         return getBooleanPreference(TextSecurePreferences.SYSTEM_EMOJI_PREF, false)
     }
@@ -1714,6 +1737,10 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun isCallNotificationsEnabled(): Boolean {
         return getBooleanPreference(CALL_NOTIFICATIONS_ENABLED, false)
+    }
+
+    override fun setCallNotificationsEnabled(boolean: Boolean) {
+        setBooleanPreference(CALL_NOTIFICATIONS_ENABLED, boolean)
     }
 
     override fun getLastVacuum(): Long {

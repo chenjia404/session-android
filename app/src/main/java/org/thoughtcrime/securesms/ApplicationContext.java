@@ -31,6 +31,8 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
+import com.hjq.language.MultiLanguages;
+
 import org.conscrypt.Conscrypt;
 import org.session.libsession.avatars.AvatarHelper;
 import org.session.libsession.database.MessageDataProvider;
@@ -46,7 +48,6 @@ import org.session.libsession.utilities.SSKEnvironment;
 import org.session.libsession.utilities.TextSecurePreferences;
 import org.session.libsession.utilities.Util;
 import org.session.libsession.utilities.WindowDebouncer;
-import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageContextWrapper;
 import org.session.libsession.utilities.dynamiclanguage.LocaleParser;
 import org.session.libsignal.utilities.HTTP;
 import org.session.libsignal.utilities.JsonUtil;
@@ -212,6 +213,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         NotificationChannels.create(this);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         AppContext.INSTANCE.configureKovenant();
+        MultiLanguages.init(this);
         messageNotifier = new OptimizedMessageNotifier(new DefaultMessageNotifier());
         broadcaster = new Broadcaster(this);
         LokiAPIDatabase apiDB = getDatabaseComponent().lokiAPIDatabase();
@@ -415,7 +417,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     @Override
     protected void attachBaseContext(Context base) {
         initializeLocaleParser();
-        super.attachBaseContext(DynamicLanguageContextWrapper.updateContext(base, TextSecurePreferences.getLanguage(base)));
+        super.attachBaseContext(MultiLanguages.attach(base));
     }
 
     private static class ProviderInitializationException extends RuntimeException {

@@ -20,7 +20,7 @@ class ETDetailAdapter : BaseQuickAdapter<Comment, BaseViewHolder>(R.layout.item_
                 tvContent.text = it.Content
                 GlideHelper.showImage(
                     view = ivAvatar,
-                    url = it.UserInfo?.Avatar,
+                    url = it.UserInfo?.Avatar ?: "",
                     roundRadius = 100,
                     placeHolder = R.drawable.ic_pic_default_round,
                     errorHolder = R.drawable.ic_pic_default_round

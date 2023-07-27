@@ -16,9 +16,10 @@ import androidx.annotation.StyleRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hjq.language.MultiLanguages;
+
 import org.session.libsession.utilities.TextSecurePreferences;
 import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageActivityHelper;
-import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageContextWrapper;
 import org.thoughtcrime.securesms.conversation.v2.WindowUtil;
 import org.thoughtcrime.securesms.util.ActivityUtilitiesKt;
 import org.thoughtcrime.securesms.util.ThemeState;
@@ -129,6 +130,6 @@ public abstract class BaseActionBarActivity extends AppCompatActivity {
 
   @Override
   protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(DynamicLanguageContextWrapper.updateContext(newBase, TextSecurePreferences.getLanguage(newBase)));
+    super.attachBaseContext(MultiLanguages.attach(newBase));
   }
 }

@@ -20,16 +20,14 @@ data class ET(
     var LikeCount: Int?,
     var OriginTweet: ET?,
     var TwAddress: String?,
-    var UserInfo: UserInfo?,
+    var UserInfo: User?,
     var isTwLike: Boolean
 ) : Parcelable
 
 @Parcelize
 data class UserInfo(
-    var Avatar: String,
-    var IsFollow: Boolean,
-    var Nickname: String,
-    var UserAddress: String
+    var Tweets: List<ET>,
+    var user: User
 ) : Parcelable
 
 
@@ -46,9 +44,9 @@ data class Comment(
     var Content: String,
     var CreatedAt: String,
     var ReplyNum: Int,
-    var ReplyUserInfo: UserInfo,
+    var ReplyUserInfo: User,
     var UserAddress: String,
-    var UserInfo: UserInfo,
+    var UserInfo: User,
     var Uuid: String
 ) : Parcelable
 
@@ -59,20 +57,22 @@ data class Nonce(
     var UserAddress: String
 )
 
+@Parcelize
 data class User(
-    var ID: String,
-    var UserAddress: String,
-    var PubKey: String,
-    var Nickname: String,
-    var Token: String,
-    var Avatar: String,
-    var Desc: String,
-    var FollowCount: String,
-    var FansCount: String,
-    var TokenStatus: Int,
-    var IpfsHash: String,
-    var TwCount: String
-)
+    var ID: String?,
+    var UserAddress: String?,
+    var PubKey: String?,
+    var Nickname: String?,
+    var Token: String?,
+    var Avatar: String?,
+    var Desc: String?,
+    var FollowCount: String?,
+    var FansCount: String?,
+    var TokenStatus: Int?,
+    var IpfsHash: String?,
+    var TwCount: String?,
+    var IsFollow: Boolean?
+) : Parcelable
 
 data class Create(
     var Id: String,
