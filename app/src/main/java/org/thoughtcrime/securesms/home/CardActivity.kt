@@ -18,7 +18,6 @@ import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityCardBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.conversation.v2.CardViewModel
 import org.thoughtcrime.securesms.et.User
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.util.FileProviderUtil

@@ -1,15 +1,20 @@
 package org.thoughtcrime.securesms.et
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.util.SmartGlideImageLoader
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ItemEtAttachBinding
 import network.qki.messenger.databinding.ItemEtBinding
 import org.thoughtcrime.securesms.util.GlideHelper
+import org.thoughtcrime.securesms.util.formatMediaUrl
 import org.thoughtcrime.securesms.util.formatMedias
 
 class ETAdapter : BaseQuickAdapter<ET, BaseViewHolder>(R.layout.item_et), LoadMoreModule {
@@ -38,10 +43,14 @@ class ETAdapter : BaseQuickAdapter<ET, BaseViewHolder>(R.layout.item_et), LoadMo
                 flexbox.removeAllViews()
                 it.Attachment?.trim()?.let { it ->
                     val medias = it.formatMedias()
+                    val urls = it.formatMediaUrl()
                     if (!medias.isNullOrEmpty()) {
                         for (i in medias.indices) {
                             val media = medias[i]
                             val attachBinding = ItemEtAttachBinding.inflate(LayoutInflater.from(context), root, false)
+                            attachBinding.ivAttach.setOnClickListener {
+                                showGallery(attachBinding.ivAttach, i, urls)
+                            }
                             flexbox.addView(attachBinding.root)
                             val lp = attachBinding.root.layoutParams as FlexboxLayout.LayoutParams
                             lp.flexBasisPercent = 0.3f
@@ -113,7 +122,13 @@ class ETAdapter : BaseQuickAdapter<ET, BaseViewHolder>(R.layout.item_et), LoadMo
 
     }
 
-    fun setupET(item: ET) {
+    private fun showGallery(imageView: ImageView, position: Int, urls: List<String>) {
+        XPopup.Builder(context)
+            .isTouchThrough(true)
+            .asImageViewer(imageView, position, urls, false, true, -1, -1, 0, false, Color.rgb(32, 36, 46), { popupView, i ->
+
+            }, SmartGlideImageLoader(), null)
+            .show()
 
     }
 

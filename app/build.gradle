@@ -145,11 +145,14 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.7.0'
 
     // https://github.com/li-xiaojun/XPopup
-    implementation('com.github.li-xiaojun:XPopup:2.2.25') {
+    implementation('com.github.li-xiaojun:XPopup:2.9.19') {
         exclude group: "com.davemorrissey.labs", module: "subsampling-scale-image-view-androidx"
     }
 
     implementation 'com.github.getActivity:MultiLanguages:8.0'
+
+    implementation("androidx.room:room-runtime:2.5.0")
+    kapt("androidx.room:room-compiler:2.5.0")
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.11.1'
@@ -265,6 +268,16 @@ android {
         testInstrumentationRunnerArguments clearPackageData: 'true'
         testOptions {
             execution 'ANDROIDX_TEST_ORCHESTRATOR'
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true",
+                        "room.schemaLocation"  : "$projectDir/schemas".toString()
+                ]
+            }
         }
     }
 

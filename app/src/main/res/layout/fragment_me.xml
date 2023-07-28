@@ -150,6 +150,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llWallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
@@ -257,7 +258,7 @@
                             android:layout_height="wrap_content">
 
                             <LinearLayout
-                                android:id="@+id/llWallet"
+                                android:id="@+id/llChain"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/shape_wallet_bg_36"

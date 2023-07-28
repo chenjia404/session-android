@@ -428,6 +428,8 @@
         <item name="tab_select_text_color">@color/color606060</item>
         <item name="copyBgColor">@color/color272727</item>
         <item name="thirdTextColor">@color/colorC2C9D1</item>
+        <item name="walletBgColor">@color/core_black</item>
+        <item name="walletTextColor">@color/color616569</item>
 
     </style>
 
@@ -533,6 +535,8 @@
         <item name="tab_select_text_color">@color/colorC2C9D1</item>
         <item name="copyBgColor">#B4FFFFFF</item>
         <item name="thirdTextColor">@color/color91979D</item>
+        <item name="walletBgColor">@color/color3E66FB</item>
+        <item name="walletTextColor">@color/core_white</item>
 
     </style>
 

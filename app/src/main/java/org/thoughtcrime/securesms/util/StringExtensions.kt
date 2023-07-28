@@ -136,10 +136,6 @@ fun String?.formatMedias(): List<Media> = this?.run {
     val str = this.trim()
     for (attach in str.split(",")) {
         val split = attach.split(".")
-//        if (split.size === 1) {
-//            list.add(Media(0, attach))
-//            continue
-//        }
         val picFilter = picsList.filter { s -> split[split.size - 1].startsWith(s, true) }
         if (!picFilter.isNullOrEmpty()) {
             list.add(Media(0, attach))
@@ -147,6 +143,23 @@ fun String?.formatMedias(): List<Media> = this?.run {
         val mediaFilter = mediasList.filter { s -> split[split.size - 1].startsWith(s, true) }
         if (!mediaFilter.isNullOrEmpty()) {
             list.add(Media(1, attach))
+        }
+    }
+    list
+} ?: emptyList()
+
+fun String?.formatMediaUrl(): List<String> = this?.run {
+    val list = arrayListOf<String>()
+    val str = this.trim()
+    for (attach in str.split(",")) {
+        val split = attach.split(".")
+        val picFilter = picsList.filter { s -> split[split.size - 1].startsWith(s, true) }
+        if (!picFilter.isNullOrEmpty()) {
+            list.add(attach)
+        }
+        val mediaFilter = mediasList.filter { s -> split[split.size - 1].startsWith(s, true) }
+        if (!mediaFilter.isNullOrEmpty()) {
+            list.add(attach)
         }
     }
     list

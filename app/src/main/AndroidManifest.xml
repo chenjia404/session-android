@@ -273,6 +273,12 @@
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
+            android:name="org.thoughtcrime.securesms.wallet.WalletActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
+        <activity
             android:name="org.thoughtcrime.securesms.conversation.v2.MessageDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight" />

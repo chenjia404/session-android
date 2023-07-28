@@ -1068,5 +1068,8 @@
     <string name="card">Card</string>
     <string name="scan_with_me">Scan the QR code and chat with me</string>
     <string name="save_success">Save success~</string>
+    <string name="transfer">Transfer</string>
+    <string name="receive">Receive</string>
+    <string name="scan">Scan</string>
 
 </resources>

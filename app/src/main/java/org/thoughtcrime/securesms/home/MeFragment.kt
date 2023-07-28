@@ -21,6 +21,7 @@ import org.thoughtcrime.securesms.et.User
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.sendToClip
 import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
+import org.thoughtcrime.securesms.wallet.WalletActivity
 import java.lang.Float.max
 
 
@@ -52,7 +53,7 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 val calcRange = appBarLayout.totalScrollRange * 0.1
                 val calcOffset = max(0f, (kotlin.math.abs(verticalOffset) - calcRange).toFloat())
                 val offsetPercent = 1 - (calcOffset / calcRange)
-               // Logger.d("offsetPercent = $offsetPercent")
+                // Logger.d("offsetPercent = $offsetPercent")
                 var alpha = if (offsetPercent <= 1) {
                     (255 * offsetPercent).toInt()
                 } else {
@@ -102,6 +103,10 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
             }
             ivCard.setOnClickListener {
                 val intent = Intent(context, CardActivity::class.java)
+                show(intent)
+            }
+            llWallet.setOnClickListener {
+                val intent = Intent(context, WalletActivity::class.java)
                 show(intent)
             }
 
