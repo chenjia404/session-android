@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.home.web3
 
-import org.session.libsignal.crypto.Wallet
+import org.thoughtcrime.securesms.crypto.KeyStoreHelper
+import org.thoughtcrime.securesms.database.room.Wallet
 import org.thoughtcrime.securesms.util.Logger
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.TypeReference
@@ -117,7 +118,7 @@ object TransactionService {
         val s = String(data, Charsets.UTF_8)
         val signMessage = Sign.signMessage(
             s.toByteArray(),
-            ECKeyPair.create(Numeric.toBigInt(wallet.pk))
+            ECKeyPair.create(Numeric.toBigInt(KeyStoreHelper.unseal(wallet.pk)))
         )
         return getSignature(signMessage)
     }

@@ -37,7 +37,6 @@ import org.session.libsession.utilities.SSKEnvironment
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient
 import org.session.libsession.utilities.truncateIdForDisplay
-import org.session.libsignal.crypto.MnemonicCodec
 import org.thoughtcrime.securesms.BaseFragment
 import org.thoughtcrime.securesms.avatar.AvatarSelection
 import org.thoughtcrime.securesms.components.ProfilePictureView
@@ -130,7 +129,7 @@ class SettingFragment : BaseFragment<SettingViewModel>(R.layout.fragment_setting
             helpButton.setOnClickListener { showHelp() }
             seedButton.setOnClickListener { showSeed() }
             clearAllDataButton.setOnClickListener { clearAllData() }
-            tvAddress.text = MnemonicCodec.toAddress(viewModel.wallet.address)
+            tvAddress.text = viewModel.wallet.address
             tvAddressCopy.setOnClickListener {
                 requireContext().sendToClip(viewModel.wallet.address)
             }

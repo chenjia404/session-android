@@ -25,12 +25,12 @@ import org.thoughtcrime.securesms.BaseActionBarActivity
 import org.thoughtcrime.securesms.crypto.KeyPairUtilities
 import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.push
-import org.thoughtcrime.securesms.util.setUpActionBarSessionLogo
 
 class RecoveryPhraseRestoreActivity : BaseActionBarActivity() {
     private lateinit var binding: ActivityRecoveryPhraseRestoreBinding
     internal val database: LokiAPIDatabaseProtocol
         get() = SnodeModule.shared.storage
+
     // region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +81,7 @@ class RecoveryPhraseRestoreActivity : BaseActionBarActivity() {
             val seed = Hex.fromStringCondensed(hexEncodedSeed)
             val keyPairGenerationResult = KeyPairUtilities.generate(seed)
             val x25519KeyPair = keyPairGenerationResult.x25519KeyPair
-            KeyPairUtilities.store(this, seed, keyPairGenerationResult.ed25519KeyPair, x25519KeyPair)
+            KeyPairUtilities.store(this, seed, keyPairGenerationResult.ed25519KeyPair, x25519KeyPair, false)
             val userHexEncodedPublicKey = x25519KeyPair.hexEncodedPublicKey
             val registrationID = KeyHelper.generateRegistrationId(false)
             TextSecurePreferences.setLocalRegistrationId(this, registrationID)

@@ -151,8 +151,9 @@ dependencies {
 
     implementation 'com.github.getActivity:MultiLanguages:8.0'
 
-    implementation("androidx.room:room-runtime:2.5.0")
-    kapt("androidx.room:room-compiler:2.5.0")
+    implementation("androidx.room:room-runtime:2.4.3")
+    kapt("androidx.room:room-compiler:2.4.3")
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
     testImplementation "junit:junit:$junitVersion"
     testImplementation 'org.assertj:assertj-core:3.11.1'
@@ -190,6 +191,9 @@ dependencies {
 
     testImplementation 'org.robolectric:robolectric:4.4'
     testImplementation 'org.robolectric:shadows-multidex:4.4'
+
+    // sql helper
+    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
 
 def canonicalVersionCode = 357
@@ -292,6 +296,7 @@ android {
             minifyEnabled false
         }
         debug {
+            //resValue("string", "PORT_NUMBER", "8082")
             minifyEnabled false
         }
     }

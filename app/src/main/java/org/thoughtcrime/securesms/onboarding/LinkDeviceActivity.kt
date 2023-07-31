@@ -29,7 +29,6 @@ import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.utilities.Hex
 import org.session.libsignal.utilities.KeyHelper
-import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.ApplicationContext
 import org.thoughtcrime.securesms.BaseActionBarActivity
@@ -72,15 +71,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
 
     // region Interaction
     override fun handleQRCodeScanned(mnemonic: String) {
-        try {
-            val words = mnemonic.split(" ").toMutableList()
-            var isPk = words.size == 1 && mnemonic.length == 64
-            val seed = Hex.fromStringCondensed(mnemonic)
-            continueWithSeed(seed, isPk)
-        } catch (e: Exception) {
-            Log.e("Loki", "Error getting seed from QR code", e)
-            Toast.makeText(this, "An error occurred.", Toast.LENGTH_LONG).show()
-        }
+        continueWithMnemonic(mnemonic)
     }
 
     fun continueWithMnemonic(mnemonic: String) {
@@ -117,7 +108,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             // RestoreActivity handles seed this way
             val keyPairGenerationResult = KeyPairUtilities.generate(seed)
             val x25519KeyPair = keyPairGenerationResult.x25519KeyPair
-            KeyPairUtilities.store(this@LinkDeviceActivity, seed, keyPairGenerationResult.ed25519KeyPair, x25519KeyPair)
+            KeyPairUtilities.store(this@LinkDeviceActivity, seed, keyPairGenerationResult.ed25519KeyPair, x25519KeyPair, isPk)
             val userHexEncodedPublicKey = x25519KeyPair.hexEncodedPublicKey
             val registrationID = KeyHelper.generateRegistrationId(false)
             TextSecurePreferences.setLocalRegistrationId(this@LinkDeviceActivity, registrationID)

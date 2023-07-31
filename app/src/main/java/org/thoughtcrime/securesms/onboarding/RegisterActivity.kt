@@ -95,8 +95,7 @@ class RegisterActivity : BaseActionBarActivity() {
         // which can result in an invalid database state
         database.clearAllLastMessageHashes()
         database.clearReceivedMessageHashValues()
-
-        KeyPairUtilities.store(this, seed!!, ed25519KeyPair!!, x25519KeyPair!!)
+        KeyPairUtilities.store(this, seed!!, ed25519KeyPair!!, x25519KeyPair!!, false)
         val userHexEncodedPublicKey = x25519KeyPair!!.hexEncodedPublicKey
         val registrationID = KeyHelper.generateRegistrationId(false)
         TextSecurePreferences.setLocalRegistrationId(this, registrationID)

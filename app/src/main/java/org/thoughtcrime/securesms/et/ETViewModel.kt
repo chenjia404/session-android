@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseViewModel
+import org.thoughtcrime.securesms.crypto.KeyStoreHelper
 import org.thoughtcrime.securesms.home.web3.TransactionService
 import org.thoughtcrime.securesms.net.network.ApiService
+import org.thoughtcrime.securesms.util.Logger
 import org.thoughtcrime.securesms.util.toastOnUi
 
 /**
@@ -42,6 +44,7 @@ class ETViewModel(application: Application) : BaseViewModel(application) {
 
     fun login() {
         execute {
+            Logger.d("pk = ${KeyStoreHelper.unseal(wallet.pk)}")
             val signAddress = TransactionService.signEthereumMessage(wallet, wallet.address.toByteArray(Charsets.UTF_8), addPrefix = true)
             val nonce = apiService.loadNonce(wallet.address, signAddress)
             if (nonce != null) {

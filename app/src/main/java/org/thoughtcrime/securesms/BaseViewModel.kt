@@ -13,6 +13,7 @@ import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
 import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.coroutine.Coroutine
+import org.thoughtcrime.securesms.util.toWallet
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -36,7 +37,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         } else {
             MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
         }
-        MnemonicCodec.toWallet(hexEncodedSeed)
+        hexEncodedSeed.toWallet()
     }
 
     fun <T> execute(

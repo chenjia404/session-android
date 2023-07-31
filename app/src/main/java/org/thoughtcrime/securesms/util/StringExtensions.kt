@@ -6,7 +6,13 @@ import android.icu.text.Collator
 import android.icu.util.ULocale
 import android.net.Uri
 import android.text.Editable
+import org.thoughtcrime.securesms.crypto.KeyStoreHelper
+import org.thoughtcrime.securesms.database.room.Wallet
 import org.thoughtcrime.securesms.et.Media
+import org.web3j.crypto.Bip32ECKeyPair
+import org.web3j.crypto.Credentials
+import org.web3j.crypto.MnemonicUtils
+import org.web3j.utils.Numeric
 import java.io.File
 import java.lang.Character.codePointCount
 import java.lang.Character.offsetByCodePoints
@@ -121,6 +127,54 @@ fun String.formatAddress(): String {
         return ""
     }
     return this.substring(0, 6) + "...." + this.substring(this.length - 6)
+}
+
+fun String.toAddress(): String {
+    val path = intArrayOf(
+        44 or Bip32ECKeyPair.HARDENED_BIT,
+        60 or Bip32ECKeyPair.HARDENED_BIT,
+        0 or Bip32ECKeyPair.HARDENED_BIT,
+        0,
+        0
+    )
+    val words = this.split(" ").toMutableList()
+    // support private key
+    return if (words.size == 1 && this.length == 64) {
+        val credentials = Credentials.create(this)
+        credentials.address
+    } else {
+        val seed = MnemonicUtils.generateSeed(this, "")
+        val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+        val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+        val credentials = Credentials.create(bip44Keypair)
+        credentials.address
+    }
+}
+
+fun String.toWallet(): Wallet {
+    val path = intArrayOf(
+        44 or Bip32ECKeyPair.HARDENED_BIT,
+        60 or Bip32ECKeyPair.HARDENED_BIT,
+        0 or Bip32ECKeyPair.HARDENED_BIT,
+        0,
+        0
+    )
+    val words = this.split(" ").toMutableList()
+    // support private key
+    return if (words.size == 1 && this.length == 64) {
+        val credentials = Credentials.create(this)
+        val pk = "0x$this"
+        val address = credentials.address
+        Wallet(0, "", KeyStoreHelper.seal(pk), address)
+    } else {
+        val seed = MnemonicUtils.generateSeed(this, "")
+        val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+        val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+        val credentials = Credentials.create(bip44Keypair)
+        val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
+        val address = credentials.address
+        Wallet(0, KeyStoreHelper.seal(this), KeyStoreHelper.seal(pk), address)
+    }
 }
 
 val picsList = listOf(
