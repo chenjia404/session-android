@@ -11,6 +11,7 @@ import org.session.libsignal.crypto.ecc.ECKeyPair
 import org.session.libsignal.utilities.Base64
 import org.session.libsignal.utilities.Hex
 import org.session.libsignal.utilities.toHexString
+import org.thoughtcrime.securesms.database.room.AppDataBase
 import org.thoughtcrime.securesms.util.toWallet
 import org.web3j.crypto.MnemonicUtils
 
@@ -48,7 +49,7 @@ object KeyPairUtilities {
         } else {
             seed.toHexString().toWallet()
         }
-        //AppDataBase.getInstance().walletDao().insert(wallet)
+        AppDataBase.getInstance().walletDao().insert(wallet)
     }
 
     fun hasV2KeyPair(context: Context): Boolean {

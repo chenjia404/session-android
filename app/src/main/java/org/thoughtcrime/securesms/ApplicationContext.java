@@ -84,6 +84,7 @@ import org.thoughtcrime.securesms.sskenvironment.ReadReceiptManager;
 import org.thoughtcrime.securesms.sskenvironment.TypingStatusRepository;
 import org.thoughtcrime.securesms.util.Broadcaster;
 import org.thoughtcrime.securesms.util.GlideHelper;
+import org.thoughtcrime.securesms.util.KeyStoreUtils;
 import org.thoughtcrime.securesms.util.dynamiclanguage.LocaleParseHelper;
 import org.thoughtcrime.securesms.webrtc.CallMessageProcessor;
 import org.webrtc.PeerConnectionFactory;
@@ -210,6 +211,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         initializeSecurityProvider();
         initializeLogging();
         initializeCrashHandling();
+        KeyStoreUtils.INSTANCE.initialize(this);
         NotificationChannels.create(this);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         AppContext.INSTANCE.configureKovenant();

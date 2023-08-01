@@ -23,6 +23,6 @@ abstract class WalletDao {
     @Update
     abstract fun update(wallet: Wallet)
 
-    @Query("SELECT * FROM Wallet LIMIT 1")
+    @Query("SELECT * FROM wallet LIMIT 1")
     abstract fun loadWallet(): Wallet
 }

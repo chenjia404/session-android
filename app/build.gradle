@@ -193,7 +193,7 @@ dependencies {
     testImplementation 'org.robolectric:shadows-multidex:4.4'
 
     // sql helper
-    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
 
 def canonicalVersionCode = 357

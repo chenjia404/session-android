@@ -6,11 +6,11 @@ import android.icu.text.Collator
 import android.icu.util.ULocale
 import android.net.Uri
 import android.text.Editable
-import org.thoughtcrime.securesms.crypto.KeyStoreHelper
 import org.thoughtcrime.securesms.database.room.Wallet
 import org.thoughtcrime.securesms.et.Media
 import org.web3j.crypto.Bip32ECKeyPair
 import org.web3j.crypto.Credentials
+import org.web3j.crypto.Keys
 import org.web3j.crypto.MnemonicUtils
 import org.web3j.utils.Numeric
 import java.io.File
@@ -164,16 +164,16 @@ fun String.toWallet(): Wallet {
     return if (words.size == 1 && this.length == 64) {
         val credentials = Credentials.create(this)
         val pk = "0x$this"
-        val address = credentials.address
-        Wallet(0, "", KeyStoreHelper.seal(pk), address)
+        val address = Keys.toChecksumAddress(credentials.address)
+        Wallet(0, "", KeyStoreUtils.encrypt(pk), address)
     } else {
         val seed = MnemonicUtils.generateSeed(this, "")
         val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
         val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
         val credentials = Credentials.create(bip44Keypair)
         val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
-        val address = credentials.address
-        Wallet(0, KeyStoreHelper.seal(this), KeyStoreHelper.seal(pk), address)
+        val address = Keys.toChecksumAddress(credentials.address)
+        Wallet(0, KeyStoreUtils.encrypt(this), KeyStoreUtils.encrypt(pk), address)
     }
 }
 

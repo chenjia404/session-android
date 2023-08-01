@@ -21,7 +21,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun walletDao(): WalletDao
 
     companion object {
-        private const val DATABASE_NAME = "EthMessenger.db"
+        private const val DATABASE_NAME = "messenger.db"
 
         @Volatile
         private var databaseInstance: AppDataBase? = null

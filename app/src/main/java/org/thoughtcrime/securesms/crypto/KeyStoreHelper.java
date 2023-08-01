@@ -5,7 +5,6 @@ import static org.session.libsignal.crypto.CipherUtil.CIPHER_LOCK;
 
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.text.TextUtils;
 import android.util.Base64;
 
 import androidx.annotation.NonNull;
@@ -23,7 +22,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.session.libsignal.utilities.JsonUtil;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -82,42 +80,6 @@ public final class KeyStoreHelper {
                 return cipher.doFinal(sealedData.data);
             }
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | IllegalBlockSizeException | BadPaddingException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    public static String seal(String data) {
-        SecretKey secretKey = getOrCreateKeyStoreEntry();
-        try {
-            // Cipher operations are not thread-safe so we synchronize over them through doFinal to
-            // prevent crashes with quickly repeated encrypt/decrypt operations
-            // https://github.com/mozilla-mobile/android-components/issues/5342
-            synchronized (CIPHER_LOCK) {
-                Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-                cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-                return Base64.encodeToString(cipher.doFinal(data.getBytes("UTF-8")), Base64.DEFAULT);
-            }
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e) {
-            throw new AssertionError(e);
-        }
-    }
-
-    public static String unseal(String data) {
-        if (TextUtils.isEmpty(data)) {
-            return "";
-        }
-        SecretKey secretKey = getKeyStoreEntry();
-        try {
-            // Cipher operations are not thread-safe so we synchronize over them through doFinal to
-            // prevent crashes with quickly repeated encrypt/decrypt operations
-            // https://github.com/mozilla-mobile/android-components/issues/5342
-            synchronized (CIPHER_LOCK) {
-                Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-                cipher.init(Cipher.DECRYPT_MODE, secretKey);
-
-                return new String(cipher.doFinal(Base64.decode(data, Base64.DEFAULT)));
-            }
-        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             throw new AssertionError(e);
         }
     }
