@@ -19,6 +19,7 @@ import org.thoughtcrime.securesms.conversation.v2.ConversationActivityV2
 import org.thoughtcrime.securesms.dms.NewMessageFragment
 import org.thoughtcrime.securesms.groups.CreateGroupFragment
 import org.thoughtcrime.securesms.groups.JoinCommunityFragment
+import org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity
 
 @AndroidEntryPoint
 class NewConversationFragment : BottomSheetDialogFragment(), NewConversationDelegate {
@@ -67,6 +68,11 @@ class NewConversationFragment : BottomSheetDialogFragment(), NewConversationDele
 
     override fun onJoinCommunitySelected() {
         replaceFragment(JoinCommunityFragment().apply { delegate = this@NewConversationFragment })
+    }
+
+    override fun onMessageRequestSelected() {
+        val intent = Intent(activity, MessageRequestsActivity::class.java)
+        activity?.startActivity(intent)
     }
 
     override fun onContactSelected(address: String) {

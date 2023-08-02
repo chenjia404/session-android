@@ -6,6 +6,8 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ItemEtCommentBinding
 import org.thoughtcrime.securesms.util.GlideHelper
+import org.thoughtcrime.securesms.util.dateDifferenceDesc
+import java.util.Date
 
 class ETDetailAdapter : BaseQuickAdapter<Comment, BaseViewHolder>(R.layout.item_et_comment), LoadMoreModule {
 
@@ -18,9 +20,10 @@ class ETDetailAdapter : BaseQuickAdapter<Comment, BaseViewHolder>(R.layout.item_
             ItemEtCommentBinding.bind(holder.itemView)?.apply {
                 tvUserName.text = it.UserInfo?.Nickname
                 tvContent.text = it.Content
+               tvTime.text = "${Date(it.CreatedAt?.toLong()?.times(1000) ?: System.currentTimeMillis()).dateDifferenceDesc()}"
                 GlideHelper.showImage(
                     view = ivAvatar,
-                    url = it.UserInfo?.Avatar,
+                    url = it.UserInfo?.Avatar ?: "",
                     roundRadius = 100,
                     placeHolder = R.drawable.ic_pic_default_round,
                     errorHolder = R.drawable.ic_pic_default_round

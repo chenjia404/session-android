@@ -53,15 +53,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@+id/createPrivateChatButton"
+            android:background="?conversation_menu_cell_color"
             app:layout_constraintBottom_toBottomOf="@+id/joinCommunityButton"
-            android:background="?conversation_menu_cell_color"/>
+            app:layout_constraintTop_toTopOf="@+id/createPrivateChatButton" />
 
         <TextView
             android:id="@+id/createPrivateChatButton"
-            android:contentDescription="@string/AccessibilityId_new_direct_message"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_button_height"
+            android:contentDescription="@string/AccessibilityId_new_direct_message"
             android:drawablePadding="@dimen/large_spacing"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/large_spacing"
@@ -85,9 +85,9 @@
 
         <TextView
             android:id="@+id/createClosedGroupButton"
-            android:contentDescription="@string/AccessibilityId_create_group"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_button_height"
+            android:contentDescription="@string/AccessibilityId_create_group"
             android:drawablePadding="@dimen/large_spacing"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/large_spacing"
@@ -111,9 +111,9 @@
 
         <TextView
             android:id="@+id/joinCommunityButton"
-            android:contentDescription="@string/AccessibilityId_join_community"
             android:layout_width="match_parent"
             android:layout_height="@dimen/setting_button_height"
+            android:contentDescription="@string/AccessibilityId_join_community"
             android:drawablePadding="@dimen/large_spacing"
             android:gravity="center_vertical"
             android:paddingHorizontal="@dimen/large_spacing"
@@ -126,13 +126,38 @@
             app:layout_constraintTop_toBottomOf="@+id/create_group_divider" />
 
         <View
+            android:id="@+id/create_message_request_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/massive_spacing"
+            android:background="?conversation_menu_border_color"
+            app:layout_constraintStart_toStartOf="@+id/createClosedGroupButton"
+            app:layout_constraintTop_toBottomOf="@+id/joinCommunityButton" />
+
+        <TextView
+            android:id="@+id/messageRequestsTexts"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/setting_button_height"
+            android:contentDescription="@string/activity_settings_message_requests_button_title"
+            android:drawablePadding="@dimen/large_spacing"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/large_spacing"
+            android:text="@string/activity_settings_message_requests_button_title"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/medium_font_size"
+            app:drawableStartCompat="@drawable/ic_message_request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_message_request_divider" />
+
+        <View
             android:id="@+id/join_community_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="1dp"
             android:background="?conversation_menu_border_color"
             app:layout_constraintStart_toStartOf="@+id/joinCommunityButton"
-            app:layout_constraintTop_toBottomOf="@+id/joinCommunityButton" />
+            app:layout_constraintTop_toBottomOf="@+id/messageRequestsTexts" />
 
         <TextView
             android:id="@+id/contactsText"

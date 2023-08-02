@@ -2,16 +2,20 @@ package org.thoughtcrime.securesms.et
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import com.google.android.flexbox.FlexboxLayout
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.util.SmartGlideImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityEtPublishBinding
@@ -25,8 +29,11 @@ import org.thoughtcrime.securesms.net.network.IpfsResponse
 import org.thoughtcrime.securesms.permissions.Permissions
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.Logger
+import org.thoughtcrime.securesms.util.dateDifferenceDesc
+import org.thoughtcrime.securesms.util.formatMediaUrl
 import org.thoughtcrime.securesms.util.formatMedias
 import org.thoughtcrime.securesms.util.parcelable
+import java.util.Date
 
 @AndroidEntryPoint
 class ETPublishActivity : PassphraseRequiredActionBarActivity() {
@@ -52,13 +59,10 @@ class ETPublishActivity : PassphraseRequiredActionBarActivity() {
             if (clipData != null) {
                 for (i in 0 until clipData.itemCount) {
                     val uri = clipData.getItemAt(i).uri
-                    Logger.d("path = ${uri.path}")
                     viewModel.uploadFile({}, {}, uri)
                 }
             } else {
                 data?.data?.let {
-
-                    Logger.d("path = ${it.path}")
                     viewModel.uploadFile({}, {}, it)
                 }
             }
@@ -145,6 +149,7 @@ class ETPublishActivity : PassphraseRequiredActionBarActivity() {
             binding.layoutForward.rootForward.isVisible = true
             binding.layoutForward.tvUserName.text = et?.UserInfo?.Nickname
             binding.layoutForward.tvContent.text = et?.Content
+            binding.layoutForward.tvTime.text = "${Date(et?.CreatedAt?.toLong()?.times(1000) ?: System.currentTimeMillis()).dateDifferenceDesc()}"
             GlideHelper.showImage(
                 binding.layoutForward.ivAvatar,
                 et?.UserInfo?.Avatar ?: "",
@@ -155,10 +160,14 @@ class ETPublishActivity : PassphraseRequiredActionBarActivity() {
             binding.layoutForward.flexbox.removeAllViews()
             et?.Attachment?.trim()?.let { it ->
                 val medias = it.formatMedias()
+                val urls = it.formatMediaUrl()
                 if (!medias.isNullOrEmpty()) {
                     for (i in medias.indices) {
                         val media = medias[i]
                         val attachBinding = ItemEtAttachBinding.inflate(LayoutInflater.from(this), binding.layoutForward.root, false)
+                        attachBinding.ivAttach.setOnClickListener {
+                            showGallery(attachBinding.ivAttach, i, urls)
+                        }
                         binding.layoutForward.flexbox.addView(attachBinding.root)
                         val lp = attachBinding.root.layoutParams as FlexboxLayout.LayoutParams
                         lp.flexBasisPercent = 0.3f
@@ -205,4 +214,13 @@ class ETPublishActivity : PassphraseRequiredActionBarActivity() {
         }
     }
 
+    private fun showGallery(imageView: ImageView, position: Int, urls: List<String>) {
+        XPopup.Builder(this)
+            .isTouchThrough(true)
+            .asImageViewer(imageView, position, urls, false, true, -1, -1, 0, false, Color.rgb(32, 36, 46), { popupView, i ->
+
+            }, SmartGlideImageLoader(), null)
+            .show()
+
+    }
 }

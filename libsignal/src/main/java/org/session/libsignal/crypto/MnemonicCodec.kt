@@ -7,6 +7,7 @@ import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.toHexString
 import org.web3j.crypto.Bip32ECKeyPair
 import org.web3j.crypto.Credentials
+import org.web3j.crypto.Keys
 import org.web3j.crypto.MnemonicUtils
 import org.web3j.utils.Numeric
 import java.util.zip.CRC32
@@ -226,7 +227,7 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
             return if (words.size == 1 && mnemonic.length == 64) {
                 val credentials = Credentials.create(mnemonic)
                 val pk = "0x$mnemonic"
-                val address = credentials.address
+                val address = Keys.toChecksumAddress(credentials.address)
                 Wallet("", pk, address)
             } else {
                 val seed = MnemonicUtils.generateSeed(mnemonic, "")
@@ -234,7 +235,7 @@ class MnemonicCodec(private val loadFileContents: (String) -> String) {
                 val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
                 val credentials = Credentials.create(bip44Keypair)
                 val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
-                val address = credentials.address
+                val address = Keys.toChecksumAddress(credentials.address)
                 Wallet(mnemonic, pk, address)
             }
         }

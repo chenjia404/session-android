@@ -15,6 +15,7 @@ class ETDetailViewModel(application: Application) : BaseViewModel(application) {
     var page: Int = 1
 
     val commentsLiveData = MutableLiveData<List<Comment>?>()
+    val likeLiveData = MutableLiveData<ET>()
 
     private val apiService by lazy {
         ApiService()
@@ -37,6 +38,32 @@ class ETDetailViewModel(application: Application) : BaseViewModel(application) {
             context.toastOnUi(it.Msg)
         }.onError {
             context.toastOnUi(it.message)
+        }
+    }
+
+    fun like(
+        onStart: () -> Unit,
+        onFinally: () -> Unit,
+        et: ET
+    ) {
+        execute {
+            apiService.like(et.TwAddress ?: "")
+        }.onStart {
+            onStart.invoke()
+        }.onSuccess {
+            if (it.Code == 0) {
+                et.isTwLike = !et.isTwLike
+                if (et.isTwLike) {
+                    et.LikeCount = et.LikeCount?.plus(1)
+                } else {
+                    et.LikeCount = et.LikeCount?.minus(1)
+                }
+            }
+            likeLiveData.postValue(et)
+        }.onError {
+            context.toastOnUi(it.message)
+        }.onFinally {
+            onFinally.invoke()
         }
     }
 }

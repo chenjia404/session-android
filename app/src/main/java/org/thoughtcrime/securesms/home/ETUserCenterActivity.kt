@@ -3,16 +3,15 @@ package org.thoughtcrime.securesms.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import com.google.android.material.appbar.AppBarLayout
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
-import network.qki.messenger.databinding.FragmentMeBinding
+import network.qki.messenger.databinding.ActivityUserEtBinding
 import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
-import org.session.libsession.utilities.TextSecurePreferences
-import org.thoughtcrime.securesms.BaseFragment
+import org.session.libsession.utilities.getColorFromAttr
+import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.ETDetailActivity
 import org.thoughtcrime.securesms.et.ETFragment
@@ -21,9 +20,15 @@ import org.thoughtcrime.securesms.et.ETPublishActivity
 import org.thoughtcrime.securesms.et.MeViewModel
 import org.thoughtcrime.securesms.et.User
 import org.thoughtcrime.securesms.util.GlideHelper
-import org.thoughtcrime.securesms.util.sendToClip
-import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
-import java.lang.Float.max
+import org.thoughtcrime.securesms.util.StatusBarUtil
+import org.thoughtcrime.securesms.util.parcelable
+import org.thoughtcrime.securesms.util.show
+import java.lang.Float
+import kotlin.Boolean
+import kotlin.getValue
+import kotlin.let
+import kotlin.math.abs
+import kotlin.with
 
 
 /**
@@ -31,28 +36,44 @@ import java.lang.Float.max
  * Describe:
  */
 @AndroidEntryPoint
-class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
+class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
 
-    private val binding by viewBinding(FragmentMeBinding::bind)
-    override val viewModel by viewModels<MeViewModel>()
+    private lateinit var binding: ActivityUserEtBinding
+    private val viewModel by viewModels<MeViewModel>()
 
     private var isFirst: Boolean = true
     private val adapter: ETMeAdapter = ETMeAdapter()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        initObserver()
-        initData()
+    var user: User? = null
+
+    companion object {
+        // Extras
+        const val KEY_USER = "user"
+
     }
 
-    private fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
+        super.onCreate(savedInstanceState, ready)
+        binding = ActivityUserEtBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        StatusBarUtil.setStatusColor(this, true, true, getColorFromAttr(R.attr.settingCardColor))
+        setSupportActionBar(binding.toolbar)
+        val actionBar = supportActionBar ?: return
+        actionBar.setDisplayHomeAsUpEnabled(true)
+        actionBar.setHomeButtonEnabled(true)
+        user = intent.parcelable(KEY_USER)
+        user?.let {
+
+        } ?: finish()
+    }
+
+    override fun initViews() {
         with(binding) {
-            appBarLayout.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
                 swipeRefreshLayout.isEnabled = verticalOffset >= 0
                 //val calcRange = appBarLayout.totalScrollRange / 2f
                 val calcRange = appBarLayout.totalScrollRange * 0.1
-                val calcOffset = max(0f, (kotlin.math.abs(verticalOffset) - calcRange).toFloat())
+                val calcOffset = Float.max(0f, (abs(verticalOffset) - calcRange).toFloat())
                 val offsetPercent = 1 - (calcOffset / calcRange)
                 // Logger.d("offsetPercent = $offsetPercent")
                 var alpha = if (offsetPercent <= 1) {
@@ -60,10 +81,9 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 } else {
                     1
                 }
-                llWallet.alpha = alpha.toFloat()
-                llName.alpha = (1 - alpha).toFloat()
+                tvTitleName.alpha = (1 - alpha).toFloat()
             })
-            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = LinearLayoutManager(this@ETUserCenterActivity)
             recyclerView.adapter = adapter
             adapter.loadMoreModule.setOnLoadMoreListener {
                 viewModel.loadETFollow({}, {})
@@ -72,7 +92,7 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
             adapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
             adapter.setOnItemClickListener { adapter, _, position ->
                 val et = adapter.data[position] as ET
-                val intent = Intent(context, ETDetailActivity::class.java)
+                val intent = Intent(this@ETUserCenterActivity, ETDetailActivity::class.java)
                 intent.putExtra(ETFragment.KEY_ET, et)
                 show(intent)
             }
@@ -81,7 +101,7 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 val et = adapter.data[position] as ET
                 when (v.id) {
                     R.id.llForward -> {
-                        val intent = Intent(context, ETPublishActivity::class.java)
+                        val intent = Intent(this@ETUserCenterActivity, ETPublishActivity::class.java)
                         intent.putExtra(ETFragment.KEY_ET, et)
                         show(intent)
                     }
@@ -97,43 +117,48 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
             }
 
             // empty
-            val emptyViewBinding = LayoutStatelayoutEmptyBinding.inflate(LayoutInflater.from(context), root, false)
+            val emptyViewBinding = LayoutStatelayoutEmptyBinding.inflate(LayoutInflater.from(this@ETUserCenterActivity), root, false)
             adapter.headerWithEmptyEnable = true
             adapter.setEmptyView(emptyViewBinding.root)
             emptyViewBinding.clOpt.setOnClickListener {
-                val intent = Intent(context, ETPublishActivity::class.java)
+                val intent = Intent(this@ETUserCenterActivity, ETPublishActivity::class.java)
                 show(intent)
             }
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.cursor = ""
                 loadData()
             }
-            tvId.setOnClickListener {
-                requireContext().sendToClip(TextSecurePreferences.getLocalNumber(requireContext()))
-            }
             ivSetting.setOnClickListener {
-                val intent = Intent(context, SettingActivity::class.java)
+                val intent = Intent(this@ETUserCenterActivity, SettingActivity::class.java)
                 show(intent)
             }
-            llFollow.setOnClickListener {
-                val intent = Intent(context, ETFollowActivity::class.java)
-                show(intent)
+            tvFollow.setOnClickListener {
+                if (user?.IsFollow == true) {
+                    viewModel.cancelFollow({}, {}, user?.UserAddress ?: "")
+                } else {
+                    viewModel.follow({}, {}, user?.UserAddress ?: "")
+                }
+
             }
+
         }
     }
 
-    private fun initData() {
+    override fun initData() {
+        showLoading()
         loadData()
     }
 
-    private fun initObserver() {
-        viewModel.userInfoLiveData.observe(viewLifecycleOwner) {
+    override fun initObserver() {
+        viewModel.userInfoLiveData.observe(this) {
+            hideLoading()
             stopRefreshing(binding.swipeRefreshLayout)
             if (it?.user != null) {
+                user = it.user
                 updateUI(it.user)
             }
         }
-        viewModel.etsLiveData.observe(viewLifecycleOwner) {
+        viewModel.etsLiveData.observe(this) {
             if (viewModel.cursor.isEmpty()) {
                 adapter.data.clear()
             }
@@ -148,7 +173,10 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 viewModel.cursor = it?.last()?.Cursor ?: ""
             }
         }
-        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+        viewModel.followStatusLiveData.observe(this) {
+            viewModel.loadUserInfo({}, {}, user?.UserAddress ?: "")
+        }
+        viewModel.likeLiveData.observe(this) {
             var ets = (adapter.data as List<ET>).toMutableList()
             ets.forEachIndexed { index, et ->
                 if (et.TwAddress.equals(it.TwAddress, true)) {
@@ -169,8 +197,8 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
             isFirst = false
             //hideLoading()
             stopRefreshing(binding.swipeRefreshLayout)
-        }, viewModel.wallet.address)
-        viewModel.loadETFollow({}, {})
+        }, user?.UserAddress ?: "")
+        viewModel.loadETTimeline({}, {}, user?.UserAddress ?: "")
     }
 
     private fun updateUI(user: User) {
@@ -182,18 +210,20 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 R.drawable.ic_pic_default_round,
                 R.drawable.ic_pic_default_round
             )
-            tvName.text = user.Nickname
-            GlideHelper.showImage(
-                ivTitleAvatar,
-                user?.Avatar ?: "",
-                100,
-                R.drawable.ic_pic_default_round,
-                R.drawable.ic_pic_default_round
-            )
             tvTitleName.text = user.Nickname
-            tvId.text = "Session ID: ${TextSecurePreferences.getLocalNumber(requireContext())}"
+            tvName.text = user.Nickname
             tvFollowNum.text = "${user.FollowCount}"
             tvFollowerNum.text = "${user.FansCount}"
+            tvFollow.text = if (user.IsFollow == true) {
+                getString(R.string.unfollow)
+            } else {
+                getString(R.string.follow)
+            }
+            tvFollow.backgroundTintList = if (user.IsFollow == true) {
+                getColorStateList(R.color.color7A7B7D)
+            } else {
+                getColorStateList(R.color.color3E66FB)
+            }
         }
     }
 

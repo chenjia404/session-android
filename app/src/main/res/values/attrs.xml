@@ -376,6 +376,13 @@
         <attr name="civ_circle_background_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="StateLayout">
+        <attr name="errorDrawable" format="reference" />
+        <attr name="emptyDrawable" format="reference" />
+        <attr name="progressView" format="reference" />
+        <attr name="emptyString" format="reference" />
+    </declare-styleable>
+
     <attr name="preferenceCornerRadius" format="dimension|reference" />
     <attr name="reactionsPillSelectedTextColor" format="color|reference" />
     <attr name="reactionsPillSelectedBackground" format="color|reference" />
@@ -400,5 +407,6 @@
     <attr name="tab_select_text_color" format="reference|color" />
     <attr name="copyBgColor" format="reference|color" />
     <attr name="thirdTextColor" format="reference|color" />
+    <attr name="followBgColor" format="reference|color" />
 
 </resources>

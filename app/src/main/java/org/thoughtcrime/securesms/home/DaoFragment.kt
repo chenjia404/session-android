@@ -35,8 +35,8 @@ class DaoFragment : BaseFragment<DaoViewModel>(R.layout.fragment_dao) {
         binding.viewpager.adapter = adapter
         val mediator = TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, pos ->
             tab.text = when (pos) {
-                0 -> getString(R.string.following)
-                1 -> getString(R.string.explore)
+                0 -> getString(R.string.explore)
+                1 -> getString(R.string.following)
                 else -> throw IllegalStateException()
             }
         }

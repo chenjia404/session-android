@@ -702,7 +702,7 @@
     <string name="share">Share</string>
     <string name="invalid_session_id">Invalid Session ID</string>
     <string name="cancel">Cancel</string>
-    <string name="your_session_id">Your Session ID</string>
+    <string name="your_session_id">Session ID</string>
     <string name="activity_landing_title_2">Your Session begins here...</string>
     <string name="activity_landing_register_button_title">Create Session ID</string>
     <string name="activity_landing_restore_button_title">Continue Your Session</string>
@@ -733,7 +733,7 @@
     <string name="activity_seed_title_2">Meet your recovery phrase</string>
     <string name="activity_seed_explanation">Your recovery phrase is the master key to your Session ID — you can use it to restore your Session ID if you lose access to your device. Store your recovery phrase in a safe place, and don\'t give it to anyone.</string>
     <string name="activity_seed_reveal_button_title">Hold to reveal</string>
-    <string name="view_seed_reminder_title">You\'re almost finished! 80%</string>
+    <string name="view_seed_reminder_title">Current account creation progress: 80%</string>
     <string name="view_seed_reminder_subtitle_1">Secure your account by saving your recovery phrase</string>
     <string name="view_seed_reminder_subtitle_2">Tap and hold the redacted words to reveal your recovery phrase, then store it safely to secure your Session ID.</string>
     <string name="view_seed_reminder_subtitle_3">Make sure to store your recovery phrase in a safe place</string>
@@ -1054,5 +1054,13 @@
     <string name="publish">Publish</string>
     <string name="enter_content">Enter Content</string>
     <string name="follower">Follower</string>
+    <string name="no_data">No Data</string>
+    <string name="x_minutes_ago">"%sminutes ago "</string>
+    <string name="x_hours_ago">"%shours ago "</string>
+    <string name="x_days_ago">%sdays ago</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="followers">Followers</string>
+    <string name="friend">Friend</string>
 
 </resources>

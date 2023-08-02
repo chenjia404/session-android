@@ -40,7 +40,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="4dp"
-            android:src="@drawable/ic_more_horiz_white" />
+            android:src="@drawable/ic_more_horiz_white"
+            android:visibility="gone" />
 
     </LinearLayout>
 

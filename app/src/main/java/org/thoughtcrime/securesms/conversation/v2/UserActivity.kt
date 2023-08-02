@@ -158,6 +158,9 @@ class UserActivity : PassphraseRequiredActionBarActivity() {
         binding.rlNotification.setOnClickListener {
             setNotifyType(this, recipient)
         }
+        binding.tvSessionIdCopy.setOnClickListener {
+            sendToClip(TextSecurePreferences.getLocalNumber(this))
+        }
     }
 
     private fun showExpiringMessagesDialog(thread: Recipient) {

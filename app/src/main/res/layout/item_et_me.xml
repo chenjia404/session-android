@@ -125,8 +125,7 @@
                 android:id="@+id/ivFavorite"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/selector_favorite"
-                app:tint="?android:textColorTertiary" />
+                android:background="@drawable/selector_favorite" />
 
             <TextView
                 android:id="@+id/tvFavoriteNum"

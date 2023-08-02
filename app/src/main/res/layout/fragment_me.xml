@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:padding="0dp"
                 app:contentScrim="@color/color3E66FB"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:statusBarScrim="@color/color3E66FB">
 
                 <ImageView
@@ -47,7 +48,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
+                        android:layout_marginTop="80dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -55,7 +56,7 @@
                             android:id="@+id/ivAvatar"
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/ic_launcher_round" />
+                            tools:src="@drawable/ic_launcher_round" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -69,10 +70,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:maxLines="1"
-                                android:text="Farhan"
                                 android:textColor="?attr/reverseMainColor"
                                 android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="Farhan" />
 
                             <TextView
                                 android:id="@+id/tvId"
@@ -89,9 +90,9 @@
                                 android:paddingTop="4dp"
                                 android:paddingEnd="8dp"
                                 android:paddingBottom="4dp"
-                                android:text="0x391fC4529d8E2EA0d6BAb339244df033a61F6A6B"
                                 android:textColor="?thirdTextColor"
-                                android:textSize="12sp" />
+                                android:textSize="12sp"
+                                tools:text="0x391fC4529d8E2EA0d6BAb339244df033a61F6A6B" />
 
                         </LinearLayout>
 
@@ -103,6 +104,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llFollow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -149,13 +151,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/llWallet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/shape_wallet_bg_10"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="16dp">
+                        android:padding="16dp"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -251,46 +255,79 @@
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp">
 
-                        <LinearLayout
-                            android:id="@+id/llWallet"
+                        <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/shape_wallet_bg_36"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="8dp"
-                            android:paddingTop="6dp"
-                            android:paddingEnd="8dp"
-                            android:paddingBottom="6dp">
+                            android:layout_height="wrap_content">
 
-                            <org.thoughtcrime.securesms.util.CircleImageView
-                                android:id="@+id/ivLogo"
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_launcher_round"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/tvChainName"
+                            <LinearLayout
+                                android:id="@+id/llChain"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="6dp"
-                                android:layout_marginEnd="6dp"
-                                android:maxLines="1"
-                                android:text="BNB Chain"
-                                android:textColor="?attr/reverseMainColor"
-                                android:textSize="12sp" />
+                                android:background="@drawable/shape_wallet_bg_36"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingStart="8dp"
+                                android:paddingTop="6dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="6dp"
+                                android:visibility="gone">
 
-                            <ImageView
-                                android:layout_width="6dp"
-                                android:layout_height="6dp"
-                                android:src="@drawable/ic_arrow_down"
-                                app:tint="?attr/reverseMainColor" />
+                                <org.thoughtcrime.securesms.util.CircleImageView
+                                    android:id="@+id/ivLogo"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:src="@drawable/ic_launcher_round"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tvChainName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:layout_marginEnd="6dp"
+                                    android:maxLines="1"
+                                    android:text="BNB Chain"
+                                    android:textColor="?attr/reverseMainColor"
+                                    android:textSize="12sp" />
+
+                                <ImageView
+                                    android:layout_width="6dp"
+                                    android:layout_height="6dp"
+                                    android:src="@drawable/ic_arrow_down"
+                                    app:tint="?attr/reverseMainColor" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/llName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <org.thoughtcrime.securesms.util.CircleImageView
+                                    android:id="@+id/ivTitleAvatar"
+                                    android:layout_width="34dp"
+                                    android:layout_height="34dp"
+                                    tools:src="@drawable/ic_launcher_round" />
+
+                                <TextView
+                                    android:id="@+id/tvTitleName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:maxLines="1"
+                                    android:textColor="@color/core_white"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    tools:text="Farhan" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
 
                         <View
                             android:layout_width="0dp"
@@ -298,10 +335,11 @@
                             android:layout_weight="1" />
 
                         <ImageView
-                            android:id="@+id/ivWallet"
+                            android:id="@+id/ivCard"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:src="@drawable/ic_me_wallet" />
+                            android:src="@drawable/ic_me_wallet"
+                            android:visibility="gone" />
 
                         <ImageView
                             android:id="@+id/ivSetting"
@@ -309,7 +347,6 @@
                             android:layout_height="36dp"
                             android:layout_marginStart="16dp"
                             android:src="@drawable/ic_me_setting" />
-
 
                     </LinearLayout>
 
@@ -322,7 +359,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

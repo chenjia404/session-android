@@ -29,7 +29,6 @@ import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.utilities.Hex
 import org.session.libsignal.utilities.KeyHelper
-import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.ApplicationContext
 import org.thoughtcrime.securesms.BaseActionBarActivity
@@ -72,14 +71,22 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
 
     // region Interaction
     override fun handleQRCodeScanned(mnemonic: String) {
+        val loadFileContents: (String) -> String = { fileName ->
+            MnemonicUtilities.loadFileContents(this, fileName)
+        }
         try {
             val words = mnemonic.split(" ").toMutableList()
             var isPk = words.size == 1 && mnemonic.length == 64
-            val seed = Hex.fromStringCondensed(mnemonic)
+            val hexEncodedSeed = MnemonicCodec(loadFileContents).decode(mnemonic)
+            val seed = Hex.fromStringCondensed(hexEncodedSeed)
             continueWithSeed(seed, isPk)
-        } catch (e: Exception) {
-            Log.e("Loki", "Error getting seed from QR code", e)
-            Toast.makeText(this, "An error occurred.", Toast.LENGTH_LONG).show()
+        } catch (error: Exception) {
+            val message = if (error is MnemonicCodec.DecodingError) {
+                error.description
+            } else {
+                "An error occurred."
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
 

@@ -2,12 +2,14 @@ package org.thoughtcrime.securesms.et
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.FragmentEtBinding
+import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -56,7 +58,7 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = adapter
             adapter.loadMoreModule.setOnLoadMoreListener {
-                loadET()
+                initData()
             }
             adapter.loadMoreModule.isAutoLoadMore = true
             adapter.loadMoreModule.isEnableLoadMoreIfNotFullPage = false
@@ -66,14 +68,22 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                 intent.putExtra(KEY_ET, et)
                 show(intent)
             }
-            adapter.addChildClickViewIds(R.id.llForward)
+            // empty
+            val emptyViewBinding = LayoutStatelayoutEmptyBinding.inflate(LayoutInflater.from(context), root, false)
+            adapter.headerWithEmptyEnable = true
+            adapter.setEmptyView(emptyViewBinding.root)
+            adapter.addChildClickViewIds(R.id.llFavorite, R.id.llForward)
             adapter.setOnItemChildClickListener { adapter, v, position ->
+                val et = adapter.data[position] as ET
                 when (v.id) {
                     R.id.llForward -> {
-                        val et = adapter.data[position] as ET
                         val intent = Intent(context, ETPublishActivity::class.java)
                         intent.putExtra(KEY_ET, et)
                         show(intent)
+                    }
+
+                    R.id.llFavorite -> {
+                        viewModel.like({}, {}, et)
                     }
 
                     else -> {
@@ -83,7 +93,7 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
             }
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel.cursor = ""
-                loadET()
+                initData()
             }
 
         }
@@ -91,7 +101,11 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
 
     private fun initData() {
         viewModel.login()
-        loadET()
+        if (type == 0) {
+            loadET()
+        } else {
+            loadETFollow()
+        }
     }
 
     private fun initObserver() {
@@ -111,6 +125,16 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                 viewModel.cursor = it?.last()?.Cursor ?: ""
             }
         }
+        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+            var ets = (adapter.data as List<ET>).toMutableList()
+            ets.forEachIndexed { index, et ->
+                if (et.TwAddress.equals(it.TwAddress, true)) {
+                    ets[index] = it
+                    adapter.notifyItemChanged(index)
+                }
+            }
+
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -121,6 +145,18 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
 
     private fun loadET() {
         viewModel.loadET({
+//            if (isFirst) {
+//                showLoading()
+//            }
+        }, {
+//            isFirst = false
+//            hideLoading()
+            stopRefreshing(binding.swipeRefreshLayout)
+        })
+    }
+
+    private fun loadETFollow() {
+        viewModel.loadETFollow({
 //            if (isFirst) {
 //                showLoading()
 //            }
