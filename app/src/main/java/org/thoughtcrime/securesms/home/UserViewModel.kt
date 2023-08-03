@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.conversation.v2
+package org.thoughtcrime.securesms.home
 
 import android.app.Application
 import org.thoughtcrime.securesms.BaseViewModel

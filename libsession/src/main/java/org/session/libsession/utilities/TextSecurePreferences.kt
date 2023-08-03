@@ -19,6 +19,7 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.CALL_NOT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_DARK
 import org.session.libsession.utilities.TextSecurePreferences.Companion.CLASSIC_LIGHT
 import org.session.libsession.utilities.TextSecurePreferences.Companion.FOLLOW_SYSTEM_SETTINGS
+import org.session.libsession.utilities.TextSecurePreferences.Companion.KEY_X_TOKEN
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LAST_VACUUM_TIME
 import org.session.libsession.utilities.TextSecurePreferences.Companion.LEGACY_PREF_KEY_SELECTED_UI_MODE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_DARK
@@ -26,7 +27,6 @@ import org.session.libsession.utilities.TextSecurePreferences.Companion.OCEAN_LI
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SELECTED_STYLE
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_NOTIFICATION
 import org.session.libsession.utilities.TextSecurePreferences.Companion.SHOWN_CALL_WARNING
-import org.session.libsignal.utilities.HTTP
 import org.session.libsignal.utilities.Log
 import java.io.IOException
 import java.util.Arrays
@@ -125,6 +125,7 @@ interface TextSecurePreferences {
     fun isNotificationVibrateEnabled(): Boolean
     fun getNotificationLedColor(): Int
     fun isThreadLengthTrimmingEnabled(): Boolean
+    fun setThreadLengthTrimmingEnabled(boolean: Boolean)
     fun isSystemEmojiPreferred(): Boolean
     fun getMobileMediaDownloadAllowed(): Set<String>?
     fun getWifiMediaDownloadAllowed(): Set<String>?
@@ -168,6 +169,7 @@ interface TextSecurePreferences {
     fun setShownCallWarning(): Boolean
     fun setShownCallNotification(): Boolean
     fun isCallNotificationsEnabled(): Boolean
+    fun setCallNotificationsEnabled(boolean: Boolean)
     fun getLastVacuum(): Long
     fun setLastVacuumNow()
     fun getFingerprintKeyGenerated(): Boolean
@@ -183,6 +185,9 @@ interface TextSecurePreferences {
     fun autoplayAudioMessages(): Boolean
     fun hasPreference(key: String): Boolean
     fun clearAll()
+
+    fun setXToken(token: String)
+    fun getXToken(): String?
 
     companion object {
         val TAG = TextSecurePreferences::class.simpleName
@@ -293,6 +298,9 @@ interface TextSecurePreferences {
         const val PREF_SEED_SITE = "pref_seed_site"
         const val PREF_PROXY_HTTPS = "pref_proxy_https"
         const val PREF_PROXY_SOCKS5 = "pref_proxy_socks5"
+        const val KEY_IMPORT_BY_PK = "import_by_pk"
+        const val KEY_X_TOKEN = "x_token"
+        const val KEY_USER = "user"
 
         @JvmStatic
         fun setCustomizedNodeSite(context: Context, site: String) {
@@ -747,6 +755,11 @@ interface TextSecurePreferences {
         }
 
         @JvmStatic
+        fun setLanguage(context: Context, language: String) {
+            setStringPreference(context, LANGUAGE_PREF, language)
+        }
+
+        @JvmStatic
         fun hasSeenWelcomeScreen(context: Context): Boolean {
             return getBooleanPreference(context, SEEN_WELCOME_SCREEN_PREF, false)
         }
@@ -1090,10 +1103,51 @@ interface TextSecurePreferences {
         }
 
         @JvmStatic
+        fun setThemeStyle(context: Context, themeStyle: String) {
+            val safeTheme = if (themeStyle !in listOf(
+                    CLASSIC_DARK,
+                    CLASSIC_LIGHT,
+                    OCEAN_DARK,
+                    OCEAN_LIGHT
+                )
+            ) CLASSIC_DARK else themeStyle
+            setStringPreference(context, SELECTED_STYLE, safeTheme)
+        }
+
+        @JvmStatic
         fun clearAll(context: Context) {
             getDefaultSharedPreferences(context).edit().clear().commit()
         }
 
+        @JvmStatic
+        fun setImportByPk(context: Context, isPk: Boolean) {
+            setBooleanPreference(context, KEY_IMPORT_BY_PK, isPk)
+        }
+
+        @JvmStatic
+        fun isImportByPk(context: Context): Boolean {
+            return getBooleanPreference(context, KEY_IMPORT_BY_PK, false)
+        }
+
+        @JvmStatic
+        fun setXToken(context: Context, token: String) {
+            setStringPreference(context, KEY_X_TOKEN, token)
+        }
+
+        @JvmStatic
+        fun getXToken(context: Context): String? {
+            return getStringPreference(context, KEY_X_TOKEN, null)
+        }
+
+        @JvmStatic
+        fun setUser(context: Context, user: String) {
+            setStringPreference(context, KEY_USER, user)
+        }
+
+        @JvmStatic
+        fun getUser(context: Context): String? {
+            return getStringPreference(context, KEY_USER, null)
+        }
     }
 }
 
@@ -1498,6 +1552,10 @@ class AppTextSecurePreferences @Inject constructor(
         return getBooleanPreference(TextSecurePreferences.THREAD_TRIM_ENABLED, true)
     }
 
+    override fun setThreadLengthTrimmingEnabled(boolean: Boolean) {
+        setBooleanPreference(TextSecurePreferences.THREAD_TRIM_ENABLED, boolean)
+    }
+
     override fun isSystemEmojiPreferred(): Boolean {
         return getBooleanPreference(TextSecurePreferences.SYSTEM_EMOJI_PREF, false)
     }
@@ -1681,6 +1739,10 @@ class AppTextSecurePreferences @Inject constructor(
         return getBooleanPreference(CALL_NOTIFICATIONS_ENABLED, false)
     }
 
+    override fun setCallNotificationsEnabled(boolean: Boolean) {
+        setBooleanPreference(CALL_NOTIFICATIONS_ENABLED, boolean)
+    }
+
     override fun getLastVacuum(): Long {
         return getLongPreference(LAST_VACUUM_TIME, 0)
     }
@@ -1826,5 +1888,13 @@ class AppTextSecurePreferences @Inject constructor(
 
     override fun clearAll() {
         getDefaultSharedPreferences(context).edit().clear().commit()
+    }
+
+    override fun setXToken(token: String) {
+        setStringPreference(KEY_X_TOKEN, token)
+    }
+
+    override fun getXToken(): String? {
+        return getStringPreference(KEY_X_TOKEN, null)
     }
 }

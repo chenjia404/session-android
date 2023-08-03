@@ -36,13 +36,9 @@ import org.session.libsession.utilities.SSKEnvironment.ProfileManagerProtocol
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.recipients.Recipient
 import org.session.libsession.utilities.truncateIdForDisplay
-import org.session.libsignal.crypto.MnemonicCodec
-import org.session.libsignal.utilities.hexEncodedPrivateKey
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.avatar.AvatarSelection
 import org.thoughtcrime.securesms.components.ProfilePictureView
-import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
-import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.home.PathActivity
 import org.thoughtcrime.securesms.messagerequests.MessageRequestsActivity
 import org.thoughtcrime.securesms.mms.GlideApp
@@ -62,25 +58,6 @@ import java.util.Date
 
 class SettingsActivity : PassphraseRequiredActionBarActivity() {
     private lateinit var binding: ActivitySettingsBinding
-
-    private val mnemonic by lazy {
-        var hexEncodedSeed = IdentityKeyUtil.retrieve(this, IdentityKeyUtil.LOKI_SEED)
-        if (hexEncodedSeed == null) {
-            hexEncodedSeed =
-                IdentityKeyUtil.getIdentityKeyPair(this).hexEncodedPrivateKey // Legacy account
-        }
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(this, fileName)
-        }
-        if (hexEncodedSeed.length == 64){
-            hexEncodedSeed
-        } else{
-            MnemonicCodec(loadFileContents).encode(
-                hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english
-            )
-        }
-
-    }
 
     private var displayNameEditActionMode: ActionMode? = null
         set(value) {
@@ -134,15 +111,15 @@ class SettingsActivity : PassphraseRequiredActionBarActivity() {
                 getString(R.string.version_s),
                 "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
             )
-            tvAddress.text = MnemonicCodec.toAddress(mnemonic)
-            tvCopy.setOnClickListener {
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("address", MnemonicCodec.toAddress(mnemonic))
-                clipboard.setPrimaryClip(clip)
-                Toast.makeText(
-                    this@SettingsActivity, R.string.copied_to_clipboard, Toast.LENGTH_SHORT
-                ).show()
-            }
+//            tvAddress.text = mnemonic.toAddress()
+//            tvCopy.setOnClickListener {
+//                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+//                val clip = ClipData.newPlainText("address", mnemonic.toAddress())
+//                clipboard.setPrimaryClip(clip)
+//                Toast.makeText(
+//                    this@SettingsActivity, R.string.copied_to_clipboard, Toast.LENGTH_SHORT
+//                ).show()
+//            }
         }
     }
 

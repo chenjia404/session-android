@@ -76,7 +76,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
-<!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
+        <!--        <item name="android:windowBackground">@drawable/splash_background</item>-->
     </style>
 
     <style name="Theme.Session.DayNight.FlatActionBar">
@@ -322,7 +322,7 @@
         <item name="dividerVertical">?android:textColorTertiary</item>
         <item name="dividerHorizontal">?dividerVertical</item>
         <item name="message_received_background_color">#F2F2F2</item>
-        <item name="colorAccent">@color/classic_accent</item>
+        <item name="colorAccent">?android:textColorPrimary</item>
         <item name="tabStyle">@style/Widget.Session.TabLayout</item>
     </style>
 
@@ -330,7 +330,7 @@
         <item name="dividerVertical">?android:textColorTertiary</item>
         <item name="dividerHorizontal">?dividerVertical</item>
         <item name="message_received_background_color">#F2F2F2</item>
-        <item name="colorAccent">@color/ocean_accent</item>
+        <item name="colorAccent">?android:textColorPrimary</item>
         <item name="tabStyle">@style/Widget.Session.TabLayout</item>
     </style>
 
@@ -425,6 +425,11 @@
         <item name="chatBgColor">@color/classic_dark_1</item>
         <item name="chat_received_text_color">@color/core_white</item>
         <item name="chat_sent_text_color">@color/core_white</item>
+        <item name="tab_select_text_color">@color/color606060</item>
+        <item name="copyBgColor">@color/color272727</item>
+        <item name="thirdTextColor">@color/colorC2C9D1</item>
+        <item name="walletBgColor">@color/core_black</item>
+        <item name="walletTextColor">@color/color616569</item>
 
     </style>
 
@@ -527,6 +532,11 @@
         <item name="chatBgColor">@color/colorF9FAFA</item>
         <item name="chat_received_text_color">@color/classic_light_0</item>
         <item name="chat_sent_text_color">@color/core_white</item>
+        <item name="tab_select_text_color">@color/colorC2C9D1</item>
+        <item name="copyBgColor">#B4FFFFFF</item>
+        <item name="thirdTextColor">@color/color91979D</item>
+        <item name="walletBgColor">@color/color3E66FB</item>
+        <item name="walletTextColor">@color/core_white</item>
 
     </style>
 

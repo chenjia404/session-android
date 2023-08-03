@@ -15,7 +15,7 @@ class ManagerViewPagerAdapter(fragmentActivity: FragmentActivity) :
     init {
         fragments.add(ChatsFragment())
         fragments.add(DaoFragment())
-        fragments.add(SettingFragment())
+        fragments.add(MeFragment())
     }
 
     override fun createFragment(position: Int): Fragment {

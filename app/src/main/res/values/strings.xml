@@ -1047,5 +1047,29 @@
     <string name="banner_desc_2_1">Chat Phone Media</string>
     <string name="banner_desc_3_1">Top- notch Security</string>
     <string name="enter_correct_phrase">Enter your correct recovery phrase</string>
+    <string name="following">Following</string>
+    <string name="explore">Explore</string>
+    <string name="comment_more">Comment...</string>
+    <string name="send">Send</string>
+    <string name="publish">Publish</string>
+    <string name="enter_content">Enter Content</string>
+    <string name="follower">Follower</string>
+    <string name="theme_mode">Theme Mode</string>
+    <string name="language">Language</string>
+    <string name="clean_cache">Clean Cache</string>
+    <string name="chat_setting">Chat Settings</string>
+    <string name="about_us">About Us</string>
+    <string name="website">Website</string>
+    <string name="follow_system">System</string>
+    <string name="tips">Tips</string>
+    <string name="clean_cache_tip">Are you sure to clear the cache?</string>
+    <string name="exit">Exit</string>
+    <string name="tip_exit">Exit will delete all your data, are you sure you want to exit?</string>
+    <string name="card">Card</string>
+    <string name="scan_with_me">Scan the QR code and chat with me</string>
+    <string name="save_success">Save success~</string>
+    <string name="transfer">Transfer</string>
+    <string name="receive">Receive</string>
+    <string name="scan">Scan</string>
 
 </resources>

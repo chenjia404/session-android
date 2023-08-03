@@ -31,6 +31,8 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
+import com.hjq.language.MultiLanguages;
+
 import org.conscrypt.Conscrypt;
 import org.session.libsession.avatars.AvatarHelper;
 import org.session.libsession.database.MessageDataProvider;
@@ -46,7 +48,6 @@ import org.session.libsession.utilities.SSKEnvironment;
 import org.session.libsession.utilities.TextSecurePreferences;
 import org.session.libsession.utilities.Util;
 import org.session.libsession.utilities.WindowDebouncer;
-import org.session.libsession.utilities.dynamiclanguage.DynamicLanguageContextWrapper;
 import org.session.libsession.utilities.dynamiclanguage.LocaleParser;
 import org.session.libsignal.utilities.HTTP;
 import org.session.libsignal.utilities.JsonUtil;
@@ -82,6 +83,8 @@ import org.thoughtcrime.securesms.sskenvironment.ProfileManager;
 import org.thoughtcrime.securesms.sskenvironment.ReadReceiptManager;
 import org.thoughtcrime.securesms.sskenvironment.TypingStatusRepository;
 import org.thoughtcrime.securesms.util.Broadcaster;
+import org.thoughtcrime.securesms.util.GlideHelper;
+import org.thoughtcrime.securesms.util.KeyStoreUtils;
 import org.thoughtcrime.securesms.util.dynamiclanguage.LocaleParseHelper;
 import org.thoughtcrime.securesms.webrtc.CallMessageProcessor;
 import org.webrtc.PeerConnectionFactory;
@@ -123,6 +126,8 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     public static final String PREFERENCES_NAME = "SecureSMS-Preferences";
 
     private static final String TAG = ApplicationContext.class.getSimpleName();
+
+    public static Context context;
 
     private ExpiringMessageManager expiringMessageManager;
     private TypingStatusRepository typingStatusRepository;
@@ -191,6 +196,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
 
     @Override
     public void onCreate() {
+        context = getApplicationContext();
         DatabaseModule.init(this);
         MessagingModuleConfiguration.configure(this);
         super.onCreate();
@@ -200,13 +206,16 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
                 () -> KeyPairUtilities.INSTANCE.getUserED25519KeyPair(this));
         callMessageProcessor = new CallMessageProcessor(this, textSecurePreferences, ProcessLifecycleOwner.get().getLifecycle(), storage);
         Log.i(TAG, "onCreate()");
+        GlideHelper.INSTANCE.initGlideHelper(this);
         startKovenant();
         initializeSecurityProvider();
         initializeLogging();
         initializeCrashHandling();
+        KeyStoreUtils.INSTANCE.initialize(this);
         NotificationChannels.create(this);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         AppContext.INSTANCE.configureKovenant();
+        MultiLanguages.init(this);
         messageNotifier = new OptimizedMessageNotifier(new DefaultMessageNotifier());
         broadcaster = new Broadcaster(this);
         LokiAPIDatabase apiDB = getDatabaseComponent().lokiAPIDatabase();
@@ -410,7 +419,7 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     @Override
     protected void attachBaseContext(Context base) {
         initializeLocaleParser();
-        super.attachBaseContext(DynamicLanguageContextWrapper.updateContext(base, TextSecurePreferences.getLanguage(base)));
+        super.attachBaseContext(MultiLanguages.attach(base));
     }
 
     private static class ProviderInitializationException extends RuntimeException {
@@ -544,9 +553,9 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
     private void updateProxy() {
         // https proxy
         String httpsProxy = TextSecurePreferences.getHttpsProxy(this);
-        if(httpsProxy != null && httpsProxy.length() > 10){
+        if (httpsProxy != null && httpsProxy.length() > 10) {
             HTTP.INSTANCE.setHTTPS_PROXY(httpsProxy);
-        } else if(BuildConfig.GUARDNODE.length() > 10){
+        } else if (BuildConfig.GUARDNODE.length() > 10) {
             HTTP.INSTANCE.setHTTPS_PROXY(BuildConfig.GUARDNODE);
             HTTP.INSTANCE.setHTTPS_ENABLE(true);
         }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/settingBgColor"
     android:orientation="vertical"
-    tools:context="org.thoughtcrime.securesms.conversation.v2.UserActivity"
+    tools:context="org.thoughtcrime.securesms.home.UserActivity"
     tools:theme="@style/Theme.Session.DayNight.NoActionBar">
 
     <androidx.appcompat.widget.Toolbar
@@ -192,14 +192,15 @@
                         android:textSize="@dimen/medium_font_size"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlSearch"
@@ -228,14 +229,15 @@
                         android:textSize="@dimen/medium_font_size"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlExpiration"
@@ -264,14 +266,16 @@
                         android:textColor="?android:textColorPrimary"
                         android:textSize="@dimen/medium_font_size"
                         android:textStyle="bold" />
-                </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlMute"
@@ -309,14 +313,15 @@
                         android:layout_centerVertical="true"
                         android:visibility="gone" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlBlock"
@@ -354,13 +359,15 @@
                         android:layout_centerVertical="true"
                         android:visibility="gone" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlEditGroup"
@@ -390,14 +397,15 @@
                         android:textSize="@dimen/medium_font_size"
                         android:textStyle="bold" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlLeaveGroup"
@@ -426,14 +434,16 @@
                         android:textColor="?android:textColorPrimary"
                         android:textSize="@dimen/medium_font_size"
                         android:textStyle="bold" />
-                </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor"
-                    android:visibility="visible" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rlNotification"
@@ -471,13 +481,15 @@
                         android:layout_centerVertical="true"
                         android:visibility="gone" />
 
-                </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="66dp"
+                        android:background="?borderColor"
+                        android:visibility="visible" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginStart="66dp"
-                    android:background="?borderColor" />
+                </RelativeLayout>
 
             </LinearLayout>
 

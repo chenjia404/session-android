@@ -30,7 +30,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -145,6 +144,7 @@ import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.ReactionRecord
 import org.thoughtcrime.securesms.giph.ui.GiphyActivity
 import org.thoughtcrime.securesms.groups.OpenGroupManager
+import org.thoughtcrime.securesms.home.UserActivity
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewRepository
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewUtil
 import org.thoughtcrime.securesms.linkpreview.LinkPreviewViewModel
@@ -570,7 +570,7 @@ class ConversationActivityV2 : PassphraseRequiredActionBarActivity(), InputBarDe
             R.dimen.small_profile_picture_size
         }
         val size = resources.getDimension(sizeID).roundToInt()
-        binding.toolbarContent.profilePictureView.root.layoutParams = LinearLayout.LayoutParams(size, size)
+        //binding.toolbarContent.profilePictureView.root.layoutParams = RelativeLayout.LayoutParams(size, size)
         binding.toolbarContent.profilePictureView.root.glide = glide
         MentionManagerUtilities.populateUserPublicKeyCacheIfNeeded(viewModel.threadId, this)
         val profilePictureView = binding.toolbarContent.profilePictureView.root
