@@ -15,7 +15,6 @@ import network.qki.messenger.R
 import network.qki.messenger.databinding.ItemEtAttachBinding
 import network.qki.messenger.databinding.ItemEtBinding
 import org.session.libsession.utilities.getColorFromAttr
-import org.thoughtcrime.securesms.home.ETUserCenterActivity
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.dateDifferenceDesc
 import org.thoughtcrime.securesms.util.formatMediaUrl

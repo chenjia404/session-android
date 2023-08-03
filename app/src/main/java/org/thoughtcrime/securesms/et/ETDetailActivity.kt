@@ -33,7 +33,7 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
     private lateinit var binding: ActivityEtDetailBinding
     private lateinit var headerBinding: LayoutEtDetailHeaderBinding
 
-    private val viewModel by viewModels<ETDetailViewModel>()
+    private val viewModel by viewModels<ETViewModel>()
 
     var et: ET? = null
 

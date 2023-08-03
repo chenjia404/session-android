@@ -45,7 +45,7 @@ class ETPublishActivity : PassphraseRequiredActionBarActivity() {
 
     private lateinit var binding: ActivityEtPublishBinding
 
-    private val viewModel by viewModels<ETPublishViewModel>()
+    private val viewModel by viewModels<ETViewModel>()
 
     var et: ET? = null
 

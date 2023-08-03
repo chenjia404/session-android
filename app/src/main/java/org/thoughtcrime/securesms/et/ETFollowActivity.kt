@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator

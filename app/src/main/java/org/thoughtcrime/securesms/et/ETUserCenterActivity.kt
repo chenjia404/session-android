@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,13 +12,7 @@ import network.qki.messenger.databinding.ActivityUserEtBinding
 import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.et.ET
-import org.thoughtcrime.securesms.et.ETDetailActivity
-import org.thoughtcrime.securesms.et.ETFragment
-import org.thoughtcrime.securesms.et.ETMeAdapter
-import org.thoughtcrime.securesms.et.ETPublishActivity
-import org.thoughtcrime.securesms.et.MeViewModel
-import org.thoughtcrime.securesms.et.User
+import org.thoughtcrime.securesms.home.SettingActivity
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.StatusBarUtil
 import org.thoughtcrime.securesms.util.parcelable
@@ -39,7 +33,7 @@ import kotlin.with
 class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
 
     private lateinit var binding: ActivityUserEtBinding
-    private val viewModel by viewModels<MeViewModel>()
+    private val viewModel by viewModels<ETViewModel>()
 
     private var isFirst: Boolean = true
     private val adapter: ETMeAdapter = ETMeAdapter()

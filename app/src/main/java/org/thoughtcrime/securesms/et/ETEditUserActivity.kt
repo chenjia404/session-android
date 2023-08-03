@@ -1,4 +1,4 @@
-package org.thoughtcrime.securesms.home
+package org.thoughtcrime.securesms.et
 
 import android.Manifest
 import android.content.Intent
@@ -13,9 +13,6 @@ import org.session.libsession.utilities.SSKEnvironment
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.et.ETViewModel
-import org.thoughtcrime.securesms.et.User
-import org.thoughtcrime.securesms.et.UserUpdateEvent
 import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.mediasend.MediaSelectActivity
 import org.thoughtcrime.securesms.mediasend.MediaSendActivity

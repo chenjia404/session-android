@@ -18,10 +18,13 @@ import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseFragment
 import org.thoughtcrime.securesms.et.ET
 import org.thoughtcrime.securesms.et.ETDetailActivity
+import org.thoughtcrime.securesms.et.ETEditUserActivity
+import org.thoughtcrime.securesms.et.ETFollowActivity
 import org.thoughtcrime.securesms.et.ETFragment
 import org.thoughtcrime.securesms.et.ETMeAdapter
 import org.thoughtcrime.securesms.et.ETPublishActivity
-import org.thoughtcrime.securesms.et.MeViewModel
+import org.thoughtcrime.securesms.et.ETUserCenterActivity
+import org.thoughtcrime.securesms.et.ETViewModel
 import org.thoughtcrime.securesms.et.User
 import org.thoughtcrime.securesms.et.UserUpdateEvent
 import org.thoughtcrime.securesms.util.GlideHelper
@@ -35,10 +38,10 @@ import java.lang.Float.max
  * Describe:
  */
 @AndroidEntryPoint
-class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
+class MeFragment : BaseFragment<ETViewModel>(R.layout.fragment_me) {
 
     private val binding by viewBinding(FragmentMeBinding::bind)
-    override val viewModel by viewModels<MeViewModel>()
+    override val viewModel by viewModels<ETViewModel>()
 
     private var isFirst: Boolean = true
     private var user: User? = null

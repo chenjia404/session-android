@@ -268,19 +268,19 @@
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
-            android:name="org.thoughtcrime.securesms.home.ETUserCenterActivity"
+            android:name="org.thoughtcrime.securesms.et.ETUserCenterActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
-            android:name="org.thoughtcrime.securesms.home.ETFollowActivity"
+            android:name="org.thoughtcrime.securesms.et.ETFollowActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
-            android:name="org.thoughtcrime.securesms.home.ETEditUserActivity"
+            android:name="org.thoughtcrime.securesms.et.ETEditUserActivity"
             android:label="@string/edit"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
