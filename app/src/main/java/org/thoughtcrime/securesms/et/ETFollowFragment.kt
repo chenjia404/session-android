@@ -95,7 +95,7 @@ class ETFollowFragment : BaseFragment<ETViewModel>(R.layout.fragment_et_follow) 
                 viewModel.page = viewModel.page + 1
             }
             if (adapter.data.isNullOrEmpty()) {
-                binding.stateLayout.showEmptyView()
+                binding.stateLayout.showEmptyView(R.drawable.ic_statelayout_empty, getString(R.string.no_data), false) {}
             } else {
                 binding.stateLayout.showContentView()
             }

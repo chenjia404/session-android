@@ -36,7 +36,6 @@ class MeViewModel(application: Application) : BaseViewModel(application) {
     val etsLiveData = MutableLiveData<List<ET>?>()
     val userInfoLiveData = MutableLiveData<UserInfo?>()
     val followStatusLiveData = MutableLiveData<Boolean>()
-    val likeLiveData = MutableLiveData<ET>()
 
     private val apiService by lazy {
         ApiService()
@@ -141,15 +140,6 @@ class MeViewModel(application: Application) : BaseViewModel(application) {
         }.onStart {
             onStart.invoke()
         }.onSuccess {
-            if (it.Code == 0) {
-                et.isTwLike = !et.isTwLike
-                if (et.isTwLike) {
-                    et.LikeCount = et.LikeCount?.plus(1)
-                } else {
-                    et.LikeCount = et.LikeCount?.minus(1)
-                }
-            }
-            likeLiveData.postValue(et)
         }.onError {
             context.toastOnUi(it.message)
         }.onFinally {

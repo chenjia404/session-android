@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="26dp"
@@ -23,12 +24,12 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="top|start"
-            android:hint="Replay:Rico"
             android:imeOptions="actionSend"
             android:inputType="text"
             android:scrollbars="vertical"
             android:textColor="?android:textColorTertiary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:hint="Replay:Rico" />
 
         <TextView
             android:id="@+id/tvSend"

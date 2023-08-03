@@ -26,6 +26,7 @@ class ETCommentPopupView(
         super.onCreate()
         binding = LayoutSendCommentBinding.bind(popupImplView)
         binding.apply {
+            etContent.hint = "Replay:${et.UserInfo?.Nickname}"
             tvSend.setOnClickListener {
                 val content = etContent.text.toString().trim()
                 content?.let {

@@ -42,9 +42,9 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="140dp"
-        android:backgroundTint="@color/color3E66FB"
         android:src="@drawable/ic_add"
         android:tint="@color/core_white"
+        app:backgroundTint="@color/color3E66FB"
         app:fabCustomSize="48dp" />
 
 </FrameLayout>

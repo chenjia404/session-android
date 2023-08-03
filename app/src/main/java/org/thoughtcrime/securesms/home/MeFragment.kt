@@ -104,7 +104,15 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                     }
 
                     R.id.llFavorite -> {
-                        viewModel.like({}, {}, et)
+                        viewModel.like({
+                            et.isTwLike = !et.isTwLike
+                            if (et.isTwLike) {
+                                et.LikeCount = et.LikeCount?.plus(1)
+                            } else {
+                                et.LikeCount = et.LikeCount?.minus(1)
+                            }
+                            adapter.notifyItemChanged(position)
+                        }, {}, et)
                     }
 
                     else -> {
@@ -171,16 +179,6 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
             if (!it.isNullOrEmpty()) {
                 viewModel.cursor = it?.last()?.Cursor ?: ""
             }
-        }
-        viewModel.likeLiveData.observe(viewLifecycleOwner) {
-            var ets = (adapter.data as List<ET>).toMutableList()
-            ets.forEachIndexed { index, et ->
-                if (et.TwAddress.equals(it.TwAddress, true)) {
-                    ets[index] = it
-                    adapter.notifyItemChanged(index)
-                }
-            }
-
         }
     }
 

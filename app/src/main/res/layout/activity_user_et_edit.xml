@@ -13,23 +13,30 @@
         android:layout_height="wrap_content"
         app:contentInsetStart="0dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/session_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginEnd="20dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
-            <View
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tvAppName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:text="@string/AccessibilityId_settings"
+                android:textColor="?reverseMainColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:paddingStart="12dp"
                 android:paddingTop="12dp"
@@ -38,7 +45,7 @@
                 android:textColor="@color/color3E66FB"
                 android:textSize="14sp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -91,8 +98,7 @@
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="48dp"
-                android:background="@drawable/bg_follow_6"
-                android:backgroundTint="?editBgColor"
+                android:background="@drawable/bg_edittext_6"
                 android:hint="@string/input_nickname"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingStart="20dp"

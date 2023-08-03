@@ -412,7 +412,7 @@
 
         <item name="mainColor">@color/core_black</item>
         <item name="reverseMainColor">@color/core_white</item>
-        <item name="borderColor">@color/core_black</item>
+        <item name="borderColor">#0CFFFFFF</item>
         <item name="settingBgColor">@color/core_black</item>
         <item name="settingCardColor">@color/classic_dark_1</item>
         <item name="secondTextColor">@color/color91979D</item>
@@ -430,7 +430,6 @@
         <item name="thirdTextColor">@color/colorC2C9D1</item>
         <item name="followBgColor">@color/color7A7B7D</item>
         <item name="editBgColor">@color/color272727</item>
-
     </style>
 
     <style name="Classic.Light">
@@ -519,7 +518,7 @@
 
         <item name="mainColor">@color/core_white</item>
         <item name="reverseMainColor">@color/core_black</item>
-        <item name="borderColor">@color/colorEDEDED</item>
+        <item name="borderColor">#0C000000</item>
         <item name="settingBgColor">@color/colorE3E5E7</item>
         <item name="settingCardColor">@color/core_white</item>
         <item name="secondTextColor">@color/color505050</item>

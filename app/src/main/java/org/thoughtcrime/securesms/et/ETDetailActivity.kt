@@ -101,15 +101,6 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
             }
             viewModel.page++
         }
-        viewModel.likeLiveData.observe(this) {
-            headerBinding.ivFavorite.isSelected = it.isTwLike
-            headerBinding.tvFavoriteNum.text = "${it.LikeCount}"
-            if (it.isTwLike) {
-                headerBinding.tvFavoriteNum.setTextColor(getColor(R.color.colorF03738))
-            } else {
-                headerBinding.tvFavoriteNum.setTextColor(getColorFromAttr(android.R.attr.textColorTertiary))
-            }
-        }
     }
 
     // initHeader
@@ -219,7 +210,23 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
                 sendComment()
             }
             headerBinding.llFavorite.setOnClickListener {
-                viewModel.like({}, {}, et!!)
+                viewModel.like({
+                    et?.apply {
+                        isTwLike = !isTwLike
+                        LikeCount = if (isTwLike) {
+                            LikeCount?.plus(1)
+                        } else {
+                            LikeCount?.minus(1)
+                        }
+                        headerBinding.ivFavorite.isSelected = isTwLike
+                        headerBinding.tvFavoriteNum.text = "$LikeCount"
+                        if (isTwLike) {
+                            headerBinding.tvFavoriteNum.setTextColor(getColor(R.color.colorF03738))
+                        } else {
+                            headerBinding.tvFavoriteNum.setTextColor(getColorFromAttr(android.R.attr.textColorTertiary))
+                        }
+                    }
+                }, {}, et!!)
             }
             headerBinding.llForward.setOnClickListener {
                 val intent = Intent(this@ETDetailActivity, ETPublishActivity::class.java)

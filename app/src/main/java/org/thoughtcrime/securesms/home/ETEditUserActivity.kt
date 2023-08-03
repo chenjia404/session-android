@@ -47,7 +47,6 @@ class ETEditUserActivity : PassphraseRequiredActionBarActivity() {
         val actionBar = supportActionBar ?: return
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setHomeButtonEnabled(true)
-        actionBar.title = getString(R.string.edit)
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             result.data?.apply {
                 val medias = getParcelableArrayListExtra<Media>(MediaSendActivity.EXTRA_MEDIA)
@@ -63,6 +62,7 @@ class ETEditUserActivity : PassphraseRequiredActionBarActivity() {
     }
 
     override fun initViews() {
+        binding.tvAppName.text = getString(R.string.edit)
         binding.ivAvatarUpload.setOnClickListener {
             Permissions.with(this@ETEditUserActivity)
                 .request(Manifest.permission.READ_EXTERNAL_STORAGE)

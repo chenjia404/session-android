@@ -107,7 +107,15 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
                     }
 
                     R.id.llFavorite -> {
-                        viewModel.like({}, {}, et)
+                        viewModel.like({
+                            et.isTwLike = !et.isTwLike
+                            if (et.isTwLike) {
+                                et.LikeCount = et.LikeCount?.plus(1)
+                            } else {
+                                et.LikeCount = et.LikeCount?.minus(1)
+                            }
+                            adapter.notifyItemChanged(position)
+                        }, {}, et)
                     }
 
                     else -> {
@@ -175,16 +183,6 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
         }
         viewModel.followStatusLiveData.observe(this) {
             viewModel.loadUserInfo({}, {}, user?.UserAddress ?: "")
-        }
-        viewModel.likeLiveData.observe(this) {
-            var ets = (adapter.data as List<ET>).toMutableList()
-            ets.forEachIndexed { index, et ->
-                if (et.TwAddress.equals(it.TwAddress, true)) {
-                    ets[index] = it
-                    adapter.notifyItemChanged(index)
-                }
-            }
-
         }
     }
 

@@ -15,7 +15,6 @@ class ETDetailViewModel(application: Application) : BaseViewModel(application) {
     var page: Int = 1
 
     val commentsLiveData = MutableLiveData<List<Comment>?>()
-    val likeLiveData = MutableLiveData<ET>()
 
     private val apiService by lazy {
         ApiService()
@@ -51,15 +50,6 @@ class ETDetailViewModel(application: Application) : BaseViewModel(application) {
         }.onStart {
             onStart.invoke()
         }.onSuccess {
-            if (it.Code == 0) {
-                et.isTwLike = !et.isTwLike
-                if (et.isTwLike) {
-                    et.LikeCount = et.LikeCount?.plus(1)
-                } else {
-                    et.LikeCount = et.LikeCount?.minus(1)
-                }
-            }
-            likeLiveData.postValue(et)
         }.onError {
             context.toastOnUi(it.message)
         }.onFinally {

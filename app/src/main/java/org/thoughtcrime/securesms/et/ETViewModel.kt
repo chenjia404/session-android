@@ -32,7 +32,6 @@ class ETViewModel(application: Application) : BaseViewModel(application) {
     val etsLiveData = MutableLiveData<List<ET>?>()
     val followLiveData = MutableLiveData<List<User>?>()
     val followStatusLiveData = MutableLiveData<Boolean>()
-    val likeLiveData = MutableLiveData<ET>()
     val ipfsLiveData = MutableLiveData<Media?>()
     val updateUserStatusLiveData = MutableLiveData<Boolean>()
     val userLiveData = MutableLiveData<User?>()
@@ -178,15 +177,6 @@ class ETViewModel(application: Application) : BaseViewModel(application) {
         }.onStart {
             onStart.invoke()
         }.onSuccess {
-            if (it.Code == 0) {
-                et.isTwLike = !et.isTwLike
-                if (et.isTwLike) {
-                    et.LikeCount = et.LikeCount?.plus(1)
-                } else {
-                    et.LikeCount = et.LikeCount?.minus(1)
-                }
-            }
-            likeLiveData.postValue(et)
         }.onError {
             context.toastOnUi(it.message)
         }.onFinally {
