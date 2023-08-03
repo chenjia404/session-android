@@ -159,15 +159,7 @@ class ETDetailActivity : PassphraseRequiredActionBarActivity() {
                             R.drawable.ic_pic_default,
                             R.drawable.ic_pic_default
                         )
-                        if (i >= 8 && medias.size > 9) {
-                            attachBinding.ivAttach.foreground = getDrawable(R.drawable.shape_pic_foreground)
-                            attachBinding.tvNum.isVisible = true
-                            attachBinding.tvNum.text = "+${medias.size - 9}"
-                            break
-                        } else {
-                            attachBinding.ivAttach.foreground = null
-                            attachBinding.tvNum.isVisible = false
-                        }
+                        attachBinding.ivAttach.foreground = null
                     }
                 }
             }

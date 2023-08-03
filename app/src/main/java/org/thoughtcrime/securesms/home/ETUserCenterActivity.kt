@@ -56,7 +56,7 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
         super.onCreate(savedInstanceState, ready)
         binding = ActivityUserEtBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        StatusBarUtil.setStatusColor(this, true, true, getColorFromAttr(R.attr.settingCardColor))
+        StatusBarUtil.setStatusColor(this, true, false, getColorFromAttr(R.attr.settingCardColor))
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar ?: return
         actionBar.setDisplayHomeAsUpEnabled(true)

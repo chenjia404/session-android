@@ -408,5 +408,6 @@
     <attr name="copyBgColor" format="reference|color" />
     <attr name="thirdTextColor" format="reference|color" />
     <attr name="followBgColor" format="reference|color" />
+    <attr name="editBgColor" format="reference|color" />
 
 </resources>

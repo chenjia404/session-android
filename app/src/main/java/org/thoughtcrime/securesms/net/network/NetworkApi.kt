@@ -39,9 +39,9 @@ class NetworkApi : BaseNetworkApi() {
                 addInterceptor(NormalInterceptor())
             }
             //超时时间 连接、读、写
-            connectTimeout(10, TimeUnit.SECONDS)
+            connectTimeout(60, TimeUnit.SECONDS)
             readTimeout(5, TimeUnit.SECONDS)
-            writeTimeout(5, TimeUnit.SECONDS)
+            writeTimeout(60, TimeUnit.SECONDS)
         }
         return builder
     }

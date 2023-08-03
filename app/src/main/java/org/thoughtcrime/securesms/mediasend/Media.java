@@ -3,6 +3,7 @@ package org.thoughtcrime.securesms.mediasend;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import org.session.libsignal.utilities.guava.Optional;
@@ -12,117 +13,119 @@ import org.session.libsignal.utilities.guava.Optional;
  */
 public class Media implements Parcelable {
 
-  public static final String ALL_MEDIA_BUCKET_ID = "org.thoughtcrime.securesms.ALL_MEDIA";
+    public static final String ALL_MEDIA_BUCKET_ID = "org.thoughtcrime.securesms.ALL_MEDIA";
 
-  private final Uri    uri;
-  private final String mimeType;
-  private final long   date;
-  private final int    width;
-  private final int    height;
-  private final long   size;
+    private final Uri uri;
 
-  private Optional<String> bucketId;
-  private Optional<String> caption;
+    public String url = "";
+    private final String mimeType;
+    private final long date;
+    private final int width;
+    private final int height;
+    private final long size;
 
-  public Media(@NonNull Uri uri, @NonNull String mimeType, long date, int width, int height, long size, Optional<String> bucketId, Optional<String> caption) {
-    this.uri      = uri;
-    this.mimeType = mimeType;
-    this.date     = date;
-    this.width    = width;
-    this.height   = height;
-    this.size     = size;
-    this.bucketId = bucketId;
-    this.caption  = caption;
-  }
+    private Optional<String> bucketId;
+    private Optional<String> caption;
 
-  protected Media(Parcel in) {
-    uri      = in.readParcelable(Uri.class.getClassLoader());
-    mimeType = in.readString();
-    date     = in.readLong();
-    width    = in.readInt();
-    height   = in.readInt();
-    size     = in.readLong();
-    bucketId = Optional.fromNullable(in.readString());
-    caption  = Optional.fromNullable(in.readString());
-  }
+    public Media(@NonNull Uri uri, @NonNull String mimeType, long date, int width, int height, long size, Optional<String> bucketId, Optional<String> caption) {
+        this.uri = uri;
+        this.mimeType = mimeType;
+        this.date = date;
+        this.width = width;
+        this.height = height;
+        this.size = size;
+        this.bucketId = bucketId;
+        this.caption = caption;
+    }
 
-  public Uri getUri() {
-    return uri;
-  }
+    protected Media(Parcel in) {
+        uri = in.readParcelable(Uri.class.getClassLoader());
+        mimeType = in.readString();
+        date = in.readLong();
+        width = in.readInt();
+        height = in.readInt();
+        size = in.readLong();
+        bucketId = Optional.fromNullable(in.readString());
+        caption = Optional.fromNullable(in.readString());
+    }
 
-  public String getMimeType() {
-    return mimeType;
-  }
+    public Uri getUri() {
+        return uri;
+    }
 
-  public long getDate() {
-    return date;
-  }
+    public String getMimeType() {
+        return mimeType;
+    }
 
-  public int getWidth() {
-    return width;
-  }
+    public long getDate() {
+        return date;
+    }
 
-  public int getHeight() {
-    return height;
-  }
+    public int getWidth() {
+        return width;
+    }
 
-  public long getSize() {
-    return size;
-  }
+    public int getHeight() {
+        return height;
+    }
 
-  public Optional<String> getBucketId() {
-    return bucketId;
-  }
+    public long getSize() {
+        return size;
+    }
 
-  public Optional<String> getCaption() {
-    return caption;
-  }
+    public Optional<String> getBucketId() {
+        return bucketId;
+    }
 
-  public void setCaption(String caption) {
-    this.caption = Optional.fromNullable(caption);
-  }
+    public Optional<String> getCaption() {
+        return caption;
+    }
 
-  @Override
-  public int describeContents() {
-    return 0;
-  }
-
-  @Override
-  public void writeToParcel(Parcel dest, int flags) {
-    dest.writeParcelable(uri, flags);
-    dest.writeString(mimeType);
-    dest.writeLong(date);
-    dest.writeInt(width);
-    dest.writeInt(height);
-    dest.writeLong(size);
-    dest.writeString(bucketId.orNull());
-    dest.writeString(caption.orNull());
-  }
-
-  public static final Creator<Media> CREATOR = new Creator<Media>() {
-    @Override
-    public Media createFromParcel(Parcel in) {
-      return new Media(in);
+    public void setCaption(String caption) {
+        this.caption = Optional.fromNullable(caption);
     }
 
     @Override
-    public Media[] newArray(int size) {
-      return new Media[size];
+    public int describeContents() {
+        return 0;
     }
-  };
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(uri, flags);
+        dest.writeString(mimeType);
+        dest.writeLong(date);
+        dest.writeInt(width);
+        dest.writeInt(height);
+        dest.writeLong(size);
+        dest.writeString(bucketId.orNull());
+        dest.writeString(caption.orNull());
+    }
 
-    Media media = (Media) o;
+    public static final Creator<Media> CREATOR = new Creator<Media>() {
+        @Override
+        public Media createFromParcel(Parcel in) {
+            return new Media(in);
+        }
 
-    return uri.equals(media.uri);
-  }
+        @Override
+        public Media[] newArray(int size) {
+            return new Media[size];
+        }
+    };
 
-  @Override
-  public int hashCode() {
-    return uri.hashCode();
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Media media = (Media) o;
+
+        return uri.equals(media.uri);
+    }
+
+    @Override
+    public int hashCode() {
+        return uri.hashCode();
+    }
 }

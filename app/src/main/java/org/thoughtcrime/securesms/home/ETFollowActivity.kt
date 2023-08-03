@@ -5,6 +5,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityFollowBinding
+import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.et.ETFollowManagerAdapter
@@ -25,7 +26,7 @@ class ETFollowActivity : PassphraseRequiredActionBarActivity() {
         super.onCreate(savedInstanceState, ready)
         binding = ActivityFollowBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        StatusBarUtil.setStatusColor(this, true, true, getColorFromAttr(R.attr.settingCardColor))
+        StatusBarUtil.setStatusColor(this, false, TextSecurePreferences.CLASSIC_DARK != TextSecurePreferences.getThemeStyle(this), getColorFromAttr(R.attr.settingCardColor))
         setSupportActionBar(binding.toolbar)
         val actionBar = supportActionBar ?: return
         actionBar.setDisplayHomeAsUpEnabled(true)

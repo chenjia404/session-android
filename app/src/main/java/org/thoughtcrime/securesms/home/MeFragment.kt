@@ -11,6 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.FragmentMeBinding
 import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseFragment
 import org.thoughtcrime.securesms.et.ET
@@ -20,6 +23,7 @@ import org.thoughtcrime.securesms.et.ETMeAdapter
 import org.thoughtcrime.securesms.et.ETPublishActivity
 import org.thoughtcrime.securesms.et.MeViewModel
 import org.thoughtcrime.securesms.et.User
+import org.thoughtcrime.securesms.et.UserUpdateEvent
 import org.thoughtcrime.securesms.util.GlideHelper
 import org.thoughtcrime.securesms.util.sendToClip
 import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
@@ -37,13 +41,26 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
     override val viewModel by viewModels<MeViewModel>()
 
     private var isFirst: Boolean = true
+    private var user: User? = null
     private val adapter: ETMeAdapter = ETMeAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        EventBus.getDefault().register(this)
         initView()
         initObserver()
         initData()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: UserUpdateEvent) {
+        viewModel.cursor = ""
+        loadData()
     }
 
     private fun initView() {
@@ -119,6 +136,11 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
                 val intent = Intent(context, ETFollowActivity::class.java)
                 show(intent)
             }
+            llUser.setOnClickListener {
+                var intent = Intent(activity, ETEditUserActivity::class.java)
+                intent.putExtra(ETUserCenterActivity.KEY_USER, user)
+                show(intent)
+            }
         }
     }
 
@@ -130,7 +152,9 @@ class MeFragment : BaseFragment<MeViewModel>(R.layout.fragment_me) {
         viewModel.userInfoLiveData.observe(viewLifecycleOwner) {
             stopRefreshing(binding.swipeRefreshLayout)
             if (it?.user != null) {
+                user = it.user
                 updateUI(it.user)
+                viewModel.updateLocalUser(it.user)
             }
         }
         viewModel.etsLiveData.observe(viewLifecycleOwner) {

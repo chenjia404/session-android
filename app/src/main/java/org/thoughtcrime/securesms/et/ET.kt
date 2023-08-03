@@ -63,6 +63,7 @@ data class User(
     var UserAddress: String?,
     var PubKey: String?,
     var Nickname: String?,
+    var Sex: String?,
     var Token: String?,
     var Avatar: String?,
     var Desc: String?,
@@ -71,7 +72,8 @@ data class User(
     var TokenStatus: Int?,
     var IpfsHash: String?,
     var TwCount: String?,
-    var IsFollow: Boolean?
+    var IsFollow: Boolean?,
+    var EncodedProfileKey: String?
 ) : Parcelable
 
 data class Create(

@@ -10,11 +10,12 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import org.thoughtcrime.securesms.BaseViewModel
+import org.thoughtcrime.securesms.constants.AppConst
 import org.thoughtcrime.securesms.home.web3.TransactionService
+import org.thoughtcrime.securesms.mediasend.Media
 import org.thoughtcrime.securesms.net.network.ApiService
 import org.thoughtcrime.securesms.net.network.IpfsResponse
 import org.thoughtcrime.securesms.util.IntentType
-import org.thoughtcrime.securesms.util.Logger
 import org.thoughtcrime.securesms.util.toastOnUi
 import java.io.File
 
@@ -27,7 +28,7 @@ class ETPublishViewModel(application: Application) : BaseViewModel(application) 
     var page: Int = 1
 
     val publishStatusLiveData = MutableLiveData<Boolean>()
-    val ipfsLiveData = MutableLiveData<IpfsResponse?>()
+    val ipfsLiveData = MutableLiveData<Media?>()
 
     private val apiService by lazy {
         ApiService()
@@ -37,10 +38,18 @@ class ETPublishViewModel(application: Application) : BaseViewModel(application) 
         onStart: () -> Unit,
         onFinally: () -> Unit,
         content: String,
-        attachment: String,
+        medias: List<Media>,
         forwardId: String
     ) {
         execute {
+            var attaches = arrayListOf<String>()
+            medias.forEach {
+                val result = uploadFile(it)
+                if (!result?.Hash.isNullOrEmpty()) {
+                    attaches.add("${AppConst.URLS.IPFS_SCAN}/${result?.Hash}?filename=${result?.Name}")
+                }
+            }
+            val attachment = attaches.joinToString(",")
             val response = apiService.create(content, attachment, forwardId)
             if (response.Data != null) {
                 val signMessage = TransactionService.signEthereumMessage(wallet, response.Data.SignMsg.toByteArray(Charsets.UTF_8), addPrefix = true)
@@ -60,27 +69,13 @@ class ETPublishViewModel(application: Application) : BaseViewModel(application) 
         }
     }
 
-    fun uploadFile(
-        onStart: () -> Unit,
-        onFinally: () -> Unit,
-        uri: Uri
-    ) {
-        execute {
-            val path = getPathFromUri(context, uri)
-            val file = File(path)
-            Logger.d("path2 = ${file.path}")
-            val part = MultipartBody.Part.createFormData("file", file.name, file.asRequestBody(IntentType.from(path)?.toMediaType()))
-            apiService.uploadFile(part)
-        }.onStart {
-            onStart.invoke()
-        }.onSuccess {
-            Logger.d("uploadFile = $it")
-            ipfsLiveData.postValue(it)
-        }.onError {
-            context.toastOnUi(it.message)
-        }.onFinally {
-            onFinally.invoke()
-        }
+    suspend fun uploadFile(
+        media: Media
+    ): IpfsResponse? {
+        val path = getPathFromUri(context, media.uri)
+        val file = File(path)
+        val part = MultipartBody.Part.createFormData("file", file.name, file.asRequestBody(IntentType.from(path)?.toMediaType()))
+        return apiService.uploadFile(part)
     }
 
     private fun getPathFromUri(context: Context, contentUri: Uri): String {

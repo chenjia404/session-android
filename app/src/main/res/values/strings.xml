@@ -1062,5 +1062,7 @@
     <string name="unfollow">Unfollow</string>
     <string name="followers">Followers</string>
     <string name="friend">Friend</string>
+    <string name="edit">Edit</string>
+    <string name="input_nickname">Add your name</string>
 
 </resources>

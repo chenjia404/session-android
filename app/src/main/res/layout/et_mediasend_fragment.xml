@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/core_black"
+    tools:context="org.thoughtcrime.securesms.mediasend.MediaSendActivity">
+
+    <org.thoughtcrime.securesms.components.ControllableViewPager
+        android:id="@+id/mediasend_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="72dp" />
+
+    <org.thoughtcrime.securesms.components.InputAwareLayout
+        android:id="@+id/mediasend_hud"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/mediasend_caption_and_rail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:background="@color/transparent_black_70"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mediasend_media_rail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                tools:layout_height="64dp"
+                tools:listitem="@layout/mediarail_media_item" />
+
+        </LinearLayout>
+
+    </org.thoughtcrime.securesms.components.InputAwareLayout>
+
+    <FrameLayout
+        android:id="@+id/mediasend_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
+        android:background="@drawable/circle_touch_highlight_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/small_spacing">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:tint="@android:color/white" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/small_spacing"
+        android:background="@drawable/circle_touch_highlight_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/small_spacing">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_baseline_done_24"
+            app:tint="@android:color/white" />
+
+    </FrameLayout>
+
+</FrameLayout>

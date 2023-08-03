@@ -1,6 +1,7 @@
 package org.thoughtcrime.securesms.util
 
 import android.content.Context
+import android.net.Uri
 import android.text.TextUtils
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -97,6 +98,26 @@ object GlideHelper {
             )
         }
         val builder: RequestBuilder<*> = Glide.with(mContext!!).load(url).apply(options)
+        builder.into(view!!)
+    }
+
+    fun showImage(
+        view: ImageView?,
+        uri: Uri,
+        roundRadius: Int = 0,
+        placeHolder: Int,
+        errorHolder: Int
+    ) {
+        val options = RequestOptions().timeout(60000).centerCrop()
+            .placeholder(placeHolder).error(errorHolder).priority(
+                Priority.HIGH
+            )
+        if (roundRadius != 0) {
+            options.transform(
+                CenterCrop(), RoundedCorners(ViewUtil.dpToPx(roundRadius))
+            )
+        }
+        val builder: RequestBuilder<*> = Glide.with(mContext!!).load(uri).apply(options)
         builder.into(view!!)
     }
 

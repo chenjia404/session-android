@@ -169,8 +169,7 @@ class SettingActivity : PassphraseRequiredActionBarActivity() {
             )
 
         if (publicKey.isNotEmpty()) {
-            val recipient =
-                Recipient.from(this, Address.fromSerialized(publicKey), false)
+            val recipient = Recipient.from(this, Address.fromSerialized(publicKey), false)
             if (profilePicturesCache.containsKey(publicKey) && profilePicturesCache[publicKey] == recipient.profileAvatar) return
             val signalProfilePicture = recipient.contactPhoto
             val avatar = (signalProfilePicture as? ProfileContactPhoto)?.avatarObject

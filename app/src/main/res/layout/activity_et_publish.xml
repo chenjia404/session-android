@@ -113,18 +113,13 @@
                         android:textColor="?android:textColorSecondary"
                         android:textSize="14sp" />
 
-                    <com.google.android.flexbox.FlexboxLayout
-                        android:id="@+id/flexbox"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:clipToPadding="false"
-                        android:visibility="visible"
-                        app:alignContent="flex_start"
-                        app:dividerDrawable="@drawable/shape_space_divider"
-                        app:flexDirection="row"
-                        app:justifyContent="flex_start"
-                        app:showDivider="middle" />
+                        android:visibility="visible" />
 
                 </LinearLayout>
 

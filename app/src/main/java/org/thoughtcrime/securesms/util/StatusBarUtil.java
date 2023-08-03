@@ -10,8 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.ColorRes;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.ColorInt;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -31,7 +30,7 @@ public class StatusBarUtil {
      * @param isDarkText  字体颜色，只有黑白两色，无论什么色值，都只会转为黑白两色
      * @param bgColor     背景色，即状态栏颜色，isTranslate若为true则此值无效
      */
-    public static void setStatusColor(Activity activity, boolean isTranslate, boolean isDarkText, @ColorRes int bgColor) {
+    public static void setStatusColor(Activity activity, boolean isTranslate, boolean isDarkText, @ColorInt int bgColor) {
         //如果系统为6.0及以上，就可以使用Google自带的方式
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -40,7 +39,7 @@ public class StatusBarUtil {
                 //可有可无
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 decorView.setSystemUiVisibility((isTranslate ? View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN : 0) | (isDarkText ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : 0));
-                window.setStatusBarColor(isTranslate ? Color.TRANSPARENT : ContextCompat.getColor(activity, bgColor));
+                window.setStatusBarColor(isTranslate ? Color.TRANSPARENT : bgColor);
             } else { //如果不是6.0及以上则分情况适配
                 if (isColorOS_3()) { //如果是OPPO Color3.0 & Android 5.1
                     //控制字体颜色，只有黑白两色
@@ -50,7 +49,7 @@ public class StatusBarUtil {
                     decorView.setSystemUiVisibility((isTranslate ? View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN : 0) | SYSTEM_UI_FLAG_OP_STATUS_BAR_TINT);
                     //可有可无
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    window.setStatusBarColor(isTranslate ? Color.TRANSPARENT : ContextCompat.getColor(activity, bgColor));
+                    window.setStatusBarColor(isTranslate ? Color.TRANSPARENT : bgColor);
                 } else if (isMIUI6Later()) { //如果是Android 6.0以下，MIUI6及以上
                     setMIUI6Translate(activity, isTranslate);
                     setMIUI6StatusBarDarkMode(activity, isDarkText);
@@ -64,7 +63,7 @@ public class StatusBarUtil {
                     if (isTranslate) {
                         setStatusTranslate(activity);
                     }
-                    setStatusBarColor(activity, isTranslate ? Color.TRANSPARENT : ContextCompat.getColor(activity, bgColor));
+                    setStatusBarColor(activity, isTranslate ? Color.TRANSPARENT : bgColor);
                 }
             }
         } catch (Exception e) {

@@ -741,4 +741,6 @@
     <string name="unfollow">Unfollow</string>
     <string name="followers">Followers</string>
     <string name="friend">Friend</string>
+    <string name="edit">编辑</string>
+    <string name="input_nickname">输入昵称</string>
 </resources>

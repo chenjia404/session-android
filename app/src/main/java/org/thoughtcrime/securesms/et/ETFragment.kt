@@ -2,6 +2,7 @@ package org.thoughtcrime.securesms.et
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseFragment
 import org.thoughtcrime.securesms.util.viewbindingdelegate.viewBinding
 
@@ -33,6 +35,8 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
 
     // 0 Following 1 Explore
     var type: Int? = null
+
+    var isLogin: Boolean = false
 
     companion object {
         // Extras
@@ -100,7 +104,9 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
     }
 
     private fun initData() {
-        viewModel.login()
+        if (type == 0 && !isLogin) {
+            viewModel.login()
+        }
         if (type == 0) {
             loadET()
         } else {
@@ -109,6 +115,13 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
     }
 
     private fun initObserver() {
+        viewModel.userLiveData.observe(viewLifecycleOwner) {
+            isLogin = true
+            val localNickname = TextSecurePreferences.getProfileName(requireContext())
+            if (!TextUtils.isEmpty(localNickname) && !localNickname.equals(it?.Nickname)) {
+                viewModel.updateUser({ }, { }, it?.Avatar ?: "", localNickname ?: "", it?.Desc ?: "", it?.Sex ?: "", (System.currentTimeMillis() / 1000).toString())
+            }
+        }
         viewModel.etsLiveData.observe(viewLifecycleOwner) {
             stopRefreshing(binding.swipeRefreshLayout)
             if (viewModel.cursor.isEmpty()) {

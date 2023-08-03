@@ -88,4 +88,9 @@ interface Api {
     @POST("/api/v0/tweets/like")
     suspend fun like(@Field("tw_address") twAddress: String): BaseResponse<Unit?>
 
+    @Headers(URL_BASE)
+    @FormUrlEncoded
+    @POST("/api/v0/users/update")
+    suspend fun updateUser(@Field("avatar") avatar: String, @Field("nickname") nickname: String, @Field("desc") desc: String, @Field("sex") sex: String, @Field("sign") sign: String, @Field("updateSignUnix") updateSignUnix: String): BaseResponse<Unit?>
+
 }

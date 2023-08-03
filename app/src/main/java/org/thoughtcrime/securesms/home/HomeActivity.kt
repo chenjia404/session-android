@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.azhon.appupdate.manager.DownloadManager
 import com.google.android.material.tabs.TabLayout
@@ -23,6 +24,7 @@ import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 import org.session.libsession.utilities.TextSecurePreferences
+import org.session.libsession.utilities.TextSecurePreferences.Companion.getThemeStyle
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.database.GroupDatabase
@@ -196,11 +198,11 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
                 if (tab.position === 0) {
-                    StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
+                    StatusBarUtil.setStatusColor(this@HomeActivity, false, TextSecurePreferences.CLASSIC_DARK != getThemeStyle(this@HomeActivity), getColorFromAttr(R.attr.chatsToolbarColor))
                 } else if (tab.position === 2) {
-                    StatusBarUtil.setStatusColor(this@HomeActivity, true, false, R.color.core_white)
+                    StatusBarUtil.setStatusColor(this@HomeActivity, true, false, ContextCompat.getColor(this@HomeActivity, R.color.core_white))
                 } else {
-                    StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
+                    StatusBarUtil.setStatusColor(this@HomeActivity, false, TextSecurePreferences.CLASSIC_DARK != getThemeStyle(this@HomeActivity), getColorFromAttr(R.attr.chatsToolbarColor))
                 }
 
             }
@@ -233,7 +235,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
                 ivIcon?.imageTintList =
                     ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
-                StatusBarUtil.setStatusColor(this@HomeActivity, true, true, getColorFromAttr(R.attr.chatsToolbarColor))
+                StatusBarUtil.setStatusColor(this, false, TextSecurePreferences.CLASSIC_DARK != getThemeStyle(this), getColorFromAttr(R.attr.chatsToolbarColor))
             }
         }
         binding.tabLayout.getTabAt(0)?.select()

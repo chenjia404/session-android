@@ -82,4 +82,8 @@ class ApiService {
     suspend fun like(tvAddress: String): BaseResponse<Unit?> {
         return api.like(tvAddress)
     }
+
+    suspend fun updateUser(avatar: String, nickname: String, desc: String, sex: String, sign: String, updateSignUnix: String): BaseResponse<Unit?> {
+        return api.updateUser(avatar, nickname, desc, sex, sign, updateSignUnix)
+    }
 }
