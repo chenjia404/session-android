@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?colorPrimary"
     android:orientation="vertical">
 
     <ProgressBar
-        style="@android:style/Widget.ProgressBar.Horizontal"
         android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/accent_line_thickness"
         android:paddingLeft="-2dp"
         android:paddingRight="-2dp"
+        android:progress="80"
         android:progressTint="?colorAccent"
-        android:progress="80" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/AccessibilityId_recovery_phrase_reminder"
         android:gravity="center_vertical"
-        android:padding="@dimen/medium_spacing"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/medium_spacing">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,39 +33,41 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/view_seed_reminder_title"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="@dimen/small_font_size"
-                android:textStyle="bold"
-                android:text="@string/view_seed_reminder_title" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/subtitleTextView"
                 android:layout_width="224dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="@dimen/very_small_font_size"
-                android:lines="2"
                 android:alpha="0.6"
-                android:text="@string/view_seed_reminder_subtitle_1" />
+                android:lines="2"
+                android:text="@string/view_seed_reminder_subtitle_1"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/very_small_font_size" />
 
         </LinearLayout>
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="4dp" />
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1" />
 
         <Button
-            style="@style/Widget.Session.Button.Common.ProminentOutline"
-            android:contentDescription="@string/AccessibilityId_continue"
             android:id="@+id/button"
+            style="@style/Widget.Session.Button.Common.ProminentOutline"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginLeft="4dp"
-            android:textStyle="normal"
-            android:text="@string/continue_2" />
+            android:background="@drawable/shape_bottom_left"
+            android:contentDescription="@string/AccessibilityId_continue"
+            android:text="@string/continue_2"
+            android:textColor="?attr/reverseMainColor"
+            android:textStyle="normal" />
 
     </LinearLayout>
 

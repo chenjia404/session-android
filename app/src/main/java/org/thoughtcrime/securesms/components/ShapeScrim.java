@@ -72,7 +72,7 @@ public class ShapeScrim extends View {
     }
 
     scrim.eraseColor(Color.TRANSPARENT);
-    scrimCanvas.drawColor(Color.parseColor("#55BDBDBD"));
+    scrimCanvas.drawColor(Color.parseColor("#00000000"));
 
     if (shape == ShapeType.CIRCLE) drawCircle(scrimCanvas, drawRadius, eraser);
     else                           drawSquare(scrimCanvas, drawRadius, eraser);

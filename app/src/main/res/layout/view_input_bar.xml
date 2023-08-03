@@ -5,12 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="?input_bar_background">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/separator" />
+    android:background="?inputBgColor">
 
     <FrameLayout
         android:id="@+id/inputBarAdditionalContentContainer"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="128dp">
@@ -24,9 +23,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/medium_spacing"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/medium_spacing"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -43,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/small_spacing"
                 android:text="00:00"
-                android:textSize="@dimen/small_font_size"
-                android:textColor="?android:textColorPrimary" />
+                android:textColor="?android:textColorPrimary"
+                android:textSize="@dimen/small_font_size" />
 
         </LinearLayout>
 
@@ -55,28 +54,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:paddingHorizontal="40dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:paddingHorizontal="40dp">
 
             <ImageView
                 android:id="@+id/inputBarChevronImageView"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/ic_keyboard_arrow_left_grey600_24dp"
                 android:layout_marginTop="1dp"
-                app:tint="?android:textColorPrimary"
-                android:alpha="0.6" />
+                android:alpha="0.6"
+                android:src="@drawable/ic_keyboard_arrow_left_grey600_24dp"
+                app:tint="?android:textColorPrimary" />
 
             <TextView
                 android:id="@+id/inputBarSlideToCancelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
+                android:alpha="0.6"
                 android:text="@string/conversation_input_panel__slide_to_cancel"
-                android:textSize="@dimen/very_small_font_size"
                 android:textColor="?android:textColorPrimary"
-                android:alpha="0.6" />
+                android:textSize="@dimen/very_small_font_size" />
 
         </LinearLayout>
 
@@ -90,8 +89,8 @@
             android:alpha="0"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textSize="@dimen/small_font_size"
             android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/small_font_size"
             android:textStyle="bold" />
 
         <!-- Separator -->
@@ -100,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentTop="true"
-            android:background="@color/separator" />
+            android:background="@color/separator"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -118,8 +118,8 @@
             android:id="@+id/pulseView"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:alpha="0.5"
             android:layout_centerInParent="true"
+            android:alpha="0.5"
             android:background="@drawable/circle_tintable"
             android:backgroundTint="@color/destructive" />
 
@@ -136,16 +136,16 @@
         android:layout_marginEnd="-8dp"
         android:layout_marginBottom="0dp"
         android:background="@drawable/circle_tintable"
-        android:backgroundTint="@color/destructive" >
+        android:backgroundTint="@color/destructive">
 
         <ImageView
             android:id="@+id/recordButtonOverlayImageView"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            app:tint="@color/white"
-            android:scaleType="centerInside"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_microphone" />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_microphone"
+            app:tint="@color/white" />
 
     </RelativeLayout>
 
@@ -153,14 +153,14 @@
         android:id="@+id/lockView"
         android:layout_width="36dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="72dp"
-        android:paddingVertical="8dp"
-        android:background="@drawable/view_lock_background">
+        android:background="@drawable/view_lock_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingVertical="8dp">
 
         <ImageView
             android:layout_width="16dp"

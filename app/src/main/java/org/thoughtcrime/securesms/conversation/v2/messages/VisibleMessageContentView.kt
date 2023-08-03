@@ -24,7 +24,6 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ViewVisibleMessageContentBinding
-import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import org.session.libsession.messaging.MessagingModuleConfiguration
 import org.session.libsession.messaging.sending_receiving.attachments.AttachmentTransferProgress
@@ -41,8 +40,7 @@ import org.thoughtcrime.securesms.database.model.MmsMessageRecord
 import org.thoughtcrime.securesms.database.model.SmsMessageRecord
 import org.thoughtcrime.securesms.mms.GlideRequests
 import org.thoughtcrime.securesms.util.SearchUtil
-import org.thoughtcrime.securesms.util.getAccentColor
-import java.util.*
+import java.util.Locale
 import kotlin.math.roundToInt
 
 class VisibleMessageContentView : ConstraintLayout {
@@ -71,8 +69,8 @@ class VisibleMessageContentView : ConstraintLayout {
     ) {
         // Background
         val background = getBackground(message.isOutgoing)
-        val color = if (message.isOutgoing) context.getAccentColor()
-        else context.getColorFromAttr(R.attr.message_received_background_color)
+        val color = if (message.isOutgoing) context.getColorFromAttr(R.attr.messageOutCardColor)
+        else context.getColorFromAttr(R.attr.chatInCardColor)
         val filter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(color, BlendModeCompat.SRC_IN)
         background.colorFilter = filter
         binding.contentParent.background = background
@@ -122,9 +120,11 @@ class VisibleMessageContentView : ConstraintLayout {
             } else {
                 quote.text
             }
-            binding.quoteView.root.bind(quote.author.toString(), quoteText, quote.attachment, thread,
+            binding.quoteView.root.bind(
+                quote.author.toString(), quoteText, quote.attachment, thread,
                 message.isOutgoing, message.isOpenGroupInvitation, message.threadId,
-                quote.isOriginalMissing, glide)
+                quote.isOriginalMissing, glide
+            )
             onContentClick.add { event ->
                 val r = Rect()
                 binding.quoteView.root.getGlobalVisibleRect(r)
@@ -140,7 +140,8 @@ class VisibleMessageContentView : ConstraintLayout {
                 val dbAttachment = attach as? DatabaseAttachment ?: return@forEach
                 val attachmentId = dbAttachment.attachmentId.rowId
                 if (attach.transferState == AttachmentTransferProgress.TRANSFER_PROGRESS_PENDING
-                    && MessagingModuleConfiguration.shared.storage.getAttachmentUploadJob(attachmentId) == null) {
+                    && MessagingModuleConfiguration.shared.storage.getAttachmentUploadJob(attachmentId) == null
+                ) {
                     onAttachmentNeedsDownload(attachmentId, dbAttachment.mmsId)
                 }
             }
@@ -148,7 +149,8 @@ class VisibleMessageContentView : ConstraintLayout {
                 val previewThumbnail = preview.getThumbnail().orNull() as? DatabaseAttachment ?: return@forEach
                 val attachmentId = previewThumbnail.attachmentId.rowId
                 if (previewThumbnail.transferState == AttachmentTransferProgress.TRANSFER_PROGRESS_PENDING
-                    && MessagingModuleConfiguration.shared.storage.getAttachmentUploadJob(attachmentId) == null) {
+                    && MessagingModuleConfiguration.shared.storage.getAttachmentUploadJob(attachmentId) == null
+                ) {
                     onAttachmentNeedsDownload(attachmentId, previewThumbnail.mmsId)
                 }
             }
@@ -162,6 +164,7 @@ class VisibleMessageContentView : ConstraintLayout {
                 // When in a link preview ensure the bodyTextView can expand to the full width
                 binding.bodyTextView.maxWidth = binding.linkPreviewView.root.layoutParams.width
             }
+
             message is MmsMessageRecord && message.slideDeck.audioSlide != null -> {
                 hideBody = true
                 // Audio attachment
@@ -175,20 +178,22 @@ class VisibleMessageContentView : ConstraintLayout {
                     onContentDoubleTap = { binding.voiceMessageView.root.handleDoubleTap() }
                 } else {
                     // TODO: move this out to its own area
-                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.AUDIO, VisibleMessageContentView.getTextColor(context,message))
+                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.AUDIO, VisibleMessageContentView.getTextColor(context, message))
                     onContentClick.add { binding.untrustedView.root.showTrustDialog(message.individualRecipient) }
                 }
             }
+
             message is MmsMessageRecord && message.slideDeck.documentSlide != null -> {
                 hideBody = true
                 // Document attachment
                 if (contactIsTrusted || message.isOutgoing) {
                     binding.documentView.root.bind(message, VisibleMessageContentView.getTextColor(context, message))
                 } else {
-                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.DOCUMENT, VisibleMessageContentView.getTextColor(context,message))
+                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.DOCUMENT, VisibleMessageContentView.getTextColor(context, message))
                     onContentClick.add { binding.untrustedView.root.showTrustDialog(message.individualRecipient) }
                 }
             }
+
             message is MmsMessageRecord && message.slideDeck.asAttachments().isNotEmpty() -> {
                 /*
                  *    Images / Video attachment
@@ -211,10 +216,11 @@ class VisibleMessageContentView : ConstraintLayout {
                 } else {
                     hideBody = true
                     binding.albumThumbnailView.root.clearViews()
-                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.MEDIA, VisibleMessageContentView.getTextColor(context,message))
+                    binding.untrustedView.root.bind(UntrustedAttachmentView.AttachmentType.MEDIA, VisibleMessageContentView.getTextColor(context, message))
                     onContentClick.add { binding.untrustedView.root.showTrustDialog(message.individualRecipient) }
                 }
             }
+
             message.isOpenGroupInvitation -> {
                 hideBody = true
                 binding.openGroupInvitationView.root.bind(message, VisibleMessageContentView.getTextColor(context, message))
@@ -276,10 +282,14 @@ class VisibleMessageContentView : ConstraintLayout {
             var body = message.body.toSpannable()
 
             body = MentionUtilities.highlightMentions(body, message.isOutgoing, message.threadId, context)
-            body = SearchUtil.getHighlightedSpan(Locale.getDefault(),
-                { BackgroundColorSpan(Color.WHITE) }, body, searchQuery)
-            body = SearchUtil.getHighlightedSpan(Locale.getDefault(),
-                { ForegroundColorSpan(Color.BLACK) }, body, searchQuery)
+            body = SearchUtil.getHighlightedSpan(
+                Locale.getDefault(),
+                { BackgroundColorSpan(Color.WHITE) }, body, searchQuery
+            )
+            body = SearchUtil.getHighlightedSpan(
+                Locale.getDefault(),
+                { ForegroundColorSpan(Color.BLACK) }, body, searchQuery
+            )
 
             Linkify.addLinks(body, Linkify.WEB_URLS)
 
@@ -303,10 +313,10 @@ class VisibleMessageContentView : ConstraintLayout {
         fun getTextColor(context: Context, message: MessageRecord): Int {
             val colorAttribute = if (message.isOutgoing) {
                 // sent
-                R.attr.message_sent_text_color
+                R.attr.chat_sent_text_color
             } else {
                 // received
-                R.attr.message_received_text_color
+                R.attr.chat_received_text_color
             }
             return context.getColorFromAttr(colorAttribute)
         }

@@ -49,7 +49,7 @@ import org.thoughtcrime.securesms.util.BitmapUtil
 import java.io.IOException
 
 object ConversationMenuHelper {
-    
+
     fun onPrepareOptionsMenu(
         menu: Menu,
         inflater: MenuInflater,
@@ -150,40 +150,90 @@ object ConversationMenuHelper {
 
     fun onOptionItemSelected(context: Context, item: MenuItem, thread: Recipient): Boolean {
         when (item.itemId) {
-            R.id.menu_view_all_media -> { showAllMedia(context, thread) }
-            R.id.menu_search -> { search(context) }
-            R.id.menu_add_shortcut -> { addShortcut(context, thread) }
-            R.id.menu_expiring_messages -> { showExpiringMessagesDialog(context, thread) }
-            R.id.menu_expiring_messages_off -> { showExpiringMessagesDialog(context, thread) }
-            R.id.menu_unblock -> { unblock(context, thread) }
-            R.id.menu_block -> { block(context, thread, deleteThread = false) }
-            R.id.menu_block_delete -> { blockAndDelete(context, thread) }
-            R.id.menu_copy_session_id -> { copySessionID(context, thread) }
-            R.id.menu_copy_open_group_url -> { copyOpenGroupUrl(context, thread) }
-            R.id.menu_edit_group -> { editClosedGroup(context, thread) }
-            R.id.menu_leave_group -> { leaveClosedGroup(context, thread) }
-            R.id.menu_invite_to_open_group -> { inviteContacts(context, thread) }
-            R.id.menu_unmute_notifications -> { unmute(context, thread) }
-            R.id.menu_mute_notifications -> { mute(context, thread) }
-            R.id.menu_notification_settings -> { setNotifyType(context, thread) }
-            R.id.menu_call -> { call(context, thread) }
+            R.id.menu_view_all_media -> {
+                showAllMedia(context, thread)
+            }
+
+            R.id.menu_search -> {
+                search(context)
+            }
+
+            R.id.menu_add_shortcut -> {
+                addShortcut(context, thread)
+            }
+
+            R.id.menu_expiring_messages -> {
+                showExpiringMessagesDialog(context, thread)
+            }
+
+            R.id.menu_expiring_messages_off -> {
+                showExpiringMessagesDialog(context, thread)
+            }
+
+            R.id.menu_unblock -> {
+                unblock(context, thread)
+            }
+
+            R.id.menu_block -> {
+                block(context, thread, deleteThread = false)
+            }
+
+            R.id.menu_block_delete -> {
+                blockAndDelete(context, thread)
+            }
+
+            R.id.menu_copy_session_id -> {
+                copySessionID(context, thread)
+            }
+
+            R.id.menu_copy_open_group_url -> {
+                copyOpenGroupUrl(context, thread)
+            }
+
+            R.id.menu_edit_group -> {
+                editClosedGroup(context, thread)
+            }
+
+            R.id.menu_leave_group -> {
+                leaveClosedGroup(context, thread)
+            }
+
+            R.id.menu_invite_to_open_group -> {
+                inviteContacts(context, thread)
+            }
+
+            R.id.menu_unmute_notifications -> {
+                unmute(context, thread)
+            }
+
+            R.id.menu_mute_notifications -> {
+                mute(context, thread)
+            }
+
+            R.id.menu_notification_settings -> {
+                setNotifyType(context, thread)
+            }
+
+            R.id.menu_call -> {
+                call(context, thread)
+            }
         }
         return true
     }
 
-    private fun showAllMedia(context: Context, thread: Recipient) {
+    fun showAllMedia(context: Context, thread: Recipient) {
         val intent = Intent(context, MediaOverviewActivity::class.java)
         intent.putExtra(MediaOverviewActivity.ADDRESS_EXTRA, thread.address)
         val activity = context as AppCompatActivity
         activity.startActivity(intent)
     }
 
-    private fun search(context: Context) {
+    fun search(context: Context) {
         val searchViewModel = (context as ConversationActivityV2).searchViewModel
         searchViewModel.onSearchOpened()
     }
 
-    private fun call(context: Context, thread: Recipient) {
+    fun call(context: Context, thread: Recipient) {
 
         if (!TextSecurePreferences.isCallNotificationsEnabled(context)) {
             val dialog = AlertDialog.Builder(context)
@@ -250,43 +300,55 @@ object ConversationMenuHelper {
         }.execute()
     }
 
-    private fun showExpiringMessagesDialog(context: Context, thread: Recipient) {
+    fun showExpiringMessagesDialog(context: Context, thread: Recipient) {
         val listener = context as? ConversationMenuListener ?: return
         listener.showExpiringMessagesDialog(thread)
     }
 
-    private fun unblock(context: Context, thread: Recipient) {
-        if (!thread.isContactRecipient) { return }
+    fun unblock(context: Context, thread: Recipient) {
+        if (!thread.isContactRecipient) {
+            return
+        }
         val listener = context as? ConversationMenuListener ?: return
         listener.unblock()
     }
 
-    private fun block(context: Context, thread: Recipient, deleteThread: Boolean) {
-        if (!thread.isContactRecipient) { return }
+    fun block(context: Context, thread: Recipient, deleteThread: Boolean) {
+        if (!thread.isContactRecipient) {
+            return
+        }
         val listener = context as? ConversationMenuListener ?: return
         listener.block(deleteThread)
     }
 
     private fun blockAndDelete(context: Context, thread: Recipient) {
-        if (!thread.isContactRecipient) { return }
+        if (!thread.isContactRecipient) {
+            return
+        }
         val listener = context as? ConversationMenuListener ?: return
         listener.block(deleteThread = true)
     }
 
     private fun copySessionID(context: Context, thread: Recipient) {
-        if (!thread.isContactRecipient) { return }
+        if (!thread.isContactRecipient) {
+            return
+        }
         val listener = context as? ConversationMenuListener ?: return
         listener.copySessionID(thread.address.toString())
     }
 
     private fun copyOpenGroupUrl(context: Context, thread: Recipient) {
-        if (!thread.isOpenGroupRecipient) { return }
+        if (!thread.isOpenGroupRecipient) {
+            return
+        }
         val listener = context as? ConversationMenuListener ?: return
         listener.copyOpenGroupUrl(thread)
     }
 
     private fun editClosedGroup(context: Context, thread: Recipient) {
-        if (!thread.isClosedGroupRecipient) { return }
+        if (!thread.isClosedGroupRecipient) {
+            return
+        }
         val intent = Intent(context, EditClosedGroupActivity::class.java)
         val groupID: String = thread.address.toGroupString()
         intent.putExtra(groupIDKey, groupID)
@@ -294,7 +356,9 @@ object ConversationMenuHelper {
     }
 
     private fun leaveClosedGroup(context: Context, thread: Recipient) {
-        if (!thread.isClosedGroupRecipient) { return }
+        if (!thread.isClosedGroupRecipient) {
+            return
+        }
         val builder = AlertDialog.Builder(context)
         builder.setTitle(context.resources.getString(R.string.ConversationActivity_leave_group))
         builder.setCancelable(true)
@@ -333,17 +397,19 @@ object ConversationMenuHelper {
     }
 
     private fun inviteContacts(context: Context, thread: Recipient) {
-        if (!thread.isOpenGroupRecipient) { return }
+        if (!thread.isOpenGroupRecipient) {
+            return
+        }
         val intent = Intent(context, SelectContactsActivity::class.java)
         val activity = context as AppCompatActivity
         activity.startActivityForResult(intent, ConversationActivityV2.INVITE_CONTACTS)
     }
 
-    private fun unmute(context: Context, thread: Recipient) {
+    fun unmute(context: Context, thread: Recipient) {
         DatabaseComponent.get(context).recipientDatabase().setMuted(thread, 0)
     }
 
-    private fun mute(context: Context, thread: Recipient) {
+    fun mute(context: Context, thread: Recipient) {
         MuteDialog.show(ContextThemeWrapper(context, context.theme)) { until: Long ->
             DatabaseComponent.get(context).recipientDatabase().setMuted(thread, until)
         }

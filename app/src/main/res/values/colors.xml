@@ -165,4 +165,20 @@
     <color name="danger_dark">#FF3A3A</color>
     <color name="danger_light">#E12D19</color>
 
+    <color name="colorEDEDED">#EDEDED</color>
+    <color name="colorE3E5E7">#E3E5E7</color>
+    <color name="color505050">#505050</color>
+    <color name="color91979D">#91979D</color>
+    <color name="colorE97E01">#E97E01</color>
+    <color name="colorF9FAFA">#F9FAFA</color>
+    <color name="colorF03738">#F03738</color>
+    <color name="color272727">#272727</color>
+    <color name="color3E66FB">#3E66FB</color>
+    <color name="color623BB3">#623BB3</color>
+    <color name="color606060">#606060</color>
+    <color name="colorC2C9D1">#C2C9D1</color>
+    <color name="color70White">#B4FFFFFF</color>
+    <color name="color616569">#616569</color>
+    <color name="color7A7B7D">#7A7B7D</color>
+
 </resources>

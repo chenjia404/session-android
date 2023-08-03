@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
@@ -28,7 +29,6 @@ import org.session.libsignal.crypto.MnemonicCodec
 import org.session.libsignal.database.LokiAPIDatabaseProtocol
 import org.session.libsignal.utilities.Hex
 import org.session.libsignal.utilities.KeyHelper
-import org.session.libsignal.utilities.Log
 import org.session.libsignal.utilities.hexEncodedPublicKey
 import org.thoughtcrime.securesms.ApplicationContext
 import org.thoughtcrime.securesms.BaseActionBarActivity
@@ -37,10 +37,11 @@ import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragment
 import org.thoughtcrime.securesms.util.ScanQRCodeWrapperFragmentDelegate
 import org.thoughtcrime.securesms.util.push
-import org.thoughtcrime.securesms.util.setUpActionBarSessionLogo
 
+@AndroidEntryPoint
 class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDelegate {
     private lateinit var binding: ActivityLinkDeviceBinding
+
     internal val database: LokiAPIDatabaseProtocol
         get() = SnodeModule.shared.storage
     private val adapter = LinkDeviceActivityAdapter(this)
@@ -54,7 +55,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
     // region Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setUpActionBarSessionLogo()
+        //setUpActionBarSessionLogo()
         TextSecurePreferences.apply {
             setHasViewedSeed(this@LinkDeviceActivity, true)
             setConfigurationMessageSynced(this@LinkDeviceActivity, false)
@@ -70,23 +71,15 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
 
     // region Interaction
     override fun handleQRCodeScanned(mnemonic: String) {
-        try {
-            val seed = Hex.fromStringCondensed(mnemonic)
-            continueWithSeed(seed)
-        } catch (e: Exception) {
-            Log.e("Loki","Error getting seed from QR code", e)
-            Toast.makeText(this, "An error occurred.", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun continueWithMnemonic(mnemonic: String) {
         val loadFileContents: (String) -> String = { fileName ->
             MnemonicUtilities.loadFileContents(this, fileName)
         }
         try {
+            val words = mnemonic.split(" ").toMutableList()
+            var isPk = words.size == 1 && mnemonic.length == 64
             val hexEncodedSeed = MnemonicCodec(loadFileContents).decode(mnemonic)
             val seed = Hex.fromStringCondensed(hexEncodedSeed)
-            continueWithSeed(seed)
+            continueWithSeed(seed, isPk)
         } catch (error: Exception) {
             val message = if (error is MnemonicCodec.DecodingError) {
                 error.description
@@ -97,7 +90,27 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
         }
     }
 
-    private fun continueWithSeed(seed: ByteArray) {
+    fun continueWithMnemonic(mnemonic: String) {
+        val loadFileContents: (String) -> String = { fileName ->
+            MnemonicUtilities.loadFileContents(this, fileName)
+        }
+        try {
+            val words = mnemonic.split(" ").toMutableList()
+            var isPk = words.size == 1 && mnemonic.length == 64
+            val hexEncodedSeed = MnemonicCodec(loadFileContents).decode(mnemonic)
+            val seed = Hex.fromStringCondensed(hexEncodedSeed)
+            continueWithSeed(seed, isPk)
+        } catch (error: Exception) {
+            val message = if (error is MnemonicCodec.DecodingError) {
+                error.description
+            } else {
+                "An error occurred."
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun continueWithSeed(seed: ByteArray, isPk: Boolean) {
 
         // only have one sync job running at a time (prevent QR from trying to spawn a new job)
         if (restoreJob?.isActive == true) return
@@ -118,10 +131,10 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             TextSecurePreferences.setLocalNumber(this@LinkDeviceActivity, userHexEncodedPublicKey)
             TextSecurePreferences.setRestorationTime(this@LinkDeviceActivity, System.currentTimeMillis())
             TextSecurePreferences.setHasViewedSeed(this@LinkDeviceActivity, true)
-
+            TextSecurePreferences.setImportByPk(this@LinkDeviceActivity, isPk)
             binding.loader.isVisible = true
-            val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt,Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.registration_activity__skip) { register(true) }
+            val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.registration_activity__skip) { register(true) }
 
             val skipJob = launch {
                 delay(30_000L)
@@ -171,6 +184,7 @@ private class LinkDeviceActivityAdapter(private val activity: LinkDeviceActivity
                 result.message = activity.getString(R.string.activity_link_device_qr_message)
                 result
             }
+
             else -> throw IllegalStateException()
         }
     }
