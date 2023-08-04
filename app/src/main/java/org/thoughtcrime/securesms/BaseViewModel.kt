@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsignal.utilities.Hex
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
 import org.thoughtcrime.securesms.util.coroutine.Coroutine
@@ -25,14 +24,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
 
     val wallet by lazy {
         var seed = IdentityKeyUtil.retrieve(context, IdentityKeyUtil.LOKI_SEED)
-        var isPk = TextSecurePreferences.isImportByPk(context)
-        val wallet = if (!isPk) {
-            val mnemonic = MnemonicUtils.generateMnemonic(Hex.fromStringCondensed(seed))
-            mnemonic.toWallet()
-        } else {
-            seed.toWallet()
-        }
-        wallet
+        val mnemonic = MnemonicUtils.generateMnemonic(Hex.fromStringCondensed(seed))
+        mnemonic.toWallet()
     }
 
     fun <T> execute(

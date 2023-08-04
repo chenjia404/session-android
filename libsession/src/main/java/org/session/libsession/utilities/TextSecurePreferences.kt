@@ -1101,16 +1101,6 @@ interface TextSecurePreferences {
         }
 
         @JvmStatic
-        fun setImportByPk(context: Context, isPk: Boolean) {
-            setBooleanPreference(context, KEY_IMPORT_BY_PK, isPk)
-        }
-
-        @JvmStatic
-        fun isImportByPk(context: Context): Boolean {
-            return getBooleanPreference(context, KEY_IMPORT_BY_PK, false)
-        }
-
-        @JvmStatic
         fun setXToken(context: Context, token: String) {
             setStringPreference(context, KEY_X_TOKEN, token)
         }

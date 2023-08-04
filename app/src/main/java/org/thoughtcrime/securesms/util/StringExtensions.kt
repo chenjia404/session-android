@@ -201,20 +201,11 @@ fun String.toWallet(): Wallet {
         0,
         0
     )
-    val words = this.split(" ").toMutableList()
-    // support private key
-    return if (words.size == 1 && this.length == 64) {
-        val credentials = Credentials.create(this)
-        val pk = "0x$this"
-        val address = Keys.toChecksumAddress(credentials.address)
-        Wallet("", pk, address)
-    } else {
-        val seed = MnemonicUtils.generateSeed(this, "")
-        val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
-        val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
-        val credentials = Credentials.create(bip44Keypair)
-        val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
-        val address = Keys.toChecksumAddress(credentials.address)
-        Wallet(this, pk, address)
-    }
+    val seed = MnemonicUtils.generateSeed(this, "")
+    val masterKeyPair = Bip32ECKeyPair.generateKeyPair(seed)
+    val bip44Keypair = Bip32ECKeyPair.deriveKeyPair(masterKeyPair, path)
+    val credentials = Credentials.create(bip44Keypair)
+    val pk = Numeric.toHexStringWithPrefix(bip44Keypair.privateKey)
+    val address = Keys.toChecksumAddress(credentials.address)
+    return Wallet(this, pk, address)
 }
