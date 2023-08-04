@@ -8,11 +8,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import org.session.libsession.utilities.TextSecurePreferences
-import org.session.libsignal.crypto.MnemonicCodec
-import org.session.libsignal.utilities.hexEncodedPrivateKey
+import org.session.libsignal.utilities.Hex
 import org.thoughtcrime.securesms.crypto.IdentityKeyUtil
-import org.thoughtcrime.securesms.crypto.MnemonicUtilities
 import org.thoughtcrime.securesms.util.coroutine.Coroutine
+import org.thoughtcrime.securesms.util.toWallet
+import org.web3j.crypto.MnemonicUtils
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -24,19 +24,15 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     val context: Context by lazy { this.getApplication<ApplicationContext>() }
 
     val wallet by lazy {
-        var hexEncodedSeed = IdentityKeyUtil.retrieve(context, IdentityKeyUtil.LOKI_SEED)
-        if (hexEncodedSeed == null) {
-            hexEncodedSeed = IdentityKeyUtil.getIdentityKeyPair(context).hexEncodedPrivateKey // Legacy account
-        }
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(context, fileName)
-        }
-        if (hexEncodedSeed.length == 64 && TextSecurePreferences.isImportByPk(context)) {
-            hexEncodedSeed
+        var seed = IdentityKeyUtil.retrieve(context, IdentityKeyUtil.LOKI_SEED)
+        var isPk = TextSecurePreferences.isImportByPk(context)
+        val wallet = if (!isPk) {
+            val mnemonic = MnemonicUtils.generateMnemonic(Hex.fromStringCondensed(seed))
+            mnemonic.toWallet()
         } else {
-            MnemonicCodec(loadFileContents).encode(hexEncodedSeed!!, MnemonicCodec.Language.Configuration.english)
+            seed.toWallet()
         }
-        MnemonicCodec.toWallet(hexEncodedSeed)
+        wallet
     }
 
     fun <T> execute(

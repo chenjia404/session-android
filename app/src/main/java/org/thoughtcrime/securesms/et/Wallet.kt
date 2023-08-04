@@ -1,4 +1,4 @@
-package org.session.libsignal.crypto
+package org.thoughtcrime.securesms.et
 
 /**
  * Created by Yaakov on
