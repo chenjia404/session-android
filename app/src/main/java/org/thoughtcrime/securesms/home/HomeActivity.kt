@@ -194,9 +194,8 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 val tvTitle = tab.customView?.findViewById<TextView>(R.id.tvTitle)
                 val ivIcon = tab?.customView?.findViewById<ImageView>(R.id.ivIcon)
                 tvTitle?.visibility = View.GONE
-                tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
-                ivIcon?.imageTintList =
-                    ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
+                tvTitle?.setTextColor(getColorFromAttr(R.attr.reverseMainColor))
+                ivIcon?.imageTintList = ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor))
                 if (tab.position === 0) {
                     StatusBarUtil.setStatusColor(this@HomeActivity, false, TextSecurePreferences.CLASSIC_DARK != getThemeStyle(this@HomeActivity), getColorFromAttr(R.attr.chatsToolbarColor))
                 } else if (tab.position === 2) {
@@ -212,9 +211,8 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
                 val tvTitle = tab.customView?.findViewById<TextView>(R.id.tvTitle)
                 val ivIcon = tab?.customView?.findViewById<ImageView>(R.id.ivIcon)
                 tvTitle?.visibility = View.GONE
-                tvTitle?.setTextColor(getColorFromAttr(R.attr.reverseMainColor))
-                ivIcon?.imageTintList =
-                    ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor))
+                tvTitle?.setTextColor(R.color.color91979D)
+                ivIcon?.imageTintList = getColorStateList(R.color.color91979D)
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
@@ -226,15 +224,13 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
             val ivIcon = tab?.customView?.findViewById<ImageView>(R.id.ivIcon)
             tvTitle?.text = getString(tabTitles[i])
             tvTitle?.visibility = View.GONE
-            tvTitle?.setTextColor(getColorFromAttr(R.attr.reverseMainColor))
-            ivIcon?.imageTintList =
-                ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor))
+            tvTitle?.setTextColor(R.color.color91979D)
+            ivIcon?.imageTintList = getColorStateList(R.color.color91979D)
             ivIcon?.setImageResource(tabIcons[i])
             if (i == 0) {
                 tvTitle?.visibility = View.GONE
-                tvTitle?.setTextColor(getColorFromAttr(R.attr.mainColor))
-                ivIcon?.imageTintList =
-                    ColorStateList.valueOf(getColorFromAttr(R.attr.mainColor))
+                tvTitle?.setTextColor(getColorFromAttr(R.attr.reverseMainColor))
+                ivIcon?.imageTintList =  ColorStateList.valueOf(getColorFromAttr(R.attr.reverseMainColor))
                 StatusBarUtil.setStatusColor(this, false, TextSecurePreferences.CLASSIC_DARK != getThemeStyle(this), getColorFromAttr(R.attr.chatsToolbarColor))
             }
         }
@@ -242,7 +238,7 @@ class HomeActivity : PassphraseRequiredActionBarActivity() {
     }
 
     fun showTabLayout(isShow: Boolean) {
-        binding.cardView.isVisible = isShow
+        binding.tabLayout.isVisible = isShow
     }
 
 

@@ -511,7 +511,8 @@
                     android:id="@+id/inviteFriendButton"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/setting_button_height"
-                    android:contentDescription="@string/AccessibilityId_invite_friend">
+                    android:contentDescription="@string/AccessibilityId_invite_friend"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/inviteFriendContainer"
