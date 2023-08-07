@@ -1,29 +1,30 @@
-package org.thoughtcrime.securesms.et
+package org.thoughtcrime.securesms.home
 
 import android.os.Bundle
-import android.text.TextUtils
 import network.qki.messenger.R
-import network.qki.messenger.databinding.ActivityReportBinding
+import network.qki.messenger.databinding.ActivityAboutBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
+import org.thoughtcrime.securesms.et.User
+import org.thoughtcrime.securesms.util.DeviceUtils
 import org.thoughtcrime.securesms.util.StatusBarUtil
-import org.thoughtcrime.securesms.util.toastOnUi
+import org.thoughtcrime.securesms.util.openUrl
 
 
 /**
  * Created by Yaakov on
  * Describe:
  */
-class ETReportActivity : PassphraseRequiredActionBarActivity() {
+class AboutActivity : PassphraseRequiredActionBarActivity() {
 
-    private lateinit var binding: ActivityReportBinding
+    private lateinit var binding: ActivityAboutBinding
 
     var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
         super.onCreate(savedInstanceState, ready)
-        binding = ActivityReportBinding.inflate(layoutInflater)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         StatusBarUtil.setStatusColor(this, false, TextSecurePreferences.CLASSIC_DARK != TextSecurePreferences.getThemeStyle(this), getColorFromAttr(R.attr.chatsToolbarColor))
         setSupportActionBar(binding.toolbar)
@@ -33,20 +34,22 @@ class ETReportActivity : PassphraseRequiredActionBarActivity() {
     }
 
     override fun initViews() {
-        binding.tvAppName.text = getString(R.string.report)
-        binding.tvOk.setOnClickListener {
-            val content = binding.etContent.text.toString().trim()
-            if (TextUtils.isEmpty(content)) {
-                toastOnUi(R.string.content_not_empty)
-            } else {
-                showLoading()
-                binding.tvOk.postDelayed({
-                    toastOnUi(getString(R.string.report_success))
-                    hideLoading()
-                    finish()
-                }, 2000)
+        with(binding) {
+            tvAppName.text = getString(R.string.about)
+            tvVersion.text = "V${DeviceUtils.getVerName(this@AboutActivity)}"
+            llTwitter.setOnClickListener {
+                // TODO:  
+                openUrl("")
+            }
+            llTelegram.setOnClickListener {
+                openUrl("")
+            }
+            llWebsite.setOnClickListener {
+                openUrl("")
             }
         }
+
+
     }
 
 

@@ -51,9 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:maxLines="1"
-                    android:text="1 hours ago"
                     android:textColor="?android:textColorTertiary"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:text="1 hours ago" />
 
             </LinearLayout>
 
@@ -62,8 +62,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:padding="4dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_more_horiz_white" />
+                android:src="@drawable/ic_more_horiz_white"
+                android:visibility="visible" />
 
         </LinearLayout>
 

@@ -291,6 +291,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
+        <activity
+            android:name="org.thoughtcrime.securesms.home.AboutActivity"
+            android:label="@string/about"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
 
         <activity
             android:name="org.thoughtcrime.securesms.mediasend.MediaSelectActivity"

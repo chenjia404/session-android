@@ -102,7 +102,8 @@ class MeFragment : BaseFragment<ETViewModel>(R.layout.fragment_me) {
                 startActivity(chooser)
             }
             llAbout.setOnClickListener {
-
+                val intent = Intent(context, AboutActivity::class.java)
+                show(intent)
             }
         }
     }

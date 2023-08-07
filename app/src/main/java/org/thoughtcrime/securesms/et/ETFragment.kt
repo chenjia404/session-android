@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lxj.xpopup.XPopup
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.FragmentEtBinding
@@ -76,7 +77,7 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
             val emptyViewBinding = LayoutStatelayoutEmptyBinding.inflate(LayoutInflater.from(context), root, false)
             adapter.headerWithEmptyEnable = true
             adapter.setEmptyView(emptyViewBinding.root)
-            adapter.addChildClickViewIds(R.id.llFavorite, R.id.llForward)
+            adapter.addChildClickViewIds(R.id.llFavorite, R.id.llForward, R.id.ivMore)
             adapter.setOnItemChildClickListener { adapter, v, position ->
                 val et = adapter.data[position] as ET
                 when (v.id) {
@@ -96,6 +97,18 @@ class ETFragment : BaseFragment<ETViewModel>(R.layout.fragment_et) {
                             }
                             adapter.notifyItemChanged(position)
                         }, {}, et)
+                    }
+
+                    R.id.ivMore -> {
+                        XPopup.Builder(requireContext())
+                            .atView(v)
+                            .asCustom(ETMorePopupView(requireContext()) { position ->
+                                if (position == 0) {
+                                    val intent = Intent(context, ETReportActivity::class.java)
+                                    show(intent)
+                                }
+                            })
+                            .show()
                     }
 
                     else -> {
