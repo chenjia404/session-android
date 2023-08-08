@@ -1020,7 +1020,7 @@
     <string name="delivery_status_failed">Failed to send</string>
     <string name="giphy_permission_title">Search GIFs?</string>
     <string name="giphy_permission_message">Session will connect to Giphy to provide search results. You will not have full metadata protection when sending GIFs.</string>
-    <string name="invitation">Hey, I\'ve been using EthMessenger to chat with complete privacy and security. Come join me! Download it at https://qki.network/. My Session ID is </string>
+    <string name="invitation">Hey, I\'ve been using EthMessenger to chat with complete privacy and security. Come join me! Download it at https://ethmessenger.app. My Session ID is </string>
     <string name="seed_site">Seed Site</string>
     <string name="dialog_seed_site_desc">Please enter the seed site, which will help you get the latest seeds</string>
     <string name="ok">Ok</string>

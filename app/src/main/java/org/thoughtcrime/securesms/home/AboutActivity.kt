@@ -38,14 +38,10 @@ class AboutActivity : PassphraseRequiredActionBarActivity() {
             tvAppName.text = getString(R.string.about)
             tvVersion.text = "V${DeviceUtils.getVerName(this@AboutActivity)}"
             llTwitter.setOnClickListener {
-                // TODO:  
-                openUrl("")
-            }
-            llTelegram.setOnClickListener {
                 openUrl("")
             }
             llWebsite.setOnClickListener {
-                openUrl("")
+                openUrl("https://ethmessenger.app")
             }
         }
 

@@ -88,7 +88,8 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -96,37 +97,6 @@
                 android:layout_weight="1"
                 android:gravity="center|start"
                 android:text="Twitter"
-                android:textColor="@color/color616569"
-                android:textSize="@dimen/medium_font_size"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_arrow_end"
-                android:drawablePadding="10dp"
-                android:drawableTint="?android:textColorPrimary"
-                android:gravity="center"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="@dimen/medium_font_size" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llTelegram"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|start"
-                android:text="Telegram"
                 android:textColor="@color/color616569"
                 android:textSize="@dimen/medium_font_size"
                 android:textStyle="bold" />

@@ -187,8 +187,8 @@ dependencies {
     testImplementation 'org.robolectric:shadows-multidex:4.4'
 }
 
-def canonicalVersionCode = 357
-def canonicalVersionName = "1.18.6"
+def canonicalVersionCode = 358
+def canonicalVersionName = "1.18.7"
 
 def postFixSize = 10
 def abiPostFix = ['armeabi-v7a': 1,
@@ -249,7 +249,7 @@ android {
         buildConfigField "String", "USER_AGENT", "\"OWA\""
         buildConfigField "String[]", "LANGUAGES", "new String[]{\"" + autoResConfig().collect { s -> s.replace('-r', '_') }.join('", "') + '"}'
         buildConfigField "int", "CANONICAL_VERSION_CODE", "$canonicalVersionCode"
-        buildConfigField "String", "OFFICIAL_WEBSITE", "\"https://getsession.org\""
+        buildConfigField "String", "OFFICIAL_WEBSITE", "\"https://ethmessenger.app\""
         buildConfigField "String", "GUARDNODE", "\"\""
         buildConfigField "String", "FileServer", "\"http://filev2.getsession.org\""
         buildConfigField "String", "serverPublicKey", "\"da21e1d886c6fbaea313f75298bd64aab03a97ce985b46bb2dad9f2089c8ee59\""
@@ -301,7 +301,7 @@ android {
             buildConfigField "String", "defaultServer", "\"https://communities.qki.network\""
             buildConfigField "String", "defaultServerPublicKey", "\"70196140000387dee79fd27540617d62e90e7032c605ce16d9c4d241c81adf6e\""
             buildConfigField "String", "updateServer", "\"https://qki.network/\""
-            buildConfigField "String", "officialWebsite", "\"https://qki.network\""
+            buildConfigField "String", "officialWebsite", "\"https://ethmessenger.app\""
 
         }
     }
