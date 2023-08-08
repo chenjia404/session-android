@@ -1069,5 +1069,8 @@
     <string name="report_success">Report success</string>
     <string name="moments">Moments</string>
     <string name="about">About Us</string>
+    <string name="card">Card</string>
+    <string name="scan_with_me">Scan the QR code and chat with me</string>
+    <string name="save_success">Save success~</string>
 
 </resources>

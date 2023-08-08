@@ -13,7 +13,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.session.libsession.utilities.TextSecurePreferences
 import org.thoughtcrime.securesms.BaseFragment
-import org.thoughtcrime.securesms.conversation.v2.UserActivity
 import org.thoughtcrime.securesms.et.ETEditUserActivity
 import org.thoughtcrime.securesms.et.ETFollowActivity
 import org.thoughtcrime.securesms.et.ETUserCenterActivity
@@ -89,8 +88,7 @@ class MeFragment : BaseFragment<ETViewModel>(R.layout.fragment_me) {
                 show(intent)
             }
             ivCard.setOnClickListener {
-                val intent = Intent(context, UserActivity::class.java)
-                intent.putExtra(ETUserCenterActivity.KEY_USER, user)
+                val intent = Intent(context, CardActivity::class.java)
                 show(intent)
             }
             llInvite.setOnClickListener {

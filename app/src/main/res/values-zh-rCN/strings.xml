@@ -1051,4 +1051,7 @@
     <string name="report_success">举报成功</string>
     <string name="moments">动态</string>
     <string name="about">关于我们</string>
+    <string name="card">Card</string>
+    <string name="scan_with_me">扫描二维码和我聊天</string>
+    <string name="save_success">保存成功~</string>
 </resources>

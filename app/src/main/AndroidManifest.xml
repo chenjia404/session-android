@@ -297,6 +297,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
+        <activity
+            android:name="org.thoughtcrime.securesms.home.CardActivity"
+            android:label="@string/card"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
             android:name="org.thoughtcrime.securesms.mediasend.MediaSelectActivity"
