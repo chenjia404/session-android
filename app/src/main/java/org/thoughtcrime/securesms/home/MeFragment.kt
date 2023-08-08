@@ -76,10 +76,12 @@ class MeFragment : BaseFragment<ETViewModel>(R.layout.fragment_me) {
             }
             llFollow.setOnClickListener {
                 val intent = Intent(context, ETFollowActivity::class.java)
+                intent.putExtra("type", 0)
                 show(intent)
             }
             llFollower.setOnClickListener {
                 val intent = Intent(context, ETFollowActivity::class.java)
+                intent.putExtra("type", 1)
                 show(intent)
             }
             llUser.setOnClickListener {

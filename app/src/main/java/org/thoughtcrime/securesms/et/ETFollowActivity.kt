@@ -8,7 +8,6 @@ import network.qki.messenger.databinding.ActivityFollowBinding
 import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
-import org.thoughtcrime.securesms.et.ETFollowManagerAdapter
 import org.thoughtcrime.securesms.util.StatusBarUtil
 
 
@@ -21,6 +20,7 @@ class ETFollowActivity : PassphraseRequiredActionBarActivity() {
 
     private lateinit var binding: ActivityFollowBinding
 
+    var type: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?, ready: Boolean) {
         super.onCreate(savedInstanceState, ready)
@@ -31,6 +31,7 @@ class ETFollowActivity : PassphraseRequiredActionBarActivity() {
         val actionBar = supportActionBar ?: return
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setHomeButtonEnabled(true)
+        type = intent.getIntExtra("type", 0)
     }
 
     override fun initViews() {
@@ -44,5 +45,8 @@ class ETFollowActivity : PassphraseRequiredActionBarActivity() {
             }
         }
         mediator.attach()
+        if (type == 1) {
+            binding.viewpager.setCurrentItem(1, true)
+        }
     }
 }
