@@ -75,20 +75,49 @@
                                 android:textStyle="bold"
                                 tools:text="Farhan" />
 
-                            <TextView
-                                android:id="@+id/tvFollow"
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="16dp"
-                                android:background="@drawable/shape_buttom_bg_30"
-                                android:maxLines="1"
-                                android:paddingStart="16dp"
-                                android:paddingTop="6dp"
-                                android:paddingEnd="16dp"
-                                android:paddingBottom="6dp"
-                                android:text="@string/follow"
-                                android:textColor="@color/core_white"
-                                android:textSize="12sp" />
+                                android:layout_marginTop="8dp">
+
+                                <TextView
+                                    android:id="@+id/tvFollow"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/shape_buttom_bg_30"
+                                    android:maxLines="1"
+                                    android:paddingStart="16dp"
+                                    android:paddingTop="6dp"
+                                    android:paddingEnd="16dp"
+                                    android:paddingBottom="6dp"
+                                    android:text="@string/follow"
+                                    android:textColor="@color/core_white"
+                                    android:textSize="12sp"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/tvId"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/shape_id_bg_40"
+                                    android:drawableEnd="@drawable/ic_copy"
+                                    android:drawablePadding="4dp"
+                                    android:drawableTint="?thirdTextColor"
+                                    android:ellipsize="middle"
+                                    android:maxLines="1"
+                                    android:paddingStart="8dp"
+                                    android:paddingTop="4dp"
+                                    android:paddingEnd="8dp"
+                                    android:paddingBottom="4dp"
+                                    android:textColor="?thirdTextColor"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"
+                                    tools:text="0x391fC4529d8E2EA0d6BAb339244df033a61F6A6B" />
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 

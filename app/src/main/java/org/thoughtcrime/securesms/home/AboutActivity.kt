@@ -36,6 +36,11 @@ class AboutActivity : PassphraseRequiredActionBarActivity() {
     override fun initViews() {
         with(binding) {
             tvAppName.text = getString(R.string.about)
+            if (TextSecurePreferences.CLASSIC_DARK == TextSecurePreferences.getThemeStyle(this@AboutActivity)) {
+                ivAvatar.setImageResource(R.drawable.ic_logo_2_2)
+            } else {
+                ivAvatar.setImageResource(R.drawable.ic_logo_2_1)
+            }
             tvVersion.text = "V${DeviceUtils.getVerName(this@AboutActivity)}"
             llTwitter.setOnClickListener {
                 openUrl("")
