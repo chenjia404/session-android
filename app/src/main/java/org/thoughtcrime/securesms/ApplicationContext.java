@@ -36,6 +36,7 @@ import org.session.libsession.avatars.AvatarHelper;
 import org.session.libsession.database.MessageDataProvider;
 import org.session.libsession.messaging.MessagingModuleConfiguration;
 import org.session.libsession.messaging.file_server.FileServerApi;
+import org.session.libsession.messaging.open_groups.OpenGroupApi;
 import org.session.libsession.messaging.sending_receiving.notifications.MessageNotifier;
 import org.session.libsession.messaging.sending_receiving.pollers.ClosedGroupPollerV2;
 import org.session.libsession.messaging.sending_receiving.pollers.Poller;
@@ -237,6 +238,8 @@ public class ApplicationContext extends Application implements DefaultLifecycleO
         HTTP.INSTANCE.setConnectedToNetwork(networkConstraint::isMet);
 
         updateProxy();
+        OpenGroupApi.INSTANCE.setDefaultServer(BuildConfig.defaultServer);
+        OpenGroupApi.INSTANCE.setDefaultServerPublicKey(BuildConfig.defaultServerPublicKey);
     }
 
     @Override
