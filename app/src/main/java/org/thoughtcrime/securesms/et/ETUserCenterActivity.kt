@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import network.qki.messenger.R
 import network.qki.messenger.databinding.ActivityUserEtBinding
 import network.qki.messenger.databinding.LayoutStatelayoutEmptyBinding
+import org.session.libsession.utilities.TextSecurePreferences
 import org.session.libsession.utilities.getColorFromAttr
 import org.thoughtcrime.securesms.PassphraseRequiredActionBarActivity
 import org.thoughtcrime.securesms.home.SettingActivity
@@ -195,6 +198,21 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
 
     private fun updateUI(user: User) {
         with(binding) {
+            val userJson = TextSecurePreferences.getUser(this@ETUserCenterActivity)
+            val localUser = Gson().fromJson(userJson, User::class.java)
+            if (user.UserAddress.equals(localUser.UserAddress, true)) {
+                tvFollow.isVisible = false
+                tvId.isVisible = true
+                tvId.text = TextSecurePreferences.getLocalNumber(this@ETUserCenterActivity)
+            } else {
+                tvFollow.isVisible = true
+                tvId.isVisible = false
+                tvFollow.text = if (user.IsFollow == true) {
+                    getString(R.string.unfollow)
+                } else {
+                    getString(R.string.follow)
+                }
+            }
             GlideHelper.showImage(
                 ivAvatar,
                 user?.Avatar ?: "",
@@ -206,11 +224,6 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
             tvName.text = user.Nickname
             tvFollowNum.text = "${user.FollowCount}"
             tvFollowerNum.text = "${user.FansCount}"
-            tvFollow.text = if (user.IsFollow == true) {
-                getString(R.string.unfollow)
-            } else {
-                getString(R.string.follow)
-            }
             tvFollow.backgroundTintList = if (user.IsFollow == true) {
                 getColorStateList(R.color.color7A7B7D)
             } else {
@@ -218,5 +231,4 @@ class ETUserCenterActivity : PassphraseRequiredActionBarActivity() {
             }
         }
     }
-
 }

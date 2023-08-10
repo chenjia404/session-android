@@ -286,6 +286,24 @@
             android:theme="@style/Theme.Session.DayNight.NoActionBar" />
 
         <activity
+            android:name="org.thoughtcrime.securesms.et.ETReportActivity"
+            android:label="@string/report"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
+        <activity
+            android:name="org.thoughtcrime.securesms.home.AboutActivity"
+            android:label="@string/about"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
+        <activity
+            android:name="org.thoughtcrime.securesms.home.CardActivity"
+            android:label="@string/card"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Session.DayNight.NoActionBar" />
+
+        <activity
             android:name="org.thoughtcrime.securesms.mediasend.MediaSelectActivity"
             android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|screenSize"
             android:screenOrientation="portrait"

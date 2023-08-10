@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="66dp"
-    android:layout_height="48dp"
-    android:background="@drawable/bg_navigation_bottom"
+    android:layout_height="66dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -13,7 +12,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:tint="@color/selector_tab_color"
-        tools:src="@drawable/ic_chat" />
+        tools:src="@drawable/ic_chat_select" />
 
     <TextView
         android:id="@+id/tvTitle"

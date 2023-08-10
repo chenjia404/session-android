@@ -16,11 +16,11 @@ object KeyPairUtilities {
     private val sodium by lazy { LazySodiumAndroid(SodiumAndroid()) }
 
     fun generate(): KeyPairGenerationResult {
-        val seed = sodium.randomBytesBuf(32)
-        try {
-            return generate(seed)
+        val seed = sodium.randomBytesBuf(16)
+        return try {
+            generate(seed)
         } catch (exception: Exception) {
-            return generate()
+            generate()
         }
     }
 

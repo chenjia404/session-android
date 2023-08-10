@@ -3,7 +3,7 @@ package org.thoughtcrime.securesms.home.web3
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import org.json.JSONObject
-import org.session.libsignal.crypto.Wallet
+import org.thoughtcrime.securesms.et.Wallet
 import org.thoughtcrime.securesms.home.DaoViewModel
 import org.thoughtcrime.securesms.util.Logger
 import org.web3j.crypto.ECKeyPair

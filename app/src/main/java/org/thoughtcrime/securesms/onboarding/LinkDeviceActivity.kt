@@ -71,23 +71,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
 
     // region Interaction
     override fun handleQRCodeScanned(mnemonic: String) {
-        val loadFileContents: (String) -> String = { fileName ->
-            MnemonicUtilities.loadFileContents(this, fileName)
-        }
-        try {
-            val words = mnemonic.split(" ").toMutableList()
-            var isPk = words.size == 1 && mnemonic.length == 64
-            val hexEncodedSeed = MnemonicCodec(loadFileContents).decode(mnemonic)
-            val seed = Hex.fromStringCondensed(hexEncodedSeed)
-            continueWithSeed(seed, isPk)
-        } catch (error: Exception) {
-            val message = if (error is MnemonicCodec.DecodingError) {
-                error.description
-            } else {
-                "An error occurred."
-            }
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        }
+        continueWithMnemonic(mnemonic)
     }
 
     fun continueWithMnemonic(mnemonic: String) {
@@ -95,11 +79,9 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             MnemonicUtilities.loadFileContents(this, fileName)
         }
         try {
-            val words = mnemonic.split(" ").toMutableList()
-            var isPk = words.size == 1 && mnemonic.length == 64
             val hexEncodedSeed = MnemonicCodec(loadFileContents).decode(mnemonic)
             val seed = Hex.fromStringCondensed(hexEncodedSeed)
-            continueWithSeed(seed, isPk)
+            continueWithSeed(seed)
         } catch (error: Exception) {
             val message = if (error is MnemonicCodec.DecodingError) {
                 error.description
@@ -110,7 +92,7 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
         }
     }
 
-    private fun continueWithSeed(seed: ByteArray, isPk: Boolean) {
+    private fun continueWithSeed(seed: ByteArray) {
 
         // only have one sync job running at a time (prevent QR from trying to spawn a new job)
         if (restoreJob?.isActive == true) return
@@ -131,7 +113,6 @@ class LinkDeviceActivity : BaseActionBarActivity(), ScanQRCodeWrapperFragmentDel
             TextSecurePreferences.setLocalNumber(this@LinkDeviceActivity, userHexEncodedPublicKey)
             TextSecurePreferences.setRestorationTime(this@LinkDeviceActivity, System.currentTimeMillis())
             TextSecurePreferences.setHasViewedSeed(this@LinkDeviceActivity, true)
-            TextSecurePreferences.setImportByPk(this@LinkDeviceActivity, isPk)
             binding.loader.isVisible = true
             val snackBar = Snackbar.make(binding.containerLayout, R.string.activity_link_device_skip_prompt, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.registration_activity__skip) { register(true) }
